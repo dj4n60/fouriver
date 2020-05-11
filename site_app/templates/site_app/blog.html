@@ -1,22 +1,23 @@
 {% load static %}
+{% csrf_token %} 
 <html>
     <head>
-        <title>Django Girls blog</title>
+        <title>Django Users</title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="{% static 'site_app/css/blog.css' %}">
     </head>
     <body>
-        <div>
-            <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
+      <h1> Welcome to djangoproject i will show you a databases result look close at source code </h1>
+      {% if user_list %}
+      <ul>
+        {% for user in user_list %}
+      <li style="color:Blue;font-size:30px;" > {{user.id}} {{ user.first_name }} {{user.last_name}} {{user.idiotita}} {{user.password}}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>No polls are available.</p>
+  {% endif %}
 
-        {% for post in posts %}
-            <div>
-                <p>published: {{ post.published_date }}</p>
-                <h2><a href="">{{ post.title }}</a></h2>
-                <p>{{ post.text|linebreaksbr }}</p>
-            </div>
-        {% endfor %}
     </body>
 </html>

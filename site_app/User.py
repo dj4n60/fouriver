@@ -1,9 +1,13 @@
 # here we have the classes of the user types (customers,developers or system admins)
 
 class User:
-    username = ""
-    password = ""
-    birthday = ""
+    def __init__(self, first_name, last_name, password, idiotita):
+        self.username = username
+        self.first_name = name
+        self.last_name = last_name
+        self.password = password
+        self.idiotita = idiotita
+
 
     def searchprofile(self):
         print('test')
@@ -19,7 +23,7 @@ class User:
 
 
 class Customer(User):
-    type = "customer"
+    idiotita = "customer"
 
     def createproject(self):
         print('test')
@@ -36,7 +40,7 @@ class Developer(User):
 
 
 class Admin(User):
-    type = "admin"
+    idiotita = "admin"
 
     def deleteuser(self):
         print('test')
