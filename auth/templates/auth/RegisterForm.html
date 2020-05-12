@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 {% load static %}
 {% csrf_token %}
 
@@ -25,34 +26,36 @@
                 <form method="POST" action="#" class="signup-form">
                     <h2 class="form-title">What type of user are you ?</h2>
                     <div class="form-radio">
-                        <input type="radio" name="member_level" value="client" id="client" checked="checked" />
+                        <input type="radio" name="member_level" value="client" id="client" checked="checked" required/>
                         <label for="client">Client</label>
 
-                        <input type="radio" name="member_level" value="developer" id="developer" />
+                        <input type="radio" name="member_level" value="developer" id="developer" required/>
                         <label for="developer">Developer</label>
 
                     </div>
 
                     <div class="form-textbox">
                         <label for="name">Username</label>
-                        <input type="text" name="name" id="name" />
+                        <input type="text" name="name" id="name" required/>
                     </div>
 
                     <div class="form-textbox">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" />
+                        <input type="email" name="email" id="email" required/>
                     </div>
 
                     <div class="form-textbox">
                         <label for="pass">Password</label>
-                        <input type="password" name="pass" id="pass" />
+                        <input type="password" name="pass" id="pass" required />
                     </div>
 
                     <div class="form-textbox">
                         <input type="submit" name="submit" id="submit" class="submit" value="Create account" />
                     </div>
                 </form>
-
+                {% block includes %}
+                {{ mnm }}
+                {% endblock includes %}
                 <p class="loginhere">
                     Already have an account ?<a href="http://127.0.0.1:8000/login" class="loginhere-link"> Log in</a>
                 </p>
