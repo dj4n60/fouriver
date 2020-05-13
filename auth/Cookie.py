@@ -1,5 +1,6 @@
 from http.cookiejar import Cookie
 from auth.models import appusers
+import pickle
 
 
 def createcookie(username, password):
@@ -7,6 +8,7 @@ def createcookie(username, password):
     c['username'] = username
     c['password'] = password
     c['idiotita'] = getidiotita(username)
+    savecookies(c)
 
 
 def getidiotita(username):
@@ -18,3 +20,13 @@ def getidiotita(username):
 
 def destroycookie(c):
     c.cookie.clear()
+
+
+def savecookies(requests_cookiejar):
+    with open('stored_cookies.txt', 'wb') as f:
+        pickle.dump(requests_cookiejar)
+
+
+def loadcookies(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(f)
