@@ -7,13 +7,13 @@ from django.db import IntegrityError
 #from .forms import LoginForm
 from .models import appusers
 from django.template.response import TemplateResponse
-
+from auth.Cookie import createcookie, destroycookie
 
 # Create your views here.
 def login(request):
     if request.method == 'POST':
-        username= request.POST.get('user')
-        given_password= request.POST.get('pass')
+        username = request.POST.get('user')
+        given_password = request.POST.get('pass')
         result = appusers.objects.filter(username=username)
         password = ''
         for index in result:
@@ -21,7 +21,8 @@ def login(request):
         authobject = Authetic(password)
         decrypt_password = authobject.decrypt(password)
         if given_password == decrypt_password:
-            return HttpResponse("<p> Welcome you are gonna see your profile soon </p> " )
+            return HttpResponse("<p> Welcome you are gonna see your profile soon </p> ")
+            createcookie(username, given_password)
         else:
             arguments = {}
             arguments['mnm'] = "! Wrong Password or Username !"
@@ -49,3 +50,9 @@ def register(request):
             arguments = {}
             arguments['mnm'] = ""
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
+
+
+def logout(request):
+    if request.method == 'POST':
+        destroycookie()
+        return render(request, 'auth/LoginForm.html')
