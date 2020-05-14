@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.template import loader
 from .Auth import Authetic
 from django.db import IntegrityError
-#from .forms import LoginForm
 from .models import appusers
 from django.template.response import TemplateResponse
 
