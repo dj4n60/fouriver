@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'site_app.apps.SiteAppConfig',
-    'auth.apps.AuthConfig'
-
+    'auth.apps.AuthConfig',
+    'projects.apps.ProjectsConfig'
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'fouriver.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates","site_app/templates","auth/templates"],
+        'DIRS': ["templates","site_app/templates","auth/templates","projects/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
