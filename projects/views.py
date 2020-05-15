@@ -27,8 +27,10 @@ def searchproject(request):
     if request.method == 'POST':
         jobtitle = request.POST.get('ProjectTitle')
         jobtype = request.POST.get('projectcategory')
-        result = projects.objects.filter(jobtitle=jobtitle)
-        return render(request, 'ProjectListing.html',{'Projects':result})
-    #Projects in {} refer to html
+        Projects = projects.objects.filter(jobtitle=jobtitle)
+        return render(request, 'ProjectListing.html',{'Projects':Projects})
+    #Projects in {} refer to html / data passed to html
+    #Projects = projects.objects.filter(jobtitle=jobtitle)
+    #context = {'Projects':Projects}
     else:
         return render(request, 'MainPage.html')
