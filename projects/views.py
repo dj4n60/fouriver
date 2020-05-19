@@ -5,6 +5,7 @@ from django.template import loader
 from django.db import IntegrityError
 
 from .models import projects
+from .models import user
 from django.template.response import TemplateResponse
 
 # Create your views here.
@@ -22,3 +23,18 @@ def createproject(request):
 
     else:
         return render(request, 'CreateProject.html')
+
+
+#profile view (it has to get the search data to pass dynamically to html file)
+def profilepage(request):
+
+    user1 = user()
+    user1.username = 'test'
+    user1.location = 'test'
+    user1.birthday = 'test'
+    user1.gmail = 'test'
+    user1.twlink = 'test'
+    user1.fblink = 'test'
+    user1.gitlink = 'test'
+
+    return render(request, "Profile.html", {'user1': user1})

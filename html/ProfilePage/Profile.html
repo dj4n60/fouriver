@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+#dynamically passed prof pic username location day of birth social twlink gmail fblink gitlink
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            {{user1.username}}
+                        </h4>
+                        <small>
+                            <cite title="{{ user1.location}}">{{user1.location}}<i class="glyphicon glyphicon-map-marker">
+                        </i></cite>
+                        </small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>{{ user1.birthday}}</p>
+                        <!-- Split button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                Social</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span><span class="sr-only">Social</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu"> #social here
+                                <li><a href="{{ user1.twlink }}">Twitter</a></li>
+
+                                <li><a href="{{ user1.fblink }}">Facebook</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ user1.gitlink}}">Github</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
