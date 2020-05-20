@@ -23,7 +23,8 @@
 <!--===============================================================================================-->
 </head>
 <body>
-	
+
+<form method="POST" action="toprojectpage">
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
@@ -41,13 +42,14 @@
 						<tbody>
                                 {% for i in Projects %}
 								<tr>
-									<td class="column1">{{i.jobtitle}}</td>
-									<td class="column2">{{i.jobtype}}</td>
-									<td class="column3">{{i.paymentmethod}}</td>
-									<td class="column4">{{i.jobdescription}}</td>
-                                    <td class="column5"><button type="button" href="">Check this project</button></td>
+									<td class="column1" id="jobtitle">{{i.jobtitle}}</td>
+									<td class="column2" id="jobtype">{{i.jobtype}}</td>
+									<td class="column3" id="paymentmethod">{{i.paymentmethod}}</td>
+									<td class="column4" id="jobdescription">{{i.jobdescription}}</td>
+                                    <td class="column5"><input type="submit" value="Check details"></td>
 								</tr>
                                 {% endfor %}
+
 						</tbody>
 					</table>
 				</div>
@@ -55,7 +57,7 @@
 		</div>
 	</div>
 
-
+</form>
 	
 
 <!--===============================================================================================-->	

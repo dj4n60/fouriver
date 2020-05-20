@@ -43,9 +43,9 @@
                             <div class="job-items">
                                
                                 <div class="job-tittle">
-                                    
-                                        <h4>Project Title</h4>
-                                    
+                                    {% for i in Projects %}
+                                        <h4>{{i.jobtitle}}</h4>
+                                    {% endfor %}
                                     <ul>
                                         <li>ClientUsername</li>
                                         

@@ -40,8 +40,8 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+	          <li class="nav-item active"><a  class="nav-link">Home</a></li>
+	          <li class="nav-item"><a  class="nav-link">About</a></li>
 	     
 	          <li class="nav-item cta mr-md-2"><a href="http://127.0.0.1:8000/register" class="nav-link">SignUp</a></li>
 	          <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
@@ -80,7 +80,7 @@
 			              				<div class="form-group">
 				              				<div class="form-field">
 				              					<div class="icon"><span class="icon-briefcase"></span></div>
-								                <input type="text" class="form-control" name="ProjectTitle" id="ProjectTitle" placeholder="Project Title">
+								                <input type="text" class="form-control" name="ProjectTitle" id="ProjectTitle" >
 								              </div>
 							              </div>
 			              			</div>
@@ -158,6 +158,28 @@
 			          </div>
 			        </div>
 		        </div>
+              <table style="background-color:grey;width:100%;border-radius:20px;align-content: center;position: relative" >
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Jobtitle</th>
+								<th class="column2">Jobtype</th>
+								<th class="column3">Payment Type</th>
+								<th class="column4">Job Description</th>
+                                <th class="column5"></th>
+							</tr>
+						</thead>
+						<tbody>
+                                {% for i in allprojects %}
+								<tr>
+									<td class="column1" id="jobtitle">{{i.jobtitle}}</td>
+									<td class="column2" id="jobtype">{{i.jobtype}}</td>
+									<td class="column3" id="paymentmethod">{{i.paymentmethod}}</td>
+									<td class="column4" id="jobdescription">{{i.jobdescription}}</td>
+								</tr>
+                                {% endfor %}
+
+						</tbody>
+      </table>
           </div>
         </div>
       </div>

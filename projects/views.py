@@ -19,18 +19,33 @@ def createproject(request):
             Projects.save()
 
             return render(request, 'CreateProject.html')
-
+        else:
+            return HttpResponse("<p> No input </p> ")
     else:
         return render(request, 'CreateProject.html')
 
 def searchproject(request):
     if request.method == 'POST':
-        jobtitle = request.POST.get('ProjectTitle')
-        jobtype = request.POST.get('projectcategory')
-        Projects = projects.objects.filter(jobtitle=jobtitle)
-        return render(request, 'ProjectListing.html',{'Projects':Projects})
+        if request.POST.get('ProjectTitle') :
+            jobtitle = request.POST.get('ProjectTitle')
+            Projects = projects.objects.filter(jobtitle=jobtitle)
+            return render(request, 'ProjectListing.html',{'Projects':Projects})
+        else:
+            return HttpResponse("<p> No input </p> ")
     #Projects in {} refer to html / data passed to html
     #Projects = projects.objects.filter(jobtitle=jobtitle)
     #context = {'Projects':Projects}
     else:
-        return render(request, 'MainPage.html')
+        allprojects = projects.objects.all()
+        return render(request, 'MainPage.html', {'allprojects': allprojects})
+
+def toprojectpage(request):
+    if request.method == 'POST':
+        jobtitle = request.POST.get('jobtitle')
+        Projects = projects.objects.filter(jobtitle=jobtitle)
+        return render(request, 'ProjectPage.html' , {'Projects':Projects})
+    #Projects in {} refer to html / data passed to html
+    #Projects = projects.objects.filter(jobtitle=jobtitle)
+    #context = {'Projects':Projects}
+    else:
+        return render(request, 'ProjectListing.html')
