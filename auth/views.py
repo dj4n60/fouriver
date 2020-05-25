@@ -6,9 +6,12 @@ from .Auth import Authetic
 from django.db import IntegrityError
 from .models import appusers
 from django.template.response import TemplateResponse
-from auth.Cookie import createcookie, destroycookie
+
+from django.contrib import messages
+
 
 # Create your views here.
+#should add if user already signed in refresh session
 def login(request):
     if request.method == 'POST':
         username = request.POST.get('user')
@@ -20,8 +23,15 @@ def login(request):
         authobject = Authetic(password)
         decrypt_password = authobject.decrypt(password)
         if given_password == decrypt_password:
+            for index in result:
+                idiotita = index.idiotita
+            request.session['username'] = username
+            request.session['idiotita'] = idiotita
+            #test
+            #if request.session:
+            #   return HttpResponse( request.session['username'])
             return HttpResponse("<p> Welcome you are gonna see your profile soon </p> ")
-            createcookie(username, given_password)
+
         else:
             arguments = {}
             arguments['mnm'] = "! Wrong Password or Username !"
@@ -51,7 +61,8 @@ def register(request):
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
 
 
-def logout(request):
+def logout_request(request):
     if request.method == 'POST':
-        destroycookie()
+        request.session.flush()
+        messages.info(request, "Logged out succesfully!")
         return render(request, 'auth/LoginForm.html')

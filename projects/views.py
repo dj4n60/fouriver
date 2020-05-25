@@ -38,3 +38,4 @@ def profilepage(request):
     user1.gitlink = 'test'
 
     return render(request, "Profile.html", {'user1': user1})
+
