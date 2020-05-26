@@ -25,6 +25,7 @@ def createproject(request):
         return render(request, 'CreateProject.html')
 
 
+
 #profile view (it has to get the search data to pass dynamically to html file)
 def profilepage(request):
 
@@ -39,3 +40,30 @@ def profilepage(request):
 
     return render(request, "Profile.html", {'user1': user1})
 
+
+
+def searchproject(request):
+    if request.method == 'POST':
+        if request.POST.get('ProjectTitle') :
+            jobtitle = request.POST.get('ProjectTitle')
+            Projects = projects.objects.filter(jobtitle=jobtitle)
+            return render(request, 'ProjectListing.html',{'Projects':Projects})
+        else:
+            return HttpResponse("<p> No input </p> ")
+    #Projects in {} refer to html / data passed to html
+    #Projects = projects.objects.filter(jobtitle=jobtitle)
+    #context = {'Projects':Projects}
+    else:
+        allprojects = projects.objects.all()
+        return render(request, 'MainPage.html', {'allprojects': allprojects})
+
+def toprojectpage(request):
+    if request.method == 'POST':
+        jobtitle = request.POST.get('jobtitle')
+        Projects = projects.objects.filter(jobtitle=jobtitle)
+        return render(request, 'ProjectPage.html' , {'Projects':Projects})
+    #Projects in {} refer to html / data passed to html
+    #Projects = projects.objects.filter(jobtitle=jobtitle)
+    #context = {'Projects':Projects}
+    else:
+        return render(request, 'ProjectListing.html')
