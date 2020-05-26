@@ -6,4 +6,5 @@ from .views import profilepage
 urlpatterns = [
     path('createproject', createproject),
     path('profilepage', profilepage)
+
 ]
