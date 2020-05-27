@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.db import IntegrityError
 
+from auth.models import appusers
 from .models import projects
 from .models import user
 from django.template.response import TemplateResponse
@@ -25,20 +26,21 @@ def createproject(request):
         return render(request, 'CreateProject.html')
 
 
-
-#profile view (it has to get the search data to pass dynamically to html file)
-def profilepage(request):
+# profile view (it has to get the search data to pass dynamically to html file)
+def profilepage(request):  # (request,username):
 
     user1 = user()
-    user1.username = 'test'
-    user1.location = 'test'
-    user1.birthday = 'test'
-    user1.gmail = 'test'
-    user1.twlink = 'test'
-    user1.fblink = 'test'
-    user1.gitlink = 'test'
+    # result = appusers.objects.filter(username=username)
 
-    return render(request, "Profile.html", {'user1': user1})
+    user1.username = 'Alexandros Papadas' #result.username
+    user1.location = 'Athens'  #result.location
+    user1.birthday = '01/02/1999' #result.birthday
+    user1.gmail = 'apapadas99@gmail.com' #result.birthday
+    user1.twlink = 'test' #result.twlink
+    user1.fblink = 'test' #result.fblink
+    user1.gitlink = 'test' #result.gitlink
+
+    return render(request, "ProfilePage.html", {'user1': user1})
 
 
 
