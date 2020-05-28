@@ -39,13 +39,19 @@ def searchproject(request):
         allprojects = projects.objects.all()
         return render(request, 'MainPage.html', {'allprojects': allprojects})
 
-def toprojectpage(request):
-    if request.method == 'POST':
-        jobtitle = request.POST.get('jobtitle')
-        Projects = projects.objects.filter(jobtitle=jobtitle)
-        return render(request, 'ProjectPage.html' , {'Projects':Projects})
+
+#projectlisting
+#def toprojectpage(request):
+        #jobtitle = request.POST.get('jobtitle')
+        #Projects = projects.objects.filter(jobtitle=jobtitle)
+        #return render(request, 'ProjectPage.html' , {'Projects':Projects})
     #Projects in {} refer to html / data passed to html
     #Projects = projects.objects.filter(jobtitle=jobtitle)
     #context = {'Projects':Projects}
-    else:
-        return render(request, 'ProjectListing.html')
+
+
+def projectdetails(request,pk):
+    #pk is called in the url path
+    Projects= projects.objects.get(id=pk)
+    context = {'Projects':Projects}
+    return render(request, 'ProjectPage.html',context)

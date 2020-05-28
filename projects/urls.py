@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import createproject,searchproject,toprojectpage
+from .views import createproject,searchproject,projectdetails
 
 urlpatterns = [
-    path('createproject', createproject),
+    path('createproject', createproject, name="createproject"),
     path('searchproject',searchproject),
-    path('toprojectpage',toprojectpage)
+    path('projectdetails/<str:pk>/',projectdetails,name="projectdetails"),
 ]

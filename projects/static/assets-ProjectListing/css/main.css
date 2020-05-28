@@ -213,18 +213,11 @@ tbody tr:hover {
   padding-right: 62px;
 }
 
-input {
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 20px;
-  cursor: pointer;
-  background-color: #008CBA;
-  border-radius: 100px;
+a.btn {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+
 }
 
 

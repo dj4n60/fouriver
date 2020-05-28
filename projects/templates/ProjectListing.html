@@ -24,7 +24,6 @@
 </head>
 <body>
 
-<form method="POST" action="toprojectpage">
 	<div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
@@ -42,11 +41,11 @@
 						<tbody>
                                 {% for i in Projects %}
 								<tr>
-									<td class="column1" id="jobtitle">{{i.jobtitle}}</td>
-									<td class="column2" id="jobtype">{{i.jobtype}}</td>
-									<td class="column3" id="paymentmethod">{{i.paymentmethod}}</td>
-									<td class="column4" id="jobdescription">{{i.jobdescription}}</td>
-                                    <td class="column5"><input type="submit" value="Check details"></td>
+									<td class="column1" >{{i.jobtitle}}</td>
+									<td class="column2" >{{i.jobtype}}</td>
+									<td class="column3" >{{i.paymentmethod}}</td>
+									<td class="column4" >{{i.jobdescription}}</td>
+                                    <td class="column5"><a href="{% url 'projectdetails' i.id %}" class="btn">Go to Project Page</a></td>
 								</tr>
                                 {% endfor %}
 
@@ -57,7 +56,7 @@
 		</div>
 	</div>
 
-</form>
+
 	
 
 <!--===============================================================================================-->	
