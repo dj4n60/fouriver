@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'site_app.apps.SiteAppConfig',
     'auth.apps.AuthConfig',
     'projects.apps.ProjectsConfig'
+
 ]
 
 MIDDLEWARE = [
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'fouriver.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates","site_app/templates","auth/templates","projects/templates"],
+        'DIRS': ["templates","site_app/templates","auth/templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,3 +124,7 @@ USE_TZ = True
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'projects/static')
+]

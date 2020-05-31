@@ -4,16 +4,18 @@ from django.http import HttpResponse
 from django.template import loader
 from .Auth import Authetic
 from django.db import IntegrityError
-#from .forms import LoginForm
 from .models import appusers
 from django.template.response import TemplateResponse
 
+from django.contrib import messages
+
 
 # Create your views here.
+#should add if user already signed in refresh session
 def login(request):
     if request.method == 'POST':
-        username= request.POST.get('user')
-        given_password= request.POST.get('pass')
+        username = request.POST.get('user')
+        given_password = request.POST.get('pass')
         result = appusers.objects.filter(username=username)
         password = ''
         for index in result:
@@ -21,7 +23,15 @@ def login(request):
         authobject = Authetic(password)
         decrypt_password = authobject.decrypt(password)
         if given_password == decrypt_password:
-            return HttpResponse("<p> Welcome you are gonna see your profile soon </p> " )
+            for index in result:
+                idiotita = index.idiotita
+            request.session['username'] = username
+            request.session['idiotita'] = idiotita
+            #test
+            #if request.session:
+            #   return HttpResponse( request.session['username'])
+            return HttpResponse("<p> Welcome you are gonna see your profile soon </p> ")
+
         else:
             arguments = {}
             arguments['mnm'] = "! Wrong Password or Username !"
@@ -49,3 +59,10 @@ def register(request):
             arguments = {}
             arguments['mnm'] = ""
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
+
+
+def logout_request(request):
+    if request.method == 'POST':
+        request.session.flush()
+        messages.info(request, "Logged out succesfully!")
+        return render(request, 'auth/LoginForm.html')
