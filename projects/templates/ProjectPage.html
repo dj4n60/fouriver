@@ -43,9 +43,7 @@
                             <div class="job-items">
                                
                                 <div class="job-tittle">
-                                    {% for i in Projects %}
-                                        <h4>{{i.jobtitle}}</h4>
-                                    {% endfor %}
+                                        <h4>{{ Projects.jobtitle }}</h4>
                                     <ul>
                                         <li>ClientUsername</li>
                                         
@@ -61,7 +59,7 @@
                                 <div class="small-section-tittle">
                                     <h4>Job Description</h4>
                                 </div>
-                                <p>..</p>
+                                <p>{{ Projects.jobdescription }}</p>
                             </div>
                             <div class="post-details2  mb-50">
                                  <!-- Small Section Tittle -->
@@ -87,8 +85,8 @@
                            </div>
                           <ul>
                               
-                              <li>Payment Method : <span>..</span></li>
-                              <li>Type of Project : <span>..</span></li>
+                              <li>Payment Method : <span>{{ Projects.paymentmethod }}</span></li>
+                              <li>Job Type : <span>{{ Projects.jobtype }}</span></li>
                               <li>Category : <span>..</span></li>
                               <li>Subcategory :  <span>..</span></li>
                               <li>Payment Type : <span>..</span></li>

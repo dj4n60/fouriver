@@ -74,7 +74,7 @@
 			            <div class="tab-content p-4" id="v-pills-tabContent">
 
 			              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-			              	<form method="POST" action="#" class="search-job">
+			              	<form method="POST" action="" class="search-job">
 			              		<div class="row">
 			              			<div class="col-md">
 			              				<div class="form-group">
@@ -161,20 +161,21 @@
               <table style="background-color:grey;width:100%;border-radius:20px;align-content: center;position: relative" >
 						<thead>
 							<tr class="table100-head">
-								<th class="column1">Jobtitle</th>
-								<th class="column2">Jobtype</th>
-								<th class="column3">Payment Type</th>
-								<th class="column4">Job Description</th>
                                 <th class="column5"></th>
+								<th class="column2">Jobtitle</th>
+								<th class="column3">Jobtype</th>
+								<th class="column4">Payment Type</th>
+								<th class="column5">Job Description</th>
 							</tr>
 						</thead>
 						<tbody>
                                 {% for i in allprojects %}
 								<tr>
-									<td class="column1" id="jobtitle">{{i.jobtitle}}</td>
-									<td class="column2" id="jobtype">{{i.jobtype}}</td>
-									<td class="column3" id="paymentmethod">{{i.paymentmethod}}</td>
-									<td class="column4" id="jobdescription">{{i.jobdescription}}</td>
+                                    <td class="column1"><a href="{% url 'projectdetails' i.id %}">Go to Project Page</a></td>
+									<td class="column2" >{{i.jobtitle}}</td>
+									<td class="column3" >{{i.jobtype}}</td>
+									<td class="column4" >{{i.paymentmethod}}</td>
+									<td class="column5" >{{i.jobdescription}}</td>
 								</tr>
                                 {% endfor %}
 
