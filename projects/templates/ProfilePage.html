@@ -3,36 +3,31 @@
 <html lang="en">
   <head>
     <title>JobPortal </title>
-    <!-- profile css    static 'css/profilestyle.css' -->
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
+    <script src="https://kit.fontawesome.com/ab9169fef5.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="{% static 'css/style.css"' %}" media="screen" type="text/css" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css'  %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css ' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/aos.css ' %}">
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/ionicons.min.css ' %}">
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
 
-    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css ' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css'  %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
 
 
-    <link rel="stylesheet" href="{% static 'css/flaticon.css'  %}">
-    <link rel="stylesheet" href="{% static 'css/icomoon.css'  %}">
-    <link rel="stylesheet" href="{% static 'css/style.css'  %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
   </head>
   <body>
 
@@ -57,12 +52,9 @@
 	  </nav>
     <!-- END nav -->
 
-    <div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/bg_2.jpg'%});" data-stellar-background-ratio="0.5">
-
+    <div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
-
       <div class="container">
-
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
               <div class="ftco-search">
@@ -71,18 +63,18 @@
                           <div class="nav nav-pills text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                               <a class="nav-link active mr-md-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Find a Project</a>
                               <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Find a Developer</a>
-                          </div>
+			            </div>
 			          </div>
-                      <div class="col-md-12 tab-wrap">
+			          <div class="col-md-12 tab-wrap">
                           <div class="tab-content p-4" id="v-pills-tabContent">
                               <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                                  <form method="POST" action="#" class="search-job">
+                                  <form method="POST" action="" class="search-job">
                                       <div class="row">
                                           <div class="col-md">
                                               <div class="form-group">
                                                   <div class="form-field">
-                                                      <div class="icon"><span class="icon-briefcase"></span></div>
-                                                      <input type="text" class="form-control" name="ProjectTitle" id="ProjectTitle" placeholder="eg. Garphic. Web Developer">
+                                                      <div class="icon" s><span class="icon-briefcase"></span></div>
+                                                      <input type="text" class="form-control" name="ProjectTitle" id="ProjectTitle" >
                                                   </div>
                                               </div>
                                           </div>
@@ -92,12 +84,11 @@
                                                       <div class="select-wrap">
                                                           <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                           <select name="projectcategory" id="projectcategory" class="form-control">
-                                                              <option value="">Category</option>
-                                                              <option value="">Full Time</option>
-                                                              <option value="">Part Time</option>
-                                                              <option value="">Freelance</option>
-                                                              <option value="">Internship</option>
-                                                              <option value="">Temporary</option>
+                                                              <option value="Full Time">Full Time</option>
+                                                              <option value="Part Time">Part Time</option>
+                                                              <option value="Freelance">Freelance</option>
+                                                              <option value="Internship">Internship</option>
+                                                              <option value="Temporary">Temporary</option>
                                                           </select>
                                                       </div>
                                                   </div>
@@ -114,58 +105,102 @@
                                       </div>
                                   </form>
                               </div>
+
+                              <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
+                                  <form method="POST" action="#" class="search-job">
+                                      <div class="row">
+                                          <div class="col-md">
+                                              <div class="form-group">
+                                                  <div class="form-field">
+                                                      <div class="icon"><span class="icon-user"></span></div>
+                                                      <input type="text" class="form-control" name="Username" id="Username" placeholder="Username">
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="col-md">
+                                              <div class="form-group">
+                                                  <div class="form-field">
+                                                      <div class="select-wrap">
+                                                          <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                          <select name="usertype" id="usertype" class="form-control">
+                                                              <option value="">Category</option>
+                                                              <option value="">Client</option>
+                                                              <option value="">Developer</option>
+                                                          </select>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-md">
+                                              <div class="form-group">
+                                                  <div class="form-field">
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-md">
+                                              <div class="form-group">
+                                                  <div class="form-field">
+                                                      <input type="submit" value="Search" class="form-control btn btn-primary">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </form>
+                              </div>
                           </div>
                       </div>
+
                   </div>
-              </div>
-<!--test1-->
-              <div class="row" >
+<!--profile div-->
+                  <div class="row" style="margin-top: 10px" >
+                      <div style="background-color: #fdfffd ;border-radius: 10px" >
+                          <div class="well well-md">
+                              <div class="row" style="position:relative; margin-bottom: 20px; margin-right:5px;">
+                                  <div class="col-sm-6 col-md-4" >
 
-                  <div  >
-                      <div class="well well-md">
-                          <div class="row" style="position:relative">
-                              <div class="col-sm-6 col-md-4">
-                                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" class="img-rounded img-responsive" />
-                              </div>
-                              <div class="col-sm-6 col-md-8">
+                                      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" class="img-rounded img-responsive" style="margin-bottom: 5px; margin-right:5px; width:300px;height:300px;" />
+                                  </div>
+                                  <div class="col-sm-6 col-md-8">
 
-                                  <h1 style="color:black">
-                                      {{user1.username}}
-                                  </h1>
+                                      <h1 style="color:black">
+                                          {{user1.username}}
+                                      </h1>
 
-                                  <h3 title="{{ user1.location}}">{{user1.location}}<i class="glyphicon glyphicon-map-marker" style="color:black" ></i>
-                                  </h3>
+                                      <h3 title="{{ user1.location}}">{{user1.location}}<i class="fa fa-map-marker" aria-hidden="true" style="color:black" ></i>
+                                      </h3>
 
-                                  <p>
-                                      <br />
-                                      <i class="glyphicon glyphicon-globe" style="color:black"></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
-                                      <br />
-                                      <h3><i class="glyphicon glyphicon-gift" style="color:black"></i>{{ user1.birthday}}</h3>
-                                  </p>
-                                                <!-- Split button -->
-                                  <div class=" btn-group" style="height: 50px ;length:225px;">
-                                      <button type="button" class="btn btn-primary" style="font-size:16px; length:120px;">
-                                                          Social</button>
-                                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                          <span class="caret"></span><span class="sr-only">Social</span>
-                                                      </button>
-                                      <ul class="dropdown-menu" role="menu">
-                                          <li><a href="{{ user1.twlink }}">Twitter</a></li><li><a href="{{ user1.fblink }}">Facebook</a></li>
+                                      <p>
+                                          <br />
+                                          <i class="fas fa-envelope" style="color:black" ></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
+                                          <br />
+                                          <h3><i class="fas fa-gift" style="color:black;margin-bottom: 10px;margin-right: 10px;"></i>{{ user1.birthday}}</h3>
+                                      </p>
+                                                    <!-- Split button -->
+                                      <div class=" btn-group" style="height: 50px ;length:225px;">
+                                          <button type="button" class="btn btn-primary" style="font-size:16px; length:120px;">
+                                                              Social</button>
+                                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                              <span class="caret"></span><span class="sr-only">Social</span>
+                                                          </button>
+                                          <ul class="dropdown-menu" role="menu">
+                                              <li><a href="{{ user1.twlink }}">Twitter</a></li><li><a href="{{ user1.fblink }}">Facebook</a></li>
 
-                                          <li><a href="{{ user1.gitlink}}">Github</a></li>
-                                      </ul>
+                                              <li><a href="{{ user1.gitlink}}">Github</a></li>
+                                          </ul>
+                                      </div>
                                   </div>
                               </div>
                           </div>
                       </div>
                   </div>
-              </div>
 
+              </div>
           </div>
         </div>
       </div>
     </div>
-
 
 
   <!-- loader -->
