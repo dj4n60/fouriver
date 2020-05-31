@@ -33,7 +33,7 @@ class Customer(User):
 
 
 class Developer(User):
-    type = "developer"
+    idiotita = "developer"
 
     def acceptproject(self):
         print('test')
