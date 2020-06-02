@@ -154,48 +154,51 @@
 
                   </div>
 <!--profile div-->
-                  <div class="row" style="margin-top: 10px" >
-                      <div style="background-color: #fdfffd ;border-radius: 10px" >
-                          <div class="well well-md">
-                              <div class="row" style="position:relative; margin-bottom: 20px; margin-right:5px;">
-                                  <div class="col-sm-6 col-md-4" >
+                  <div class="container"style="margin-left: 20px ">
+                      <div class="row" style="margin-top: 10px;position: center" >
+                          <div class="row " style="background-color: #fdfffd ;border-radius: 25px;width:100%" >
+                              <div class="well well-md">
+                                  <div class="row" style="min-height: 500px">
+                                      <div class="left-content col-md-4 " style="display: block;line-height: 1.428571429;color: #999;border: 1px; width: 25% "  >
 
-                                      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" class="img-rounded img-responsive" style="margin-bottom: 5px; margin-right:5px; width:300px;height:300px;" />
-                                  </div>
-                                  <div class="col-sm-6 col-md-8">
+                                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="" style=" width:225px;height:225px;" />
+                                      </div>
 
-                                      <h1 style="color:black">
-                                          {{user1.username}}
-                                      </h1>
+                                      <div class="right-content col-md-7 " style="border: 1px; width:70%">
 
-                                      <h3 title="{{ user1.location}}">{{user1.location}}<i class="fa fa-map-marker" aria-hidden="true" style="color:black" ></i>
-                                      </h3>
+                                          <h1 style="color:black">
+                                              {{user1.username}}
+                                          </h1></br>
 
-                                      <p>
-                                          <br />
-                                          <i class="fas fa-envelope" style="color:black" ></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
-                                          <br />
-                                          <h3><i class="fas fa-gift" style="color:black;margin-bottom: 10px;margin-right: 10px;"></i>{{ user1.birthday}}</h3>
-                                      </p>
-                                                    <!-- Split button -->
-                                      <div class=" btn-group" style="height: 50px ;length:225px;">
-                                          <button type="button" class="btn btn-primary" style="font-size:16px; length:120px;">
-                                                              Social</button>
-                                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                              <span class="caret"></span><span class="sr-only">Social</span>
-                                                          </button>
-                                          <ul class="dropdown-menu" role="menu">
-                                              <li><a href="{{ user1.twlink }}">Twitter</a></li><li><a href="{{ user1.fblink }}">Facebook</a></li>
 
-                                              <li><a href="{{ user1.gitlink}}">Github</a></li>
-                                          </ul>
+                                          <h3 title="{{ user1.location}}">{{user1.location}}<i class="fa fa-map-marker" aria-hidden="true" style="color:black" ></i>
+                                          </h3>
+
+                                          <p>
+                                              <br />
+                                              <i class="fas fa-envelope" style="color:black" ></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
+                                              <br />
+                                              <h3><i class="fas fa-gift" style="color:black;margin-bottom: 10px;margin-right: 10px;"></i>{{ user1.birthday}}</h3>
+                                          </p>
+                                                        <!-- Split button -->
+                                          <div class=" btn-group" style="height: 50px ;length:225px;">
+                                              <button type="button" class="btn btn-primary" style="font-size:16px; length:120px;">
+                                                                  Social</button>
+                                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                  <span class="caret"></span><span class="sr-only">Social</span>
+                                                              </button>
+                                              <ul class="dropdown-menu" role="menu">
+                                                  <li><a href="{{ user1.twlink }}">Twitter</a></li><li><a href="{{ user1.fblink }}">Facebook</a></li>
+
+                                                  <li><a href="{{ user1.gitlink}}">Github</a></li>
+                                              </ul>
+                                          </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
                       </div>
                   </div>
-
               </div>
           </div>
         </div>
