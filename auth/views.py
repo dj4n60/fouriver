@@ -30,7 +30,7 @@ def login(request):
             #test
             #if request.session:
             #   return HttpResponse( request.session['username'])
-            return HttpResponse("<p> Welcome you are gonna see your profile soon </p> ")
+            return render(request, 'MainPage.html')
 
         else:
             arguments = {}
@@ -42,18 +42,23 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
-        username = request.POST.get('name')
+        username = request.POST.get('username')
+        fullname = request.POST.get('fullname')
+        location = request.POST.get('location')
         email = request.POST.get('email')
+        birthday = request.POST.get('birthday')
         password = request.POST.get('pass')
         idiotita = request.POST.get('member_level')
         Password = str(password)
         authobject = Authetic(Password)
         try:
-            newuser = appusers.objects.create(username=username,password=str(authobject.encrypt()),email=email,idiotita=idiotita)
-            return HttpResponse("<p> Register </p> " + str(username)+ "<p> Me idiotita </p>" + str(idiotita) + str(newuser))
+            newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
+            arguments = {}
+            arguments['mnm'] = "Try to login with your new account"
+            return render(request, 'auth/LoginForm.html')
         except IntegrityError as e:
             arguments = {}
-            arguments['mnm'] = "--------------Username Already Exist-----------------"
+            arguments['mnm'] = "Username already exist"
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
     else:
             arguments = {}

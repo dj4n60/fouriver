@@ -14,6 +14,7 @@ class projects(models.Model):
 
 
 class user():
+    fullname = models.CharField(max_length=100)
     username = models.CharField(max_length=20,primary_key=True)
     location = models.CharField(max_length=20)
     birthday = models.CharField(max_length=20)

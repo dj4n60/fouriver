@@ -7,7 +7,7 @@ urlpatterns = [
     path('createproject', createproject),
     path('profilepage', profilepage),
     path('createproject', createproject),
-    path('searchproject', searchproject),
+    path('', searchproject),
     path('createproject', createproject, name="createproject"),
     path('searchproject', searchproject),
     path('projectdetails/<str:pk>/', projectdetails, name="projectdetails"),

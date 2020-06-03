@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form</title>
+    <title>Register</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href=" {% static 'auth/fonts/material-icon/css/material-design-iconic-font.min.css' %} ">
@@ -36,12 +36,29 @@
 
                     <div class="form-textbox">
                         <label for="name">Username</label>
-                        <input type="text" name="name" id="name" required/>
+                        <input type="text" name="username" id="username" required/>
                     </div>
+
+                    <div class="form-textbox">
+                      <label for="name">Fullname</label>
+                      <input type="text" name="fullname" id="fullname" required/>
+                    </div>
+
+                    <div class="form-textbox">
+                        <label for="name">Location</label>
+                        <input type="text" name="location" id="location" required/>
+                    </div>
+
+
 
                     <div class="form-textbox">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" required/>
+                    </div>
+
+                    <div class="form-textbox">
+                    <label for="birthday">Birthday</label>
+                      <input type="date" id="birthday" name="birthday">
                     </div>
 
                     <div class="form-textbox">
