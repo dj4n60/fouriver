@@ -3,7 +3,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.db import IntegrityError
-
 from auth.models import appusers
 from .models import projects
 from .models import user
@@ -21,7 +20,6 @@ def createproject(request):
             Projects.save()
 
             return render(request, 'CreateProject.html')
-
     else:
         return render(request, 'CreateProject.html')
 
@@ -46,10 +44,21 @@ def profilepage(request):  # (request,username):
 
 def searchproject(request):
     if request.method == 'POST':
-        if request.POST.get('ProjectTitle') :
-            jobtitle = request.POST.get('ProjectTitle')
-            Projects = projects.objects.filter(jobtitle=jobtitle)
-            return render(request, 'ProjectListing.html',{'Projects':Projects})
+        if "SearchP" in request.POST:
+            if request.POST.get('ProjectTitle') :
+                jobtitle = request.POST.get('ProjectTitle')
+                Projects = projects.objects.filter(jobtitle=jobtitle)
+                return render(request, 'ProjectListing.html',{'Projects':Projects})
+            else:
+                return render(request, 'MainPage.html')
+
+        elif "SearchU" in request.POST:
+            if request.POST.get('username'):
+                user = request.POST.get('username')
+                cat = request.POST.get('usertype')
+                return render(request, 'ProjectListing.html',{'Projects':Projects})
+            else:
+                return render(request, 'MainPage.html')
         else:
             return HttpResponse("<p> No input </p> ")
     #Projects in {} refer to html / data passed to html
