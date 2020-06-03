@@ -48,18 +48,7 @@ html {
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
-/* !profile css*/
-body{padding-top:30px;}
 
-.glyphicon {  margin-bottom: 10px;margin-right: 10px;}
-
-small {
-display: block;
-line-height: 1.428571429;
-color: #999;
-}
-
-/* ! ^ profile css*/
 
 @-ms-viewport {
   width: device-width; }

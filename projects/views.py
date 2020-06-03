@@ -30,12 +30,13 @@ def createproject(request):
 def profilepage(request):  # (request,username):
 
     user1 = user()
-    # result = appusers.objects.filter(username=username)
+    #result = appusers.objects.filter(username=request.session.get("username"))
 
-    user1.username = 'Alexandros Papadas' #result.username
+    user1.username = request.session.get("username")  + request.session.get("idiotita")# 'Alexandros ' #
+
     user1.location = 'Athens'  #result.location
-    user1.birthday = '01/02/1999' #result.birthday
-    user1.gmail = 'apapadas99@gmail.com' #result.birthday
+    user1.birthday = '01/01/1983' #result.birthday
+    user1.gmail = 'username99@gmail.com' #result.birthday
     user1.twlink = 'test' #result.twlink
     user1.fblink = 'test' #result.fblink
     user1.gitlink = 'test' #result.gitlink
