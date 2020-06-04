@@ -31,19 +31,24 @@
   </head>
   <body>
 
+
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.html">Fouriver</a>
+	      <a class="navbar-brand" href="http://127.0.0.1:8000">Fouriver</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item active"><a  class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="http://127.0.0.1:8000/profilepage" class="nav-link">Profile</a></li>
+	          <li class="nav-item cta cta-colored"> <a class="nav-link"  href="http://127.0.0.1:8000" >Home</a></li>
 
-	          <li class="nav-item cta mr-md-2"><a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
+            <li class="nav-item cta mr-md-2">
+                 <form  method="post" id="profile">
+                <button type="submit" form="profile" name="profile" value="Profile">Profile</button>
+            </li>
+
+	          <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
 	          <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
 
 	        </ul>
@@ -51,7 +56,9 @@
 	    </div>
 	  </nav>
     <!-- END nav -->
-
+    {% block includes %}
+    {{ mnm }}
+    {% endblock includes %}
     <div class="hero-wrap js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
@@ -80,7 +87,7 @@
 			              				<div class="form-group">
 				              				<div class="form-field">
 				              					<div class="icon"><span class="icon-briefcase"></span></div>
-								                <input type="text" class="form-control" name="ProjectTitle" id="ProjectTitle" >
+								                <input type="text" class="form-control" name="projecttext" id="projecttext" >
 								              </div>
 							              </div>
 			              			</div>

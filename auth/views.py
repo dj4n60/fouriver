@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from .Auth import Authetic
@@ -55,7 +54,7 @@ def register(request):
             newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
             arguments = {}
             arguments['mnm'] = "Try to login with your new account"
-            return render(request, 'auth/LoginForm.html')
+            return redirect('http://127.0.0.1:8000/') # theloume success
         except IntegrityError as e:
             arguments = {}
             arguments['mnm'] = "Username already exist"
