@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
 from .models import projects
@@ -38,20 +39,14 @@ def searchproject(request):
     arguments['mnm'] = ''
     if request.method == 'POST':
         if "SearchP" in request.POST:
-            if request.POST.get('projecttext') :
-                #     Απλό κείμενο. Το σύστημα θα ψάχνει στον τίτλο και στην περιγραφή και θα φέρνει τα αποτελέσματα στο χρήστη.
-                #     Σύνθετη αναζήτηση:
-                #     Βάσει προτεινόμενων τεχνολογιών.
-                #     Βάσει ημερομηνίας υποβολής.
-                #     Βάσει κατηγορίας.
-                #     Βάσει υποκατηγορίας.
-
+            if  request.POST.get('projecttext'):
                 textinjob = request.POST.get('projecttext')
-
-                Projects = projects.objects.filter(jobtitle=textinjob)
-                return render(request, 'ProjectListing.html',{'Projects':Projects})
+                mainCategory = request.POST.get('projectcategory')
+                Projects = projects.objects.filter( Q(jobtitle__exact=textinjob) | Q(jobdescription__exact=textinjob) | Q(jobtype__icontains=mainCategory)  )
+                return render(request, 'ProjectListing.html',{'Projects':Projects}) # contains the text
             else:
-                return render(request, 'MainPage.html')
+                arguments['mnm'] = "! Place at least one keyword !"
+                return render(request, 'MainPage.html', arguments)
 
         elif "SearchU" in request.POST:
             if request.POST.get('username'):
@@ -74,7 +69,7 @@ def searchproject(request):
     #Projects = projects.objects.filter(jobtitle=jobtitle)
     #context = {'Projects':Projects}
     else:
-        allprojects = projects.objects.all()
+        allprojects = projects.objects.all()[:4]
         return render(request, 'MainPage.html', {'allprojects': allprojects})
 
 

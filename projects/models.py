@@ -7,7 +7,7 @@ class projects(models.Model):
     jobtitle = models.CharField(max_length=20)
     jobtype = models.CharField(max_length=20)
     paymentmethod = models.CharField(max_length=20)
-    jobdescription = models.CharField(max_length=100)
+    jobdescription = models.CharField(max_length=200)
 
     class Meta:
         db_table = "projects"
