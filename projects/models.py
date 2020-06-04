@@ -8,6 +8,8 @@ class projects(models.Model):
     jobtype = models.CharField(max_length=20)
     paymentmethod = models.CharField(max_length=20)
     jobdescription = models.CharField(max_length=200)
+    #taggeddev = models.CharField(max_length=200)
+
 
     class Meta:
         db_table = "projects"
