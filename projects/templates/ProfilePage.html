@@ -79,7 +79,8 @@
                                           {% endfor %}
 
                       </tbody>
-                      </table>
+
+
 <!--profile div-->
                   <div class="container"style="margin-left: 20px ">
                       <div class="row" style="margin-top: 10px;position: center" >
@@ -128,11 +129,33 @@
                       </div>
                   </div>
               </div>
+                  <table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Jobtitle</th>
+								<th class="column2">Jobtype</th>
+								<th class="column3">Payment Type</th>
+								<th class="column4">Job Description</th>
+                                <th class="column5"></th>
+							</tr>
+						</thead>
+						<tbody>
+                                {% for i in myProjects %}
+								<tr>
+									<td class="column1" >{{i.jobtitle}}</td>
+									<td class="column2" >{{i.jobtype}}</td>
+									<td class="column3" >{{i.paymentmethod}}</td>
+									<td class="column4" >{{i.jobdescription}}</td>
+                                    <td class="column5"><a href="{% url 'projectdetails' i.id %}" class="btn">Go to Project Page</a></td>
+								</tr>
+                                {% endfor %}
+
+						</tbody>
+					</table>
           </div>
         </div>
       </div>
     </div>
-
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

@@ -43,9 +43,13 @@
                             <div class="job-items">
                                
                                 <div class="job-tittle">
+                                    <ul>
+                                        <li>Jobtitle</li>
                                         <h4>{{ Projects.jobtitle }}</h4>
+                                     </ul>
                                     <ul>
                                         <li>ClientUsername</li>
+                                        <h4>{{ Projects.createdby }}</h4>
                                         
                                     </ul>
                                 </div>
@@ -87,9 +91,8 @@
                               
                               <li>Payment Method : <span>{{ Projects.paymentmethod }}</span></li>
                               <li>Job Type : <span>{{ Projects.jobtype }}</span></li>
-                              <li>Category : <span>..</span></li>
                               <li>Subcategory :  <span>..</span></li>
-                              <li>Payment Type : <span>..</span></li>
+                              <li>Privacy : <span>{{ Projects.privacy }}</span></li>
                           </ul>
                          <div class="apply-btn2">
                             <a href="#" class="btn">Apply Now</a>

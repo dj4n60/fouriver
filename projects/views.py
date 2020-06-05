@@ -13,12 +13,15 @@ from django.template.response import TemplateResponse
 # Create your views here.
 def createproject(request):
     if request.method == 'POST':
-        if request.POST.get('jobtitle') and request.POST.get('job-type') and request.POST.get('payment-type') and request.POST.get('jobdescription'):
+        if request.POST.get('jobtitle') and request.POST.get('privacytype') and  request.POST.get('job-type') and request.POST.get('payment-type') and request.POST.get('category-type')  and  request.POST.get('jobdescription') :
             Projects = projects()
             Projects.jobtitle = request.POST.get('jobtitle')
             Projects.jobtype = request.POST.get('job-type')
             Projects.paymentmethod = request.POST.get('payment-type')
             Projects.jobdescription = request.POST.get('jobdescription')
+            Projects.category= request.POST.get('category-type')
+            Projects.privacy = request.POST.get('privacytype')
+            Projects.createdby =request.session.get("username")
             Projects.save()
 
             return render(request, 'CreateProject.html')
@@ -30,7 +33,10 @@ def createproject(request):
 def profilepage(request):  # (request,username):
     callobject = Calls()
     user1 = callobject.profilecall(request)
-    return render(request, "ProfilePage.html", {'user1': user1})
+    #showing project created by client
+    myProjects = projects.objects.filter(createdby=request.session.get("username"))
+    context = {'user1':user1 , 'myprojects':myProjects}
+    return render(request, "ProfilePage.html", context)
 
 
 
@@ -42,8 +48,14 @@ def searchproject(request):
             if  request.POST.get('projecttext'):
                 textinjob = request.POST.get('projecttext')
                 mainCategory = request.POST.get('projectcategory')
-                Projects = projects.objects.filter( Q(jobtitle__exact=textinjob) | Q(jobdescription__exact=textinjob) | Q(jobtype__icontains=mainCategory)  )
-                return render(request, 'ProjectListing.html',{'Projects':Projects}) # contains the text
+                criterion1 = Q(jobtitle__exact=textinjob)
+                criterion2 = Q(jobtype__icontains=mainCategory)
+                if request.session.get('username'):
+                    allProjects = projects.objects.filter(criterion1 | criterion2 )
+                    return render(request, 'ProjectListing.html', {'Projects': allProjects})  # contains the text
+                else:
+                    publicProjects = projects.objects.filter(Q(privacy="Public") & criterion1)
+                    return render(request, 'ProjectListing.html', {'Projects': publicProjects})  # contains the text
             else:
                 arguments['mnm'] = "! Place at least one keyword !"
                 return render(request, 'MainPage.html', arguments)
@@ -69,8 +81,14 @@ def searchproject(request):
     #Projects = projects.objects.filter(jobtitle=jobtitle)
     #context = {'Projects':Projects}
     else:
-        allprojects = projects.objects.all()[:4]
-        return render(request, 'MainPage.html', {'allprojects': allprojects})
+        if request.session.get('username'):
+            allprojects = projects.objects.all()[:4]
+            return render(request, 'MainPage.html', {'allprojects': allprojects})
+        else:
+            # showing only public projects
+            publicprojects = projects.objects.filter(privacy="Public")[:4]
+            return render(request, 'MainPage.html', {'allprojects': publicprojects})
+
 
 
 #projectlisting
