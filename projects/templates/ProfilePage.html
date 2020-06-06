@@ -56,29 +56,7 @@
               <div class="ftco-search">
                   <div class="row">
                       <div class="col-md-12 nav-link-wrap">
-                        <table style="background-color:grey;width:100%;border-radius:20px;align-content: center;position: relative" >
-                      <thead>
-                        <h1> Recommendation </h1>
-                        <tr class="table100-head">
-                          <th class="column5" width="5%"></th>
-                          <th class="column2" width="5%"> Title    </th>
-                          <th class="column3" width="5%"> Job Type</th>
-                          <th class="column4" width="5%"> Payment Type</th>
-                          <th class="column5" width="5%"> Job Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                                          {% for i in taggedprojects %}
-                          <tr>
-                            <td class="column1"><a href="{% url 'projectdetails' i.id %}">Go to Project Page</a></td>
-                            <td class="column2" >{{i.jobtitle}}</td>
-                            <td class="column3" >{{i.jobtype}}</td>
-                            <td class="column4" >{{i.paymentmethod}}</td>
-                            <td class="column5" >{{i.jobdescription}}</td>
-                          </tr>
-                                          {% endfor %}
 
-                      </tbody>
 
 
 <!--profile div-->
@@ -129,29 +107,6 @@
                       </div>
                   </div>
               </div>
-                  <table>
-						<thead>
-							<tr class="table100-head">
-								<th class="column1">Jobtitle</th>
-								<th class="column2">Jobtype</th>
-								<th class="column3">Payment Type</th>
-								<th class="column4">Job Description</th>
-                                <th class="column5"></th>
-							</tr>
-						</thead>
-						<tbody>
-                                {% for i in myProjects %}
-								<tr>
-									<td class="column1" >{{i.jobtitle}}</td>
-									<td class="column2" >{{i.jobtype}}</td>
-									<td class="column3" >{{i.paymentmethod}}</td>
-									<td class="column4" >{{i.jobdescription}}</td>
-                                    <td class="column5"><a href="{% url 'projectdetails' i.id %}" class="btn">Go to Project Page</a></td>
-								</tr>
-                                {% endfor %}
-
-						</tbody>
-					</table>
           </div>
         </div>
       </div>

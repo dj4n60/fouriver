@@ -11,7 +11,7 @@ class Calls():
 
     def profilecall(self,request):
         user1 = appusers()
-        result = appusers.objects.filter(username=request.session.get("username") )
+        result = appusers.objects.filter(username=request.session.get("username"))
 
         user1.username = result.values_list('fullname', flat=True)[0]
         user1.location = result.values_list('location', flat=True)[0]  #result.location

@@ -24,7 +24,7 @@ def createproject(request):
             Projects.createdby =request.session.get("username")
             Projects.save()
 
-            return render(request, 'CreateProject.html')
+            return redirect('/')
     else:
         return render(request, 'CreateProject.html')
 
@@ -34,8 +34,8 @@ def profilepage(request):  # (request,username):
     callobject = Calls()
     user1 = callobject.profilecall(request)
     #showing project created by client
-    myProjects = projects.objects.filter(createdby=request.session.get("username"))
-    context = {'user1':user1 , 'myprojects':myProjects}
+    #myProjects = projects.objects.filter(createdby=request.session.get("username"))
+    context = {'user1':user1 }
     return render(request, "ProfilePage.html", context)
 
 
@@ -106,3 +106,18 @@ def projectdetails(request,pk):
     Projects= projects.objects.get(id=pk)
     context = {'Projects':Projects}
     return render(request, 'ProjectPage.html',context)
+
+
+def myprojects(request):
+    if request.session.get('username'):
+        #check if client or developer
+        if request.session['idiotita'] == 'client':
+            myProjects = projects.objects.filter(createdby=request.session.get("username"))
+            return render(request, 'MyProjects.html', {'myProjects': myProjects})
+        else:
+            return HttpResponse("You are not a client")
+    else:
+        return HttpResponse("You are not logged in")
+
+
+
