@@ -32,6 +32,20 @@ def profilepage(request):  # (request,username):
     user1 = callobject.profilecall(request)
     return render(request, "ProfilePage.html", {'user1': user1})
 
+def editprofiledev(request):
+    return render(request, "EditProfileDev.html")
+
+
+def editprofilecus(request):
+    return render(request, "EditProfileCustomer.html")
+
+
+#
+#def editprofile(request):
+#   if request.get.session('idiotita') == 'developer':
+#       return render(request, "EditProfileDev.html")
+#   if request.get.session('idiotita') == 'customer':
+#       return render(request, "EditProfileCustomer.html")
 
 
 def searchproject(request):
