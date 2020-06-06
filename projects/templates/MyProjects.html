@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+	<title>ProjectListing</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'assets-ProjectListing/images/icons/favicon.ico' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'assets-ProjectListing/css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+                    <a href="{% url 'createproject' %}" class="btn" >Create New Project</a>
+					<table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Jobtitle</th>
+								<th class="column2">Jobtype</th>
+								<th class="column3">Payment Type</th>
+								<th class="column4">Job Description</th>
+                                <th class="column5"></th>
+							</tr>
+						</thead>
+						<tbody>
+                                {% for i in myProjects %}
+								<tr>
+									<td class="column1" >{{i.jobtitle}}</td>
+									<td class="column2" >{{i.jobtype}}</td>
+									<td class="column3" >{{i.paymentmethod}}</td>
+									<td class="column4" >{{i.jobdescription}}</td>
+                                    <td class="column5"><a href="{% url 'projectdetails' i.id %}" class="btn">Go to Project Page</a></td>
+								</tr>
+                                {% endfor %}
+
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+<!--===============================================================================================-->
+	<script src="{% static 'assets-ProjectListing/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'assets-ProjectListing/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'assets-ProjectListing/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'assets-ProjectListing/vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'assets-ProjectListing/js/main.js' %}"></script>
+
+</body>
