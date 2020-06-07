@@ -17,7 +17,7 @@ class projects(models.Model):
 
 class user():
     fullname = models.CharField(max_length=100)
-    username = models.CharField(max_length=20,primary_key=True)
+    username = models.CharField(max_length=20, primary_key=True)
     location = models.CharField(max_length=20)
     birthday = models.CharField(max_length=20)
     gmail = models.CharField(max_length=20)
@@ -28,3 +28,25 @@ class user():
 
     def __str__(self):
         return self.jobtitle
+
+
+class devinfo(models.Model):
+    username = models.CharField(max_length=20, primary_key=True)
+    location = models.CharField(max_length=20)
+    language= models.CharField(max_length=20)
+    github = models.CharField(max_length=20)
+    cv= models.CharField(max_length=20)
+    profilepic = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = "devinfo"
+
+class customerinfo(models.Model):
+    username = models.CharField(max_length=20, primary_key=True)
+    location = models.CharField(max_length=20)
+    disc = models.CharField(max_length=20)
+    linkedin = models.CharField(max_length=20)
+    profilepic = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = "customerinfo"

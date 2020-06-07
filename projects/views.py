@@ -1,12 +1,12 @@
 from .Calls import Calls
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
-from .models import projects
+from .models import projects, devinfo, customerinfo
 from .models import user
 from django.template.response import TemplateResponse
 
@@ -100,5 +100,48 @@ def searchproject(request):
 def projectdetails(request,pk):
     #pk is called in the url path
     Projects= projects.objects.get(id=pk)
-    context = {'Projects':Projects}
+    context = {'Projects': Projects}
     return render(request, 'ProjectPage.html',context)
+
+
+def editdevs(request):
+    if request.method == 'POST':
+        location = request.POST.get('city')
+        language = request.POST.get('language')
+        cv = request.POST.get('cv')
+        github = request.POST.get('github')
+        profile_pic = request.POST.get('profile_pic')
+        try:
+            userinfo =devinfo.objects.filter(username=request.session.get('username'), location=location, language=language, cv=cv, github=github, profile_pic=profile_pic)
+            arguments = {}
+            arguments['mnm'] = "all done"
+            return redirect('projects/ProfilePage.html', arguments)
+        except IntegrityError as e:
+            arguments = {}
+            arguments['mnm'] = "sth went wrong"
+            return TemplateResponse(request, 'projects/EditProfileDev.html', arguments)
+    else:
+        arguments = {}
+        arguments['mnm'] = ""
+        return TemplateResponse(request, 'projects/EditProfileDev.html', arguments)
+
+
+def editcus(request):
+    if request.method == 'POST':
+        location = request.POST.get('city')
+        disc = request.POST.get('disc')
+        linkedin = request.POST.get('linkedin')
+        profile_pic = request.POST.get('profile_pic')
+        try:
+            userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location, disc=disc, linkedin=linkedin, profile_pic=profile_pic )
+            arguments = {}
+            arguments['mnm'] = "all done"
+            return redirect('projects/ProfilePage.html', arguments)
+        except IntegrityError as e:
+            arguments = {}
+            arguments['mnm'] = "sth went wrong"
+            return TemplateResponse(request, 'projects/EditProfileCustomer.html', arguments)
+    else:
+        arguments = {}
+        arguments['mnm'] = ""
+        return TemplateResponse(request, 'projects/EditProfileCustomer.html', arguments)
