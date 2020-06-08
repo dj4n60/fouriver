@@ -1,5 +1,5 @@
 from django.db import models
-
+from auth.models import appusers
 # Create your models here.
 
 
@@ -33,3 +33,11 @@ class user():
 
     def __str__(self):
         return self.jobtitle
+
+
+
+class offers(models.Model):
+    developername = models.ForeignKey(appusers,null=True,on_delete=models.SET_NULL)
+    projectid = models.ForeignKey(projects,null=True,on_delete=models.SET_NULL)
+    date_created = models.DateTimeField(auto_now_add=True,null=True)
+    money = models.IntegerField()

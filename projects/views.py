@@ -1,6 +1,6 @@
 from .Calls import Calls
 from django.shortcuts import render
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Q
@@ -118,6 +118,23 @@ def myprojects(request):
             return HttpResponse("You are not a client")
     else:
         return HttpResponse("You are not logged in")
+
+def apply(request,pk):
+    #check if client or developer
+    #if request.session.get('username'):
+        #if request.session['idiotita'] == 'developer':
+    #if request.method == 'POST':
+        #if request.POST.get('project_id') and request.POST.get('money'):
+            #Offers=offers()
+            #Offers.projectid = request.POST.get('project_id')
+            #Offers.developername = request.session.get("username")
+            #Offers.money = request.POST.get('money')
+
+            #Offers.save()
+            #return redirect('/')
+    Projects = projects.objects.get(id=pk)
+    context = {'Projects': Projects}
+    return render(request, 'ApplyPage.html', context)
 
 
 
