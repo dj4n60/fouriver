@@ -73,7 +73,7 @@ def searchproject(request):
             if request.session.get('username'):
                 callobject = Calls()
                 user1 = callobject.profilecall(request)
-                return render(request, "ProfilePage.html", {'user1': user1} )
+                return render(request, "ProfilePage.html", {'user1': user1})
             else:
                 arguments['mnm'] = "! You have to log in to see your profile click the register buttom !"
                 return render(request, 'MainPage.html', arguments)

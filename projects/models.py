@@ -33,9 +33,9 @@ class user():
 class devinfo(models.Model):
     username = models.CharField(max_length=20, primary_key=True)
     location = models.CharField(max_length=20)
-    language= models.CharField(max_length=20)
+    language = models.CharField(max_length=20)
     github = models.CharField(max_length=20)
-    cv= models.CharField(max_length=20)
+    cv = models.CharField(max_length=20)
     profilepic = models.CharField(max_length=20)
 
     class Meta:
