@@ -1,7 +1,7 @@
 from django.urls import path
 
 
-from .views import createproject, searchproject,  profilepage, projectdetails, editprofiledev, editprofilecus
+from .views import createproject, searchproject,  profilepage, projectdetails, editprofile, editdevs, editcus
 
 urlpatterns = [
     path('createproject', createproject),
@@ -11,6 +11,7 @@ urlpatterns = [
     path('createproject', createproject, name="createproject"),
     path('searchproject', searchproject),
     path('projectdetails/<str:pk>/', projectdetails, name="projectdetails"),
-    path('editprofiledev', editprofiledev), # change path when edit profile htmls are finished
-    path('editprofilecus', editprofilecus)
+    path('editprofilepage', editprofile),
+    path('editprofiledev', editdevs),# change path when edit profile htmls are finished
+    path('editprofilecus', editcus)
 ]

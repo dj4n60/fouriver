@@ -12,20 +12,24 @@ class Calls():
     def profilecall(self,request):
         user1 = appusers()
         result = appusers.objects.filter(username=request.session.get("username"))
-        if request.session.get('idiotita') == 'dev':
+
+
+        if request.session.get('idiotita') == 'dev' :
             result1 = devinfo.objects.filter(usenrame=request.session.get("username"))
+
             user1.info1 = result1.values_list('github', flat=True)[0]
             user1.info2 = result1.values_list('cv', flat=True)[0]
             user1.info3 = result1.values_list('language', flat=True)[0]
-            user1.profile_pic = result1.values_list('profile_pic', flat=True)[0]
+            user1.profile_pic =' test'# result1.values_list('profile_pic', flat=True)[0]
             user1.location2 = result1.values_list('location', flat=True)[0]
         else:
-            result1 = customerinfo.objects.filter(username=request.session.get("username"))
-            user1.info1 = result1.values_list('linkedin', flat=True)[0]
-            user1.info2 = result1.values_list('disc', flat=True)[0]
+            result2 = customerinfo.objects.filter(username=request.session.get("username"))
+
+            user1.info1 = result2.values_list('linkedin', flat=True)[0]
+            user1.info2 = result2.values_list('disc', flat=True)
             user1.info3 = " "
-            user1.profile_pic =result1.values_list('profile_pic', flat=True)[0]
-            user1.location2 = result1.values_list('location', flat=True)[0]
+            user1.profile_pic = 'test'# result2.values_list('profile_pic', flat=True)
+            user1.location2 = result2.values_list('location', flat=True)
 
         user1.username = result.values_list('fullname', flat=True)[0]
         user1.location = result.values_list('location', flat=True)[0]  #result.location

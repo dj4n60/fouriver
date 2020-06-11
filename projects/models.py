@@ -36,7 +36,7 @@ class devinfo(models.Model):
     language = models.CharField(max_length=20)
     github = models.CharField(max_length=20)
     cv = models.CharField(max_length=20)
-    profilepic = models.CharField(max_length=20)
+    profilepic = models.ImageField(upload_to='static/images/profile_pics/', height_field=500, width_field=500, max_length=100)
 
     class Meta:
         db_table = "devinfo"
@@ -46,7 +46,7 @@ class customerinfo(models.Model):
     location = models.CharField(max_length=20)
     disc = models.CharField(max_length=20)
     linkedin = models.CharField(max_length=20)
-    profilepic = models.CharField(max_length=20)
+    profile_pic = models.ImageField(upload_to='static/images/profile_pics/', height_field=500, width_field=500, max_length=100)
 
     class Meta:
         db_table = "customerinfo"

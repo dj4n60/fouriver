@@ -32,21 +32,57 @@ def profilepage(request):  # (request,username):
     user1 = callobject.profilecall(request)
     return render(request, "ProfilePage.html", {'user1': user1})
 
-def editprofiledev(request):
-    return render(request, "EditProfileDev.html")
 
+def editprofile(request):
+   if request.session.get('idiotita') == 'developer':
+       if request.method == 'POST':
+           location = request.POST.get('city')
+           language = request.POST.get('language')
+           cv = request.POST.get('cv')
+           github = request.POST.get('github')
+           profile_pic = request.POST.get('profile_pic')
 
-def editprofilecus(request):
-    return render(request, "EditProfileCustomer.html")
+           try:
+               userinfo = devinfo.objects.filter(username=request.session.get('username'), location=location,
+                                                 language=language, cv=cv, github=github, profile_pic=profile_pic, )
+               arguments = {}
+               arguments['mnm'] = "all done"
+               return redirect('ProfilePage.html', arguments)
+           except IntegrityError as e:
+               arguments = {}
+               arguments['mnm'] = "sth went wrong"
+               return TemplateResponse(request, 'EditProfileDev.html', arguments)
+       else:
+           arguments = {}
+           arguments['mnm'] = ""
+           return TemplateResponse(request, 'EditProfileDev.html', arguments)
+       return render(request, "EditProfileDev.html")
+   if request.session.get('idiotita') == 'customer':
+       if request.method == 'POST':
+           location = request.POST.get('city')
+           disc = request.POST.get('disc')
+           linkedin = request.POST.get('linkedin')
+           profile_pic = request.POST.get('profile_pic')
 
-
-#
-#def editprofile(request):
-#   if request.get.session('idiotita') == 'developer':
-#       return render(request, "EditProfileDev.html")
-#   if request.get.session('idiotita') == 'customer':
-#       return render(request, "EditProfileCustomer.html")
-
+           try:
+               userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location,
+                                                      disc=disc, linkedin=linkedin, profile_pic=profile_pic, )
+               arguments = {}
+               arguments['mnm'] = "all done"
+               return redirect('http://127.0.0.1:8000/profilepage', arguments)
+           except IntegrityError as e:
+               arguments = {}
+               arguments['mnm'] = "sth went wrong"
+               return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
+       else:
+           arguments = {}
+           arguments['mnm'] = "hola"
+           return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
+       return render(request, "EditProfileCustomer.html")
+   else:
+       arguments = {}
+       arguments['mnm'] = "cant show you the edit profile page"
+       return TemplateResponse(request,'ProfilePage.html', arguments)
 
 def searchproject(request):
     arguments = {}
@@ -66,7 +102,7 @@ def searchproject(request):
             if request.POST.get('username'):
                 user = request.POST.get('username')
                 cat = request.POST.get('usertype')
-                return render(request, 'ProjectListing.html',{'Projects':Projects})
+                return render(request, 'ProjectListing.html',{'Projects': Projects})
             else:
                 return render(request, 'MainPage.html', {'mnm': mnm})
         elif "profile" in request.POST:
@@ -103,7 +139,7 @@ def projectdetails(request,pk):
     context = {'Projects': Projects}
     return render(request, 'ProjectPage.html',context)
 
-
+# editdevs and editcus will be deleted at the end
 def editdevs(request):
     if request.method == 'POST':
         location = request.POST.get('city')
@@ -111,19 +147,20 @@ def editdevs(request):
         cv = request.POST.get('cv')
         github = request.POST.get('github')
         profile_pic = request.POST.get('profile_pic')
+
         try:
-            userinfo =devinfo.objects.filter(username=request.session.get('username'), location=location, language=language, cv=cv, github=github, profile_pic=profile_pic)
+            userinfo = devinfo.objects.filter(username=request.session.get('username'), location=location, language=language, cv=cv, github=github, profile_pic=profile_pic,)
             arguments = {}
             arguments['mnm'] = "all done"
-            return redirect('projects/ProfilePage.html', arguments)
+            return redirect('ProfilePage.html', arguments)
         except IntegrityError as e:
             arguments = {}
             arguments['mnm'] = "sth went wrong"
-            return TemplateResponse(request, 'projects/EditProfileDev.html', arguments)
+            return TemplateResponse(request, 'EditProfileDev.html', arguments)
     else:
         arguments = {}
         arguments['mnm'] = ""
-        return TemplateResponse(request, 'projects/EditProfileDev.html', arguments)
+        return TemplateResponse(request, 'EditProfileDev.html', arguments)
 
 
 def editcus(request):
@@ -132,16 +169,17 @@ def editcus(request):
         disc = request.POST.get('disc')
         linkedin = request.POST.get('linkedin')
         profile_pic = request.POST.get('profile_pic')
+
         try:
-            userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location, disc=disc, linkedin=linkedin, profile_pic=profile_pic )
+            userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location, disc=disc, linkedin=linkedin, profile_pic=profile_pic, )
             arguments = {}
             arguments['mnm'] = "all done"
-            return redirect('projects/ProfilePage.html', arguments)
+            return redirect('http://127.0.0.1:8000/profilepage', arguments)
         except IntegrityError as e:
             arguments = {}
             arguments['mnm'] = "sth went wrong"
-            return TemplateResponse(request, 'projects/EditProfileCustomer.html', arguments)
+            return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
     else:
         arguments = {}
-        arguments['mnm'] = ""
-        return TemplateResponse(request, 'projects/EditProfileCustomer.html', arguments)
+        arguments['mnm'] = "hola"
+        return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
