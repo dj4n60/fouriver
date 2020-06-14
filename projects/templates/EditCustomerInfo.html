@@ -14,10 +14,23 @@
 <body>
 
 <div class="hero-image js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %}); background-position: center;background-repeat: no-repeat;background-size: cover;text-align: center;" ><!-- rewove border-->
+    <div class="content container">
+        <div class="row">
+            {% block content  %}
+                <form method="POST"> {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Save"/>
+                </form>
+            {% endblock %}
+        </div>
+    </div>
+
+
 
 </div>
 
 
-</div>
+
+
 </body>
 </html>

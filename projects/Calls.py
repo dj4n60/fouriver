@@ -1,5 +1,5 @@
 from auth.models import appusers
-from .models import user, devinfo, customerinfo
+from .models import user, developerinfo, customerinfo
 
 class Calls():
 
@@ -15,17 +15,17 @@ class Calls():
 
 
         if request.session.get('idiotita') == 'dev' :
-            result1 = devinfo.objects.filter(usenrame=request.session.get("username"))
+            result1 = developerinfo.objects.filter(usenrame=request.session.get("username"))
 
-            user1.info1 = result1.values_list('github', flat=True)[0]
+            user1.info1 = result1.values_list('github', flat=True)
             user1.info2 = result1.values_list('cv', flat=True)[0]
-            user1.info3 = result1.values_list('language', flat=True)[0]
+            user1.info3 = result1.values_list('language', flat=True)
             user1.profile_pic =' test'# result1.values_list('profile_pic', flat=True)[0]
-            user1.location2 = result1.values_list('location', flat=True)[0]
+            user1.location2 = result1.values_list('location', flat=True)
         else:
             result2 = customerinfo.objects.filter(username=request.session.get("username"))
 
-            user1.info1 = result2.values_list('linkedin', flat=True)[0]
+            user1.info1 = result2.values_list('linkedin', flat=True)
             user1.info2 = result2.values_list('disc', flat=True)
             user1.info3 = " "
             user1.profile_pic = 'test'# result2.values_list('profile_pic', flat=True)

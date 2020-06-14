@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 # Create your models here.
 
@@ -30,23 +31,25 @@ class user():
         return self.jobtitle
 
 
-class devinfo(models.Model):
+class developerinfo(models.Model):
     username = models.CharField(max_length=20, primary_key=True)
-    location = models.CharField(max_length=20)
-    language = models.CharField(max_length=20)
-    github = models.CharField(max_length=20)
-    cv = models.CharField(max_length=20)
-    profilepic = models.ImageField(upload_to='static/images/profile_pics/', height_field=500, width_field=500, max_length=100)
+    location = models.CharField(max_length=22)
+    language = models.CharField(max_length=22)
+    github = models.CharField(max_length=50)
+    cv = models.CharField(max_length=50)
+    profile_pic = models.ImageField(upload_to='static/images/profile_pics/', height_field=500, width_field=500, max_length=100)
 
     class Meta:
         db_table = "devinfo"
 
+
 class customerinfo(models.Model):
     username = models.CharField(max_length=20, primary_key=True)
-    location = models.CharField(max_length=20)
-    disc = models.CharField(max_length=20)
-    linkedin = models.CharField(max_length=20)
+    location = models.CharField(max_length=22, )
+    disc = models.CharField(max_length=150, )
+    linkedin = models.CharField(max_length=50, )
     profile_pic = models.ImageField(upload_to='static/images/profile_pics/', height_field=500, width_field=500, max_length=100)
 
     class Meta:
         db_table = "customerinfo"
+

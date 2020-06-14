@@ -6,9 +6,11 @@ from django.template import loader
 from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
-from .models import projects, devinfo, customerinfo
+from .models import projects, developerinfo, customerinfo
 from .models import user
 from django.template.response import TemplateResponse
+from django import forms
+from .forms import EditDeveloperForm, EditCustomerForm
 
 # Create your views here.
 def createproject(request):
@@ -33,56 +35,7 @@ def profilepage(request):  # (request,username):
     return render(request, "ProfilePage.html", {'user1': user1})
 
 
-def editprofile(request):
-   if request.session.get('idiotita') == 'developer':
-       if request.method == 'POST':
-           location = request.POST.get('city')
-           language = request.POST.get('language')
-           cv = request.POST.get('cv')
-           github = request.POST.get('github')
-           profile_pic = request.POST.get('profile_pic')
 
-           try:
-               userinfo = devinfo.objects.filter(username=request.session.get('username'), location=location,
-                                                 language=language, cv=cv, github=github, profile_pic=profile_pic, )
-               arguments = {}
-               arguments['mnm'] = "all done"
-               return redirect('ProfilePage.html', arguments)
-           except IntegrityError as e:
-               arguments = {}
-               arguments['mnm'] = "sth went wrong"
-               return TemplateResponse(request, 'EditProfileDev.html', arguments)
-       else:
-           arguments = {}
-           arguments['mnm'] = ""
-           return TemplateResponse(request, 'EditProfileDev.html', arguments)
-       return render(request, "EditProfileDev.html")
-   if request.session.get('idiotita') == 'customer':
-       if request.method == 'POST':
-           location = request.POST.get('city')
-           disc = request.POST.get('disc')
-           linkedin = request.POST.get('linkedin')
-           profile_pic = request.POST.get('profile_pic')
-
-           try:
-               userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location,
-                                                      disc=disc, linkedin=linkedin, profile_pic=profile_pic, )
-               arguments = {}
-               arguments['mnm'] = "all done"
-               return redirect('http://127.0.0.1:8000/profilepage', arguments)
-           except IntegrityError as e:
-               arguments = {}
-               arguments['mnm'] = "sth went wrong"
-               return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
-       else:
-           arguments = {}
-           arguments['mnm'] = "hola"
-           return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
-       return render(request, "EditProfileCustomer.html")
-   else:
-       arguments = {}
-       arguments['mnm'] = "cant show you the edit profile page"
-       return TemplateResponse(request,'ProfilePage.html', arguments)
 
 def searchproject(request):
     arguments = {}
@@ -139,47 +92,71 @@ def projectdetails(request,pk):
     context = {'Projects': Projects}
     return render(request, 'ProjectPage.html',context)
 
-# editdevs and editcus will be deleted at the end
-def editdevs(request):
-    if request.method == 'POST':
-        location = request.POST.get('city')
-        language = request.POST.get('language')
-        cv = request.POST.get('cv')
-        github = request.POST.get('github')
-        profile_pic = request.POST.get('profile_pic')
 
-        try:
-            userinfo = devinfo.objects.filter(username=request.session.get('username'), location=location, language=language, cv=cv, github=github, profile_pic=profile_pic,)
-            arguments = {}
-            arguments['mnm'] = "all done"
-            return redirect('ProfilePage.html', arguments)
-        except IntegrityError as e:
-            arguments = {}
-            arguments['mnm'] = "sth went wrong"
-            return TemplateResponse(request, 'EditProfileDev.html', arguments)
-    else:
-        arguments = {}
-        arguments['mnm'] = ""
-        return TemplateResponse(request, 'EditProfileDev.html', arguments)
+# new code for new edit forms
 
 
-def editcus(request):
-    if request.method == 'POST':
-        location = request.POST.get('city')
-        disc = request.POST.get('disc')
-        linkedin = request.POST.get('linkedin')
-        profile_pic = request.POST.get('profile_pic')
+def edit_profile_info(request):
+    if request.session.get('idiotita') == 'developer':
+        form = EditDeveloperForm(request.POST, request.FILES or None)
+        context = {
+            'form': form
+        }
+        if request.method == "POST":
+            if form.is_valid():
+                cd = form.cleaned_data
+                username = request.session.get('username')
+                location = cd['location']
+                language = cd['language']
+                github = cd['github']
+                cv = cd['cv']
+                profile_pic = cd['profile_pic']
 
-        try:
-            userinfo = customerinfo.objects.filter(username=request.session.get('username'), location=location, disc=disc, linkedin=linkedin, profile_pic=profile_pic, )
-            arguments = {}
-            arguments['mnm'] = "all done"
-            return redirect('http://127.0.0.1:8000/profilepage', arguments)
-        except IntegrityError as e:
-            arguments = {}
-            arguments['mnm'] = "sth went wrong"
-            return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
-    else:
-        arguments = {}
-        arguments['mnm'] = "hola"
-        return TemplateResponse(request, 'EditProfileCustomer.html', arguments)
+                try:
+                    userinfo = developerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        language=language,
+                        github=github,
+                        cv=cv,
+                        profile_pic=profile_pic,
+                    )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect('http://127.0.0.1:8000/profilepage', arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                    return TemplateResponse(request, 'EditDeveloperInfo.html', arguments)
+
+        return render(request, 'EditDeveloperInfo.html', context)
+    if request.session.get('idiotita') == 'customer':
+        form = EditCustomerForm(request.POST, request.FILES or None)
+        context = {
+            'form': form
+        }
+        if request.method == "POST":
+            if form.is_valid():
+                cd = form.cleaned_data
+                username = request.session.get('username')
+                location = cd['location']
+                disc = cd['disc']
+                linkedin = cd['linkedin']
+                profile_pic = cd['profile_pic']
+
+                try:
+                    userinfo = customerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        disc=disc,
+                        linkedin=linkedin,
+                        profile_pic=profile_pic, )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect('http://127.0.0.1:8000/profilepage', arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
+
+    return render(request, 'EditCustomerInfo.html', context)
