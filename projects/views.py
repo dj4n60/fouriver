@@ -1,3 +1,5 @@
+from django.core.files.uploadhandler import FileUploadHandler
+
 from .Calls import Calls
 from django.shortcuts import render, redirect
 from django.shortcuts import render
@@ -35,18 +37,16 @@ def profilepage(request):  # (request,username):
     return render(request, "ProfilePage.html", {'user1': user1})
 
 
-
-
 def searchproject(request):
     arguments = {}
     arguments['mnm'] = ''
     if request.method == 'POST':
         if "SearchP" in request.POST:
-            if  request.POST.get('projecttext'):
+            if request.POST.get('projecttext'):
                 textinjob = request.POST.get('projecttext')
                 mainCategory = request.POST.get('projectcategory')
                 Projects = projects.objects.filter( Q(jobtitle__exact=textinjob) | Q(jobdescription__exact=textinjob) | Q(jobtype__icontains=mainCategory)  )
-                return render(request, 'ProjectListing.html',{'Projects':Projects}) # contains the text
+                return render(request, 'ProjectListing.html', {'Projects': Projects})# contains the text
             else:
                 arguments['mnm'] = "! Place at least one keyword !"
                 return render(request, 'MainPage.html', arguments)
@@ -106,12 +106,13 @@ def edit_profile_info(request):
             if form.is_valid():
                 cd = form.cleaned_data
                 username = request.session.get('username')
-                location = cd['location']
-                language = cd['language']
-                github = cd['github']
-                cv = cd['cv']
-                profile_pic = cd['profile_pic']
-
+                location = request.POST.get('location')
+                language = request.POST.get('language')
+                github = request.POST.get('github')
+                cv = request.POST.get('cv')
+                profile_pic = request.POST.get('profile_pic')
+                new = form.save()
+                new.profile_pic = request.FILES.get('profile_pic')
                 try:
                     userinfo = developerinfo.objects.create(
                         username=request.session.get('username'),
@@ -123,7 +124,7 @@ def edit_profile_info(request):
                     )
                     arguments = {}
                     arguments['mnm'] = "all done"
-                    return redirect('http://127.0.0.1:8000/profilepage', arguments)
+                    return redirect(profilepage, arguments)
                 except IntegrityError as e:
                     arguments = {}
                     arguments['mnm'] = "sth went wrong"
@@ -143,17 +144,19 @@ def edit_profile_info(request):
                 disc = cd['disc']
                 linkedin = cd['linkedin']
                 profile_pic = cd['profile_pic']
-
+                newfile = FileUploadHandler(title=username, file=request.FILES['profile_pic'])
+                newfile.save()
                 try:
                     userinfo = customerinfo.objects.create(
                         username=request.session.get('username'),
                         location=location,
                         disc=disc,
                         linkedin=linkedin,
-                        profile_pic=profile_pic, )
+                        profile_pic=profile_pic,
+                         )
                     arguments = {}
                     arguments['mnm'] = "all done"
-                    return redirect('http://127.0.0.1:8000/profilepage', arguments)
+                    return redirect(profilepage, arguments)
                 except IntegrityError as e:
                     arguments = {}
                     arguments['mnm'] = "sth went wrong"
