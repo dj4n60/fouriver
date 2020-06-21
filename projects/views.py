@@ -25,7 +25,7 @@ def createproject(request):
             Projects.createdby =request.session.get("username")
             Projects.save()
 
-            return redirect('/')
+            return redirect('')
     else:
         return render(request, 'CreateProject.html')
 
