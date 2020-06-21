@@ -37,7 +37,14 @@ class user():
 
 
 class offers(models.Model):
-    developername = models.ForeignKey(appusers,null=True,on_delete=models.SET_NULL)
-    projectid = models.ForeignKey(projects,null=True,on_delete=models.SET_NULL)
+    developername = models.CharField(max_length=100,null=True)
+    projectid = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     money = models.IntegerField()
+
+    class Meta:
+        db_table = "offers"
+
+#class reccomends(models.Model)
+    #developername
+    #projectid

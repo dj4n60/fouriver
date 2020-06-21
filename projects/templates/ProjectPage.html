@@ -23,6 +23,7 @@
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/slick.css' %}">
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/style.css' %}">
+            <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/main.css' %}">
    </head>
 
    <body>
@@ -68,6 +69,29 @@
 
 
                         </div>
+                        {% for i in Offers %}
+                        <table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Developer Name</th>
+								<th class="column2">Date</th>
+								<th class="column3">Offer</th>
+                                <th class="column4"></th>
+							</tr>
+						</thead>
+						<tbody>
+
+								<tr>
+									<td class="column1" >{{i.developername}}</td>
+									<td class="column2" >{{i.date_created}}</td>
+									<td class="column3" >{{i.money}}</td>
+                                    <td class="column4"><a class="button" >Accept Offer</a></td>
+								</tr>
+
+
+						</tbody>
+                    {% endfor %}
+					</table>
 
                     </div>
                     <!-- Right Content -->
@@ -84,13 +108,15 @@
                               <li>Subcategory :  <span>{{ Projects.category }}</span></li>
                               <li>Privacy : <span>{{ Projects.privacy }}</span></li>
                           </ul>
+                            {% if request.session.username %}
                          <div class="apply-btn2">
                             <a href="{% url 'apply' Projects.id %}" class="btn">Apply Now</a>
                          </div>
                             <div class="apply-btn2">
                                 <p></p>
-                            <a href="" class="btn">Reccomend to Developer</a>
+                            <a href="{% url 'reccomend' Projects.id %}" class="btn">Reccomend to Developer</a>
                          </div>
+                            {% endif %}
                        </div>
                         
                     </div>

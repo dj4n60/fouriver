@@ -6,9 +6,10 @@ from django.template import loader
 from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
-from .models import projects
+from .models import *
 from .models import user
 from django.template.response import TemplateResponse
+
 
 # Create your views here.
 def createproject(request):
@@ -102,10 +103,17 @@ def searchproject(request):
 
 
 def projectdetails(request,pk):
+    Offers = offers.objects.filter(projectid=pk)
+    Projects = projects.objects.get(id=pk)
+    if request.session.get('username'):
+        if Projects.createdby == request.session.get('username'):
+            context = {'Projects': Projects ,'Offers' : Offers}
+            return render(request, 'ProjectPage.html', context)
+        else:
+            return render(request, 'ProjectPage.html', {'Projects': Projects})
     #pk is called in the url path
-    Projects= projects.objects.get(id=pk)
-    context = {'Projects':Projects}
-    return render(request, 'ProjectPage.html',context)
+    else:
+        return render(request, 'ProjectPage.html',{'Projects':Projects})
 
 
 def myprojects(request):
@@ -120,6 +128,35 @@ def myprojects(request):
         return HttpResponse("You are not logged in")
 
 def apply(request,pk):
+    if request.method == 'POST':
+        if request.POST.get('project_id') and request.POST.get('money'):
+            Offers = offers()
+            Offers.projectid = request.POST.get('project_id')
+            Offers.developername = request.session.get("username")
+            Offers.money = request.POST.get('money')
+
+            Offers.save()
+
+            return redirect('/')
+        else:
+            return HttpResponse("Data not saved")
+
+    #check if client or developer
+    else:
+        if request.session.get('username'):
+            if request.session['idiotita'] == 'developer':
+                Projects = projects.objects.get(id=pk)
+                context = {'Projects': Projects}
+                return render(request, 'ApplyPage.html', context)
+            else:
+                return HttpResponse("You are not a developer")
+        else:
+            return HttpResponse("You are not signed in")
+
+
+
+
+def reccomend(request,pk):
     #check if client or developer
     #if request.session.get('username'):
         #if request.session['idiotita'] == 'developer':
@@ -134,7 +171,7 @@ def apply(request,pk):
             #return redirect('/')
     Projects = projects.objects.get(id=pk)
     context = {'Projects': Projects}
-    return render(request, 'ApplyPage.html', context)
+    return render(request, 'ReccomendPage.html', context)
 
 
 

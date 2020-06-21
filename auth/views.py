@@ -29,7 +29,7 @@ def login(request):
             #test
             #if request.session:
             #   return HttpResponse( request.session['username'])
-            return render(request, 'MainPage.html')
+            return redirect('/')
 
         else:
             arguments = {}
