@@ -173,5 +173,18 @@ def reccomend(request,pk):
     context = {'Projects': Projects}
     return render(request, 'ReccomendPage.html', context)
 
-
-
+def acceptoffer(request,pk,sk):
+    #pk,sk in url path
+    if request.method == 'POST':
+        if request.POST.get('project_id') and request.POST.get('developer_name'):
+            Projects = projects.objects.get(id=pk)
+            Projects.offerby = request.POST.get('developer_name')
+            Projects.save()
+            return redirect('/')
+        else:
+            return HttpResponse("Attributes empty")
+    else:
+        Projects = projects.objects.get(id=pk)
+        Offers = offers.objects.get(id=sk)
+        context = {'Projects': Projects , 'Offers':Offers}
+        return render(request ,'AcceptOfferPage.html',context)
