@@ -40,6 +40,12 @@
                     <!-- Left Content -->
                     <div class="col-xl-7 col-lg-8">
                         <!-- job single -->
+                    {% if Projects.isCompleted != False %}
+                    <ul>
+                                        <li>Project Completed</li>
+                                        <h4>Offer has already accepted by {{ Projects.offerby }} for this project</h4>
+                                     </ul>
+                    {% endif %}
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                
@@ -69,6 +75,9 @@
 
 
                         </div>
+                    <!-- Checking if an offer is already accepted to remove apply button and other offers
+                        -->
+                        {% if Projects.isCompleted != True %}
                         {% for i in Offers %}
                         <table>
 						<thead>
@@ -91,6 +100,7 @@
 
 						</tbody>
                     {% endfor %}
+                    {% endif %}
 					</table>
 
                     </div>
@@ -108,6 +118,7 @@
                               <li>Subcategory :  <span>{{ Projects.category }}</span></li>
                               <li>Privacy : <span>{{ Projects.privacy }}</span></li>
                           </ul>
+                            {% if Projects.isCompleted != True %}
                             {% if request.session.username %}
                          <div class="apply-btn2">
                             <a href="{% url 'apply' Projects.id %}" class="btn">Apply Now</a>
@@ -117,6 +128,7 @@
                             <a href="{% url 'reccomend' Projects.id %}" class="btn">Reccomend to Developer</a>
                          </div>
                             {% endif %}
+                        {% endif %}
                        </div>
                         
                     </div>

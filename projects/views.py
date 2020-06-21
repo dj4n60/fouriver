@@ -179,6 +179,7 @@ def acceptoffer(request,pk,sk):
         if request.POST.get('project_id') and request.POST.get('developer_name'):
             Projects = projects.objects.get(id=pk)
             Projects.offerby = request.POST.get('developer_name')
+            Projects.isCompleted = True
             Projects.save()
             return redirect('/')
         else:

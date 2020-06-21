@@ -13,11 +13,15 @@ class projects(models.Model):
     tagdev = models.CharField(max_length=100,null=True)
     offerby = models.CharField(max_length=100,null=True)
     createdby = models.CharField(max_length=100,null=True)
+    isCompleted = models.BooleanField(default=False)
 
 
 
     class Meta:
         db_table = "projects"
+
+    def __str__(self):
+        return self.jobtitle
 
 
 class user():
@@ -31,8 +35,7 @@ class user():
     gitlink = models.CharField(max_length=20)
 
 
-    def __str__(self):
-        return self.jobtitle
+
 
 
 
@@ -44,6 +47,9 @@ class offers(models.Model):
 
     class Meta:
         db_table = "offers"
+
+    def __str__(self):
+        return self.developername
 
 #class reccomends(models.Model)
     #developername
