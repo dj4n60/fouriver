@@ -17,4 +17,5 @@ urlpatterns = [
     path('acceptoffer/<str:pk>/<str:sk>', acceptoffer, name="acceptoffer"),
     path('myreccomendations', myreccomendations),
 
+
 ]

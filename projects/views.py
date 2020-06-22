@@ -134,7 +134,7 @@ def apply(request,pk):
             Offers = offers()
             Offers.projectid = request.POST.get('project_id')
             Offers.developername = request.session.get("username")
-            Offers.projecttitle = request.session.get("project_title")
+            Offers.projecttitle = request.POST.get('projecttitle')
             Offers.money = request.POST.get('money')
 
             Offers.save()
@@ -188,10 +188,13 @@ def acceptoffer(request,pk,sk):
     #pk,sk in url path
     if request.method == 'POST':
         if request.POST.get('project_id') and request.POST.get('developer_name'):
+            Offers = offers.objects.get(id=sk)
             Projects = projects.objects.get(id=pk)
             Projects.offerby = request.POST.get('developer_name')
             Projects.isCompleted = True
+            Offers.isAccepted = True
             Projects.save()
+            Offers.save()
             return redirect('/')
         else:
             return HttpResponse("Attributes empty")

@@ -45,6 +45,7 @@ class offers(models.Model):
     projecttitle = models.CharField(max_length=100, null=True)
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     money = models.IntegerField()
+    isAccepted = models.BooleanField(default=False)
 
     class Meta:
         db_table = "offers"
@@ -57,6 +58,7 @@ class reccomends(models.Model):
     projectid = models.CharField(max_length=100,null=True)
     projecttitle = models.CharField(max_length=100,null=True)
     reccomendedby = models.CharField(max_length=100,null=True)
+
 
     class Meta:
         db_table = "reccomends"
