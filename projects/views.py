@@ -134,7 +134,7 @@ def apply(request,pk):
             Offers = offers()
             Offers.projectid = request.POST.get('project_id')
             Offers.developername = request.session.get("username")
-            Offers.projecttitle = request.POST.get('projecttitle')
+            Offers.projecttitle = request.POST.get('project_title')
             Offers.money = request.POST.get('money')
 
             Offers.save()
@@ -211,3 +211,12 @@ def myreccomendations(request):
         return render(request, 'MyReccomendations.html', {'myReccomendations': myReccomedations})
     else:
         return HttpResponse("You have no reccomendations yet")
+
+
+def myoffers(request):
+    Offers = offers.objects.filter(developername=request.session.get('username')).count()
+    if Offers>0 :
+        myOffers =offers.objects.filter(developername=request.session.get('username'))
+        return render(request,'MyOffers.html', {'myOffers': myOffers})
+    else:
+        return HttpResponse("You have made no offers")
