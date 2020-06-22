@@ -123,7 +123,8 @@ def myprojects(request):
             myProjects = projects.objects.filter(createdby=request.session.get("username"))
             return render(request, 'MyProjects.html', {'myProjects': myProjects})
         else:
-            return HttpResponse("You are not a client")
+            myProjects = projects.objects.filter(offerby=request.session.get("username"))
+            return render(request, 'MyProjects.html', {'myProjects': myProjects})
     else:
         return HttpResponse("You are not logged in")
 
@@ -133,6 +134,7 @@ def apply(request,pk):
             Offers = offers()
             Offers.projectid = request.POST.get('project_id')
             Offers.developername = request.session.get("username")
+            Offers.projecttitle = request.session.get("project_title")
             Offers.money = request.POST.get('money')
 
             Offers.save()
@@ -145,6 +147,9 @@ def apply(request,pk):
     else:
         if request.session.get('username'):
             if request.session['idiotita'] == 'developer':
+                #if offers.objects.get(Q(projectid=pk) & Q(developername=request.session.get('username'))):
+                    #HttpResponse("You have already submited an offer for this project")
+                #else:
                 Projects = projects.objects.get(id=pk)
                 context = {'Projects': Projects}
                 return render(request, 'ApplyPage.html', context)
@@ -157,21 +162,27 @@ def apply(request,pk):
 
 
 def reccomend(request,pk):
-    #check if client or developer
-    #if request.session.get('username'):
-        #if request.session['idiotita'] == 'developer':
-    #if request.method == 'POST':
-        #if request.POST.get('project_id') and request.POST.get('money'):
-            #Offers=offers()
-            #Offers.projectid = request.POST.get('project_id')
-            #Offers.developername = request.session.get("username")
-            #Offers.money = request.POST.get('money')
+    if request.method == 'POST':
+        if request.POST.get('project_id') and request.POST.get('project_title') and request.POST.get('developername'):
+            Reccomends=reccomends()
+            Reccomends.projectid = request.POST.get('project_id')
+            Reccomends.projecttitle = request.POST.get('project_title')
+            Reccomends.developername = request.POST.get('developername')
+            Reccomends.reccomendedby = request.session.get("username")
 
-            #Offers.save()
-            #return redirect('/')
-    Projects = projects.objects.get(id=pk)
-    context = {'Projects': Projects}
-    return render(request, 'ReccomendPage.html', context)
+            Reccomends.save()
+            return redirect('/')
+
+        else:
+            return HttpResponse("You left empty fields")
+
+    else:       #filtering users
+        Projects = projects.objects.get(id=pk)
+        Users = appusers.objects.filter(idiotita="developer")
+        context = {'Projects': Projects , 'Users': Users}
+        return render(request, 'ReccomendPage.html', context)
+
+
 
 def acceptoffer(request,pk,sk):
     #pk,sk in url path

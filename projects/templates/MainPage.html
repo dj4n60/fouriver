@@ -49,6 +49,9 @@
                 <button type="submit" form="profile" name="profile" value="Profile">Profile</button>
             </li>
                 <li class="nav-item cta mr-md-2">  <a href="http://127.0.0.1:8000/myprojects" class="nav-link">MyProjects</a> </li>
+                {% if request.session.idiotita == 'developer' %}
+                <li class="nav-item cta mr-md-2">  <a href="http://127.0.0.1:8000/myprojects" class="nav-link">MyReccomendations</a> </li>
+                    {% endif %}
 
              {% endif %}
 	          <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>

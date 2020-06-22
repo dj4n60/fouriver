@@ -42,6 +42,7 @@ class user():
 class offers(models.Model):
     developername = models.CharField(max_length=100,null=True)
     projectid = models.IntegerField()
+    projecttitle = models.CharField(max_length=100, null=True)
     date_created = models.DateTimeField(auto_now_add=True,null=True)
     money = models.IntegerField()
 
@@ -51,6 +52,15 @@ class offers(models.Model):
     def __str__(self):
         return self.developername
 
-#class reccomends(models.Model)
-    #developername
-    #projectid
+class reccomends(models.Model):
+    developername = models.CharField(max_length=100,null=True)
+    projectid = models.CharField(max_length=100,null=True)
+    projecttitle = models.CharField(max_length=100,null=True)
+    reccomendedby = models.CharField(max_length=100,null=True)
+
+    class Meta:
+        db_table = "reccomends"
+
+    def __str__(self):
+        return self.developername
+
