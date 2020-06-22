@@ -29,7 +29,7 @@ def login(request):
             #test
             #if request.session:
             #   return HttpResponse( request.session['username'])
-            return render(request, 'MainPage.html')
+            return redirect('/')
 
         else:
             arguments = {}
@@ -54,7 +54,7 @@ def register(request):
             newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
             arguments = {}
             arguments['mnm'] = "Try to login with your new account"
-            return redirect('http://127.0.0.1:8000/') # theloume success
+            return redirect('http://127.0.0.1:8000/')  # theloume success
         except IntegrityError as e:
             arguments = {}
             arguments['mnm'] = "Username already exist"

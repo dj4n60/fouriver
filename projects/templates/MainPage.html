@@ -43,15 +43,22 @@
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item cta cta-colored"> <a class="nav-link"  href="http://127.0.0.1:8000" >Home</a></li>
 
+            {% if request.session.username %}
             <li class="nav-item cta mr-md-2">
                  <form  method="post" id="profile">
                 <button type="submit" form="profile" name="profile" value="Profile">Profile</button>
             </li>
+                <li class="nav-item cta mr-md-2">  <a href="http://127.0.0.1:8000/myprojects" class="nav-link">MyProjects</a> </li>
+                {% if request.session.idiotita == 'developer' %}
+                <li class="nav-item cta mr-md-2">  <a href="http://127.0.0.1:8000/myreccomendations" class="nav-link">MyReccomendations</a> </li>
+                 <li class="nav-item cta mr-md-2">  <a href="http://127.0.0.1:8000/myoffers" class="nav-link">MyOffers</a> </li>
+                    {% endif %}
 
+             {% endif %}
 	          <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
 	          <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
-
 	        </ul>
+
 	      </div>
 	    </div>
 	  </nav>
@@ -173,7 +180,6 @@
 								<th class="column2" width="5%"> Jobtitle    </th>
 								<th class="column3" width="5%"> Jobtype</th>
 								<th class="column4" width="5%"> Payment Type</th>
-								<th class="column5" width="5%"> Job Description</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -183,7 +189,6 @@
 									<td class="column2" >{{i.jobtitle}}</td>
 									<td class="column3" >{{i.jobtype}}</td>
 									<td class="column4" >{{i.paymentmethod}}</td>
-									<td class="column5" >{{i.jobdescription}}</td>
 								</tr>
                                 {% endfor %}
 
