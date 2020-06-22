@@ -233,5 +233,5 @@ def deleteoffer(request,pk):
         myOffer.delete()
         return redirect('/')
     else:
-        myOffer = offers.objects.get(id=pk)
+        myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
