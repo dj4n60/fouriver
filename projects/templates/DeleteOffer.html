@@ -40,7 +40,7 @@
 
 
           <div class="col-md-8 ftco-animate text-center text-md-left mb-5" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Accept Offer from Developer</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Delete Offer from Developer</h1>
           </div>
 
 
@@ -57,29 +57,28 @@
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Project id</label>
-                  <input type="text" id="project_id" name="project_id" class="form-control" value="{{ Projects.id }}" readonly="readonly">
+                  <input type="text" id="project_id"  class="form-control" value="{{ myOffer.projectid }}" readonly="readonly">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Developer Name</label>
-                  <input type="text" class="form-control" id="developer_name" name="developer_name"  value="{{ Offers.developername }}" readonly="readonly">
+                  <input type="text" class="form-control"  name="developer_name"  value="{{ myOffer.projecttitle }}" readonly="readonly">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
                   <label class="font-weight-bold" for="fullname">Payment Ammount</label>
-                  <input type="text" class="form-control"  name="developer_name"  value="{{ Offers.money }}" readonly="readonly">
+                  <input type="text" class="form-control"  name="developer_name"  value="{{ myOffer.money }}" readonly="readonly">
                 </div>
               </div>
 
 
-
               <div class="row form-group">
                 <div class="col-md-12">
-                  <input type="submit" value="Accept" href=""  class="btn btn-primary  py-2 px-5">
+                  <input type="submit" value="Delete" href=""  class="btn btn-primary  py-2 px-5">
                 </div>
               </div>
 

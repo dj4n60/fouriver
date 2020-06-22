@@ -104,10 +104,11 @@ def searchproject(request):
 
 def projectdetails(request,pk):
     Offers = offers.objects.filter(projectid=pk)
+    totalOffers =offers.objects.filter(projectid=pk).count()
     Projects = projects.objects.get(id=pk)
     if request.session.get('username'):
         if Projects.createdby == request.session.get('username'):
-            context = {'Projects': Projects ,'Offers' : Offers}
+            context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
             return render(request, 'ProjectPage.html', context)
         else:
             return render(request, 'ProjectPage.html', {'Projects': Projects})
@@ -120,6 +121,7 @@ def myprojects(request):
     if request.session.get('username'):
         #check if client or developer
         if request.session['idiotita'] == 'client':
+
             myProjects = projects.objects.filter(createdby=request.session.get("username"))
             return render(request, 'MyProjects.html', {'myProjects': myProjects})
         else:
@@ -150,7 +152,8 @@ def apply(request,pk):
                     #HttpResponse("You have already submited an offer for this project")
             Offers = offers.objects.filter(Q(projectid=pk) & Q(developername=request.session.get('username'))).count()
             if Offers > 0 :
-                return HttpResponse("You have already submitted offer for this project.")
+                html = "You have already made an offer for this projects go to  " + '<a href="/myoffers">My Offers</a>' + "  to delete previous offer in order to make a new one"
+                return HttpResponse(html)
             else:
                 Projects = projects.objects.get(id=pk)
                 context = {'Projects': Projects}
@@ -213,6 +216,7 @@ def myreccomendations(request):
         return HttpResponse("You have no reccomendations yet")
 
 
+
 def myoffers(request):
     Offers = offers.objects.filter(developername=request.session.get('username')).count()
     if Offers>0 :
@@ -220,3 +224,14 @@ def myoffers(request):
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
         return HttpResponse("You have made no offers")
+
+
+def deleteoffer(request,pk):
+    if request.method == 'POST':
+        myOffer = offers.objects.get(id=pk)
+
+        myOffer.delete()
+        return redirect('/')
+    else:
+        myOffer = offers.objects.get(id=pk)
+        return render(request, 'DeleteOffer.html', {'myOffer': myOffer})

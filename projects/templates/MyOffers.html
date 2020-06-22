@@ -39,6 +39,7 @@
 								<th class="column2">Date Created</th>
 								<th class="column3">Payment Ammount</th>
 								<th class="column4"></th>
+                                <th class="column5"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,6 +49,7 @@
 									<td class="column2" >{{i.date_created}}</td>
 									<td class="column3" >{{i.money}}</td>
                                     <td class="column4"><a href="{% url 'projectdetails' i.projectid %}" class="btn">Go to Project Page</a></td>
+                                    <td class="column5"><a href="{% url 'deleteoffer' i.id %}" class="btn">Delete Offer</a></td>
 								</tr>
                                 {% endfor %}
 
