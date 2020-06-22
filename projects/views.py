@@ -150,7 +150,7 @@ def apply(request,pk):
                     #HttpResponse("You have already submited an offer for this project")
             Offers = offers.objects.filter(Q(projectid=pk) & Q(developername=request.session.get('username'))).count()
             if Offers > 0 :
-                return HttpResponse("You have already submitted offer for this project.Go to MyOffer Page to delete old offer to be able to make a new one")
+                return HttpResponse("You have already submitted offer for this project.")
             else:
                 Projects = projects.objects.get(id=pk)
                 context = {'Projects': Projects}
