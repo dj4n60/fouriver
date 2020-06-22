@@ -120,9 +120,11 @@
                           </ul>
                             {% if Projects.isCompleted != True %}
                             {% if request.session.username %}
+                             {% if request.session.idiotita == 'developer' %}
                          <div class="apply-btn2">
                             <a href="{% url 'apply' Projects.id %}" class="btn">Apply Now</a>
                          </div>
+                                 {% endif %}
                             <div class="apply-btn2">
                                 <p></p>
                             <a href="{% url 'reccomend' Projects.id %}" class="btn">Reccomend to Developer</a>
