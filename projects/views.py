@@ -25,7 +25,7 @@ def createproject(request):
             Projects.createdby =request.session.get("username")
             Projects.save()
 
-            return redirect('')
+            return redirect('/')
     else:
         return render(request, 'CreateProject.html')
 
@@ -145,18 +145,18 @@ def apply(request,pk):
 
     #check if client or developer
     else:
-        if request.session.get('username'):
-            if request.session['idiotita'] == 'developer':
+        if request.session['idiotita'] == 'developer':
                 #if offers.objects.get(Q(projectid=pk) & Q(developername=request.session.get('username'))):
                     #HttpResponse("You have already submited an offer for this project")
-                #else:
+            Offers = offers.objects.filter(Q(projectid=pk) & Q(developername=request.session.get('username'))).count()
+            if Offers > 0 :
+                return HttpResponse("You have already submitted offer for this project.Go to MyOffer Page to delete old offer to be able to make a new one")
+            else:
                 Projects = projects.objects.get(id=pk)
                 context = {'Projects': Projects}
                 return render(request, 'ApplyPage.html', context)
-            else:
-                return HttpResponse("You are not a developer")
         else:
-            return HttpResponse("You are not signed in")
+            return HttpResponse("You are not a developer")
 
 
 
