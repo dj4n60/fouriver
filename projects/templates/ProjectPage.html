@@ -40,14 +40,16 @@
                     <!-- Left Content -->
                     <div class="col-xl-7 col-lg-8">
                         <!-- job single -->
+                        {% if Projects.isCompleted != True %}
                     <ul>
                                         <li>Number of total offers for this project</li>
                                         <h4>{{ totalOffers }}</h4>
                                      </ul>
+                    {% endif %}
                     {% if Projects.isCompleted != False %}
                     <ul>
                                         <li>Project Completed</li>
-                                        <h4>Offer has already accepted by {{ Projects.offerby }} for this project</h4>
+                                        <h4>Offer by {{ Projects.offerby }} has  accepted  for this project</h4>
                                      </ul>
                     {% endif %}
                         <div class="single-job-items mb-50">
