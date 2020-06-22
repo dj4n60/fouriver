@@ -23,6 +23,7 @@
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/slick.css' %}">
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/style.css' %}">
+            <link rel="stylesheet" href="{% static 'assets-ProjectPage/css/main.css' %}">
    </head>
 
    <body>
@@ -39,13 +40,29 @@
                     <!-- Left Content -->
                     <div class="col-xl-7 col-lg-8">
                         <!-- job single -->
+                        {% if Projects.isCompleted != True %}
+                    <ul>
+                                        <li>Number of total offers for this project</li>
+                                        <h4>{{ totalOffers }}</h4>
+                                     </ul>
+                    {% endif %}
+                    {% if Projects.isCompleted != False %}
+                    <ul>
+                                        <li>Project Completed</li>
+                                        <h4>Offer by {{ Projects.offerby }} has  accepted  for this project</h4>
+                                     </ul>
+                    {% endif %}
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                
                                 <div class="job-tittle">
+                                    <ul>
+                                        <li>Jobtitle</li>
                                         <h4>{{ Projects.jobtitle }}</h4>
+                                     </ul>
                                     <ul>
                                         <li>ClientUsername</li>
+                                        <h4>{{ Projects.createdby }}</h4>
                                         
                                     </ul>
                                 </div>
@@ -61,19 +78,36 @@
                                 </div>
                                 <p>{{ Projects.jobdescription }}</p>
                             </div>
-                            <div class="post-details2  mb-50">
-                                 <!-- Small Section Tittle -->
-                                <div class="small-section-tittle">
-                                    <h4>Keywords</h4>
-                                </div>
-                               <ul>
-                                   <li>..</li>
-                                   <li>..</li>
-                                   <li>..</li> 
-                               </ul>
-                            </div>
-                            
+
+
                         </div>
+                    <!-- Checking if an offer is already accepted to remove apply button and other offers
+                        -->
+                        {% if Projects.isCompleted != True %}
+                        {% for i in Offers %}
+                        <table>
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">Developer Name</th>
+								<th class="column2">Date</th>
+								<th class="column3">Offer</th>
+                                <th class="column4"></th>
+							</tr>
+						</thead>
+						<tbody>
+
+								<tr>
+									<td class="column1" >{{i.developername}}</td>
+									<td class="column2" >{{i.date_created}}</td>
+									<td class="column3" >{{i.money}}</td>
+                                    <td class="column4"><a href="{% url 'acceptoffer' Projects.id i.id %}" class="button" >Accept Offer</a></td>
+								</tr>
+
+
+						</tbody>
+                    {% endfor %}
+                    {% endif %}
+					</table>
 
                     </div>
                     <!-- Right Content -->
@@ -84,16 +118,25 @@
                                <h4>Project Overview</h4>
                            </div>
                           <ul>
-                              
+
                               <li>Payment Method : <span>{{ Projects.paymentmethod }}</span></li>
                               <li>Job Type : <span>{{ Projects.jobtype }}</span></li>
-                              <li>Category : <span>..</span></li>
-                              <li>Subcategory :  <span>..</span></li>
-                              <li>Payment Type : <span>..</span></li>
+                              <li>Subcategory :  <span>{{ Projects.category }}</span></li>
+                              <li>Privacy : <span>{{ Projects.privacy }}</span></li>
                           </ul>
+                            {% if Projects.isCompleted != True %}
+                            {% if request.session.username %}
+                             {% if request.session.idiotita == 'developer' %}
                          <div class="apply-btn2">
-                            <a href="#" class="btn">Apply Now</a>
+                            <a href="{% url 'apply' Projects.id %}" class="btn">Apply Now</a>
                          </div>
+                                 {% endif %}
+                            <div class="apply-btn2">
+                                <p></p>
+                            <a href="{% url 'reccomend' Projects.id %}" class="btn">Reccomend to Developer</a>
+                         </div>
+                            {% endif %}
+                        {% endif %}
                        </div>
                         
                     </div>
