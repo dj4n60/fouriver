@@ -50,6 +50,9 @@
 									<td class="column3" >{{i.paymentmethod}}</td>
 									<td class="column4" >{{i.jobdescription}}</td>
                                     <td class="column5"><a href="{% url 'projectdetails' i.id %}" class="btn">Go to Project Page</a></td>
+                                    {% if request.session.idiotita == 'developer' %}
+                                    <td class="column6"><a href="" class="btn">Finish Project</a></td>
+                                {% endif %}
 								</tr>
                                 {% endfor %}
 

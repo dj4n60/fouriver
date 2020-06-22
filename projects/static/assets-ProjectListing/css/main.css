@@ -27,7 +27,7 @@ body, html {
 /* ------------------------------------ */
 
 a.btn {
-  font: bold 11px Arial;
+  font: bold 15px Arial;
   text-decoration: none;
   background-color: #EEEEEE;
   color: #333333;
@@ -36,6 +36,7 @@ a.btn {
   border-right: 1px solid #333333;
   border-bottom: 1px solid #333333;
   border-left: 1px solid #CCCCCC;
+
 }
 
 /* ------------------------------------ */
