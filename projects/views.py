@@ -1,3 +1,5 @@
+from django.core.files.uploadhandler import FileUploadHandler
+
 from .Calls import Calls
 from django.shortcuts import render
 from django.shortcuts import render,redirect
@@ -9,6 +11,8 @@ from auth.models import appusers
 from .models import *
 from .models import user
 from django.template.response import TemplateResponse
+from django import forms
+from .forms import EditDeveloperForm, EditCustomerForm
 
 
 # Create your views here.
@@ -40,13 +44,12 @@ def profilepage(request):  # (request,username):
     return render(request, "ProfilePage.html", context)
 
 
-
 def searchproject(request):
     arguments = {}
     arguments['mnm'] = ''
     if request.method == 'POST':
         if "SearchP" in request.POST:
-            if  request.POST.get('projecttext'):
+            if request.POST.get('projecttext'):
                 textinjob = request.POST.get('projecttext')
                 mainCategory = request.POST.get('projectcategory')
                 criterion1 = Q(jobtitle__exact=textinjob)
@@ -65,14 +68,14 @@ def searchproject(request):
             if request.POST.get('username'):
                 user = request.POST.get('username')
                 cat = request.POST.get('usertype')
-                return render(request, 'ProjectListing.html',{'Projects':Projects})
+                return render(request, 'ProjectListing.html',{'Projects': Projects})
             else:
                 return render(request, 'MainPage.html', {'mnm': mnm})
         elif "profile" in request.POST:
             if request.session.get('username'):
                 callobject = Calls()
                 user1 = callobject.profilecall(request)
-                return render(request, "ProfilePage.html", {'user1': user1} )
+                return render(request, "ProfilePage.html", {'user1': user1})
             else:
                 arguments['mnm'] = "! You have to log in to see your profile click the register buttom !"
                 return render(request, 'MainPage.html', arguments)
@@ -237,6 +240,7 @@ def deleteoffer(request,pk):
         myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
 
+
 def completeprojectdeveloper(request,pk):
     if request.method == "POST":
         if request.POST.get('developer_comments'):
@@ -251,3 +255,72 @@ def completeprojectdeveloper(request,pk):
     else:
         Project=projects.objects.get(id=pk)
         return render(request,'CompleteProjectDeveloper.html',{'Project':Project})
+
+def edit_profile_info(request):
+    if request.session.get('idiotita') == 'developer':
+        form = EditDeveloperForm(request.POST, request.FILES or None)
+        context = {
+            'form': form
+        }
+        if request.method == "POST":
+            if form.is_valid():
+                cd = form.cleaned_data
+                username = request.session.get('username')
+                location = request.POST.get('location')
+                language = request.POST.get('language')
+                github = request.POST.get('github')
+                cv = request.POST.get('cv')
+                profile_pic = request.POST.get('profile_pic')
+                new = form.save()
+                new.profile_pic = request.FILES.get('profile_pic')
+                try:
+                    userinfo = developerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        language=language,
+                        github=github,
+                        cv=cv,
+                        profile_pic=profile_pic,
+                    )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect(profilepage, arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                    return TemplateResponse(request, 'EditDeveloperInfo.html', arguments)
+
+        return render(request, 'EditDeveloperInfo.html', context)
+    if request.session.get('idiotita') == 'customer':
+        form = EditCustomerForm(request.POST, request.FILES or None)
+        context = {
+            'form': form
+        }
+        if request.method == "POST":
+            if form.is_valid():
+                cd = form.cleaned_data
+                username = request.session.get('username')
+                location = cd['location']
+                disc = cd['disc']
+                linkedin = cd['linkedin']
+                profile_pic = cd['profile_pic']
+                newfile = FileUploadHandler(title=username, file=request.FILES['profile_pic'])
+                newfile.save()
+                try:
+                    userinfo = customerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        disc=disc,
+                        linkedin=linkedin,
+                        profile_pic=profile_pic,
+                         )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect(profilepage, arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
+
+    return render(request, 'EditCustomerInfo.html', context)        
+
