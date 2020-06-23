@@ -111,7 +111,7 @@ def projectdetails(request,pk):
             context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
             return render(request, 'ProjectPage.html', context)
         else:
-            context = {'Projects': Projects, 'Offers': Offers, 'totalOffers': totalOffers}
+            context = {'Projects': Projects, 'totalOffers': totalOffers}
             return render(request, 'ProjectPage.html', context)
     #pk is called in the url path
     else:
