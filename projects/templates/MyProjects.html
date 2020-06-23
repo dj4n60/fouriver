@@ -42,6 +42,9 @@
                                 <th class="column5"></th>
                                 {% if request.session.idiotita == 'developer' %}<th class="column6"></th>
                                 {% endif %}
+                            {% if request.session.idiotita == 'developer' %}
+                                <td class="column7" ><h style="color:white;">Status of Project</h></td>
+                            {% endif %}
                             {% if request.session.idiotita == 'client' %}
                                 <td class="column6" ><h style="color:white;">Status of Project</h></td>
                             {% endif %}
@@ -63,7 +66,13 @@
                                     <td class="column6"><a href="{% url 'completeprojectdeveloper' i.id %}" class="btn">Finish Project</a></td>
                                             {% endif %}
                                 {% endif %}
-
+                                {% if request.session.idiotita == 'developer' %}
+                                        {% if i.isCopletedbyClient == False %}
+                                    <td class="column7">Waiting Client Response</td>
+                                            {% else %}
+                                            <td class="column7">Finished.Client has completed the project</td>
+                                            {% endif %}
+                                {% endif %}
                                 {% if request.session.idiotita == 'client' %}
                                     {% if i.isCompleted == True %}
                                         {% if i.isCompletedbyDeveloper == False  %}
