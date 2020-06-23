@@ -8,18 +8,17 @@ class Calls():
     def __init__(self):
         pass
 
-
-    def profilecall(self,request):
+    def profilecall(self, request):
         user1 = appusers()
         result = appusers.objects.filter(username=request.session.get("username"))
 
         if request.session.get('idiotita') == 'developer':
             result1 = developerinfo.objects.filter(username=request.session.get("username"))
 
-            user1.info1 = result1.values_list('github',flat=True)[0]
+            user1.info1 = result1.values_list('github', flat=True)[0]
             user1.info2 = result1.values_list('cv', flat=True)[0]
             user1.info3 = result1.values_list('language', flat=True)[0]
-            user1.profile_pic = 'test'# result1.values_list('profile_pic', flat=True)
+            user1.profile_pic = 'test' # result1.values_list('profile_pic', flat=True)
             user1.location2 = result1.values_list('location', flat=True)[0]
             user1.location = user1.location2
         else:
@@ -41,6 +40,7 @@ class Calls():
 
         if user1.location2 in globals():
             user1.location = user1.location2
-
+        else:
+            user1.location = user1.location
 
         return user1
