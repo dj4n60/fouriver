@@ -65,11 +65,7 @@
                                     <td class="column7"><a href="" class="btn">Finish Project</a></td>
                                             {% endif %}
                                 {% endif %}
-                                    {% if request.session.idiotita == 'client' %}
-                                        {% if i.isCompletedbyDeveloper == True %}
-                                    <td class="column6"><a href="" class="btn">Finish Project</a></td>
-                                            {% endif %}
-                                {% endif %}
+
                                 {% if request.session.idiotita == 'client' %}
                                     {% if i.isCompleted == True %}
                                     <td class="column5" >Accepted Offer</td>
