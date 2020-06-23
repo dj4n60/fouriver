@@ -221,7 +221,7 @@ def myreccomendations(request):
 def myoffers(request):
     Offers = offers.objects.filter(developername=request.session.get('username')).count()
     if Offers>0 :
-        myOffers =offers.objects.filter(developername=request.session.get('username') & Q(isAccepted=False))
+        myOffers =offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False))
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
         return HttpResponse("You have made no offers")
