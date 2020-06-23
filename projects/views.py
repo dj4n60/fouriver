@@ -219,12 +219,12 @@ def myreccomendations(request):
 
 
 def myoffers(request):
-    Offers = offers.objects.filter(developername=request.session.get('username')).count()
+    Offers = offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False)).count()
     if Offers>0 :
         myOffers =offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False))
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
-        return HttpResponse("You have made no offers")
+        return HttpResponse("You have made no pending offers.Either you have deleted offers or client has accepted your offers")
 
 
 def deleteoffer(request,pk):
