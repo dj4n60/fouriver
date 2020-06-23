@@ -114,7 +114,8 @@ def projectdetails(request,pk):
             context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
             return render(request, 'ProjectPage.html', context)
         else:
-            return render(request, 'ProjectPage.html', {'Projects': Projects})
+            context = {'Projects': Projects, 'totalOffers': totalOffers}
+            return render(request, 'ProjectPage.html', context)
     #pk is called in the url path
     else:
         return render(request, 'ProjectPage.html',{'Projects':Projects})
@@ -221,12 +222,12 @@ def myreccomendations(request):
 
 
 def myoffers(request):
-    Offers = offers.objects.filter(developername=request.session.get('username')).count()
+    Offers = offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False)).count()
     if Offers>0 :
-        myOffers =offers.objects.filter(developername=request.session.get('username'))
+        myOffers =offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False))
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
-        return HttpResponse("You have made no offers")
+        return HttpResponse("You have made no pending offers.Either you have deleted offers or client has accepted your offers")
 
 
 def deleteoffer(request,pk):
@@ -238,6 +239,22 @@ def deleteoffer(request,pk):
     else:
         myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
+
+
+def completeprojectdeveloper(request,pk):
+    if request.method == "POST":
+        if request.POST.get('developer_comments'):
+            Project = projects.objects.get(id=pk)
+            Project.developercomments = request.POST.get('developer_comments')
+            Project.isCompletedbyDeveloper = True
+
+            Project.save()
+            return redirect('/')
+        else:
+            return HttpResponse("Comment section is empty")
+    else:
+        Project=projects.objects.get(id=pk)
+        return render(request,'CompleteProjectDeveloper.html',{'Project':Project})
 
 def edit_profile_info(request):
     if request.session.get('idiotita') == 'developer':
@@ -306,3 +323,4 @@ def edit_profile_info(request):
                 return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
 
     return render(request, 'EditCustomerInfo.html', context)        
+

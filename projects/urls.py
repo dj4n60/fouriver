@@ -1,7 +1,8 @@
 from django.urls import path
 
 
-from .views import createproject, searchproject,  profilepage, projectdetails,myprojects , apply , reccomend ,acceptoffer,myreccomendations,myoffers,deleteoffer,edit_profile_info
+
+from .views import createproject, searchproject,  profilepage, projectdetails,myprojects , apply , reccomend ,acceptoffer,myreccomendations,myoffers,deleteoffer,edit_profile_info,completeprojectdevelope
 
 urlpatterns = [
     path('createproject', createproject),
@@ -18,7 +19,7 @@ urlpatterns = [
     path('myreccomendations', myreccomendations),
     path('myoffers',myoffers),
     path('deleteoffer/<str:pk>/', deleteoffer, name="deleteoffer"),
+    path('completeprojectdeveloper/<str:pk>/', completeprojectdeveloper, name="completeprojectdeveloper"),
     path('editinfo', edit_profile_info),
-
 
 ]
