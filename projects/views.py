@@ -111,7 +111,8 @@ def projectdetails(request,pk):
             context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
             return render(request, 'ProjectPage.html', context)
         else:
-            return render(request, 'ProjectPage.html', {'Projects': Projects})
+            context = {'Projects': Projects, 'Offers': Offers, 'totalOffers': totalOffers}
+            return render(request, 'ProjectPage.html', context)
     #pk is called in the url path
     else:
         return render(request, 'ProjectPage.html',{'Projects':Projects})
@@ -220,7 +221,7 @@ def myreccomendations(request):
 def myoffers(request):
     Offers = offers.objects.filter(developername=request.session.get('username')).count()
     if Offers>0 :
-        myOffers =offers.objects.filter(developername=request.session.get('username'))
+        myOffers =offers.objects.filter(developername=request.session.get('username') & Q(isAccepted=False))
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
         return HttpResponse("You have made no offers")
