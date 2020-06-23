@@ -43,7 +43,10 @@
                                 {% if request.session.idiotita == 'developer' %}<th class="column6"></th>
                                 {% endif %}
                             {% if request.session.idiotita == 'client' %}
-                                <td class="column5" >Status of Project</td>
+                                <td class="column5" ><h style="color:white;">Status of Project</h></td>
+                            {% endif %}
+                            {% if request.session.idiotita == 'client' %}
+                                <td class="column7" ><h style="color:white;">Finish Project</h></td>
                             {% endif %}
 							</tr>
 						</thead>
@@ -60,11 +63,6 @@
                                     <td class="column6"><a href="{% url 'completeprojectdeveloper' i.id %}" class="btn">Finish Project</a></td>
                                             {% endif %}
                                 {% endif %}
-                                    {% if request.session.idiotita == 'client' %}
-                                        {% if i.isCompletedbyDeveloper == True %}
-                                    <td class="column7"><a href="" class="btn">Finish Project</a></td>
-                                            {% endif %}
-                                {% endif %}
 
                                 {% if request.session.idiotita == 'client' %}
                                     {% if i.isCompleted == True %}
@@ -72,6 +70,11 @@
                                         {% else %}
                                     <td class="column5" >Pending</td>
                                 {% endif %}
+                                {% endif %}
+                                {% if request.session.idiotita == 'client' %}
+                                        {% if i.isCompletedbyDeveloper == True %}
+                                    <td class="column7"><a href="" class="btn">Finish Project</a></td>
+                                            {% endif %}
                                 {% endif %}
 								</tr>
                                 {% endfor %}
