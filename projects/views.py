@@ -86,8 +86,8 @@ def searchproject(request):
     #context = {'Projects':Projects}
 
 
-def projectdetails(request,pk):
-    #pk is called in the url path
+def projectdetails(request, pk):
+    # pk is called in the url path
     Projects= projects.objects.get(id=pk)
     context = {'Projects': Projects}
     return render(request, 'ProjectPage.html',context)
