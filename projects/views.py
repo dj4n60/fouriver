@@ -236,3 +236,18 @@ def deleteoffer(request,pk):
     else:
         myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
+
+def completeprojectdeveloper(request,pk):
+    if request.method == "POST":
+        if request.POST.get('developer_comments'):
+            Project = projects.objects.get(id=pk)
+            Project.developercomments = request.POST.get('developer_comments')
+            Project.isCompletedbyDeveloper = True
+
+            Project.save()
+            return redirect('/')
+        else:
+            return HttpResponse("Comment section is empty")
+    else:
+        Project=projects.objects.get(id=pk)
+        return render(request,'CompleteProjectDeveloper.html',{'Project':Project})

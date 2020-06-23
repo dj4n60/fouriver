@@ -16,6 +16,7 @@ class projects(models.Model):
     isCompleted = models.BooleanField(default=False)
     isCompletedbyDeveloper = models.BooleanField(default=False)
     isCopletedbyClient = models.BooleanField(default=False)
+    developercomments = models.CharField(max_length=100,null=True)
 
 
 
