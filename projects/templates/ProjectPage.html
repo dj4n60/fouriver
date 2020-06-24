@@ -108,7 +108,22 @@
                     {% endfor %}
                     {% endif %}
 					</table>
+                    {% for i in Comments %}
 
+                        <p style="color:white;background-color: midnightblue;border-radius: 5px;" >Comment Section</p>
+                            <div>
+                                    <ul>
+                                        <li>Username</li>
+                                        <h4>{{ i.commentby }}</h4>
+                                     </ul>
+                                    <ul>
+                                        <li>Comment</li>
+                                        <h4>{{ i.comment }}</h4>
+
+                                    </ul>
+                            </div>
+
+                {% endfor %}
                     </div>
                     <!-- Right Content -->
                     <div class="col-xl-4 col-lg-4">

@@ -69,3 +69,11 @@ class reccomends(models.Model):
     def __str__(self):
         return self.developername
 
+class comments(models.Model):
+    commentby = models.CharField(max_length=100)
+    projectid = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "comments"
+

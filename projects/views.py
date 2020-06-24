@@ -104,18 +104,19 @@ def searchproject(request):
 
 def projectdetails(request,pk):
     Offers = offers.objects.filter(projectid=pk)
-    totalOffers =offers.objects.filter(projectid=pk).count()
+    totalOffers =Offers.count()
     Projects = projects.objects.get(id=pk)
+    Comments = comments.objects.filter(projectid=pk)
     if request.session.get('username'):
         if Projects.createdby == request.session.get('username'):
-            context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
+            context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers,'Comments':Comments}
             return render(request, 'ProjectPage.html', context)
         else:
-            context = {'Projects': Projects, 'totalOffers': totalOffers}
+            context = {'Projects': Projects, 'totalOffers': totalOffers,'Comments':Comments}
             return render(request, 'ProjectPage.html', context)
     #pk is called in the url path
     else:
-        return render(request, 'ProjectPage.html',{'Projects':Projects})
+        return render(request, 'ProjectPage.html',{'Projects':Projects,'Comments':Comments})
 
 
 def myprojects(request):
@@ -251,3 +252,19 @@ def completeprojectdeveloper(request,pk):
     else:
         Project=projects.objects.get(id=pk)
         return render(request,'CompleteProjectDeveloper.html',{'Project':Project})
+
+def comment(request,pk):
+    if request.method == "POST":
+        if request.POST.get('comments'):
+            Comment = comments()
+            Comment.commentby = request.session.get("username")
+            Comment.projectid = request.POST.get('project_id')
+            Comment.comment = request.POST.get('comments')
+
+            Comment.save()
+            return redirect('/')
+        else:
+            return HttpResponse("Comment section is empty")
+    else:
+        Project=projects.objects.get(id=pk)
+        return render(request,'CommentPage.html',{'Project':Project})
