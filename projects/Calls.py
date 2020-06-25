@@ -46,6 +46,23 @@ class Calls():
 
         return user1
 
+    def searchP(self,request):
+        textinjob = request.POST.get('projecttext')
+        mainCategory = request.POST.get('projectcategory')
+        details = request.POST.get('detail')
+        criterion1 = Q(jobtitle__icontains=textinjob)
+        criterion2 = Q(jobtype__iexact=mainCategory)
+        criterion3 = Q(jobdescription__exact=details)
+        if request.session.get('username'):
+            if  "No category" == mainCategory:
+                allProjects = projects.objects.filter( (criterion1 | criterion3) )
+            else:
+                allProjects = projects.objects.filter( (criterion1 | criterion3) &  criterion2 )
+            return allProjects
+        else:
+            publicProjects = projects.objects.filter(Q(privacy="Public") & criterion1)
+            return publicProjects
+
     def searchU(self, request):
         criterion1 = Q(username__icontains=request.POST.get('username'))
         criterion2 = Q(idiotita__exact=request.POST.get('usertype'))
@@ -70,7 +87,7 @@ class Calls():
             ################
             #criterion4 = Q(idiotita__exact=request.POST.get('rating')) search on appusers
         else:
-            allUsers = appusers.objects.filter(criterion1 | criterion2 ) #Users with username simple search
+            allUsers = appusers.objects.filter(criterion1 & criterion2 ) #Users with username simple search
 
 
         return allUsers

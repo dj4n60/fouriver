@@ -38,8 +38,6 @@ def createproject(request):
 def profilepage(request):  # (request,username):
     callobject = Calls()
     user1 = callobject.profilecall(request)
-    #showing project created by client
-    #myProjects = projects.objects.filter(createdby=request.session.get("username"))
     context = {'user1':user1 }
     return render(request, "ProfilePage.html", context)
 
@@ -52,19 +50,10 @@ def searchproject(request):
 
     if request.method == 'POST':
         if "SearchP" in request.POST:
-            if request.POST.get('projecttext') or request.POST.get('details') or request.POST.get('projectcategory')  :
-                textinjob = request.POST.get('projecttext')
-                mainCategory = request.POST.get('projectcategory')
-                details = request.POST.get('detail')
-                criterion1 = Q(jobtitle__icontains=textinjob)
-                criterion2 = Q(jobtype__exact=mainCategory)
-                criterion3 = Q(Jobdescription__exact=details)
-                if request.session.get('username'):
-                    allProjects = projects.objects.filter(criterion1 | criterion2 | criterion3 )
-                    return render(request, 'ProjectListing.html', {'Projects': allProjects})  # contains the text
-                else:
-                    publicProjects = projects.objects.filter(Q(privacy="Public") & criterion1)
-                    return render(request, 'ProjectListing.html', {'Projects': publicProjects})  # contains the text
+            if request.POST.get('projecttext') or request.POST.get('details') :
+                callobject = Calls()
+                usersearch = callobject.searchP(request)
+                return render(request, 'ProjectListing.html', {'Projects': usersearch})  # contains the text
             else:
                 arguments['mnm'] = "! Place at least one keyword !"
                 return render(request, 'MainPage.html', arguments)
@@ -73,8 +62,6 @@ def searchproject(request):
             if request.POST.get('username'):
                 callobject = Calls()
                 usersearch = callobject.searchU(request)
-                #arguments['mnm'] = usersearch
-                #return render(request, 'MainPage.html', arguments)
                 return render(request, 'UserListing.html',{'Projects': usersearch})
             else:
                 arguments['mnm'] = "! Please provide keys !"
@@ -87,8 +74,6 @@ def searchproject(request):
             else:
                 arguments['mnm'] = "! Please provide keys !"
                 return render(request, 'MainPage.html',arguments)
-
-
         elif "profile" in request.POST:
             if request.session.get('username'):
                 callobject = Calls()
