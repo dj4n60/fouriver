@@ -47,15 +47,20 @@ def profilepage(request):  # (request,username):
 def searchproject(request):
     arguments = {}
     arguments['mnm'] = ''
+    arguments['publicprojects'] = projects.objects.filter(privacy="Public")[:4]
+    #publicprojects = projects.objects.filter(privacy="Public")[:4]
+
     if request.method == 'POST':
         if "SearchP" in request.POST:
-            if request.POST.get('projecttext'):
+            if request.POST.get('projecttext') or request.POST.get('details') or request.POST.get('projectcategory')  :
                 textinjob = request.POST.get('projecttext')
                 mainCategory = request.POST.get('projectcategory')
-                criterion1 = Q(jobtitle__exact=textinjob)
-                criterion2 = Q(jobtype__icontains=mainCategory)
+                details = request.POST.get('detail')
+                criterion1 = Q(jobtitle__icontains=textinjob)
+                criterion2 = Q(jobtype__exact=mainCategory)
+                criterion3 = Q(Jobdescription__exact=details)
                 if request.session.get('username'):
-                    allProjects = projects.objects.filter(criterion1 | criterion2 )
+                    allProjects = projects.objects.filter(criterion1 | criterion2 | criterion3 )
                     return render(request, 'ProjectListing.html', {'Projects': allProjects})  # contains the text
                 else:
                     publicProjects = projects.objects.filter(Q(privacy="Public") & criterion1)
@@ -66,11 +71,24 @@ def searchproject(request):
 
         elif "SearchU" in request.POST:
             if request.POST.get('username'):
-                user = request.POST.get('username')
-                cat = request.POST.get('usertype')
-                return render(request, 'ProjectListing.html',{'Projects': Projects})
+                callobject = Calls()
+                usersearch = callobject.searchU(request)
+                #arguments['mnm'] = usersearch
+                #return render(request, 'MainPage.html', arguments)
+                return render(request, 'UserListing.html',{'Projects': usersearch})
             else:
-                return render(request, 'MainPage.html', {'mnm': mnm})
+                arguments['mnm'] = "! Please provide keys !"
+                return render(request, 'MainPage.html',arguments)
+        elif "SearchUA" in request.POST:
+            if request.POST.get('nprojects'):
+                callobject = Calls()
+                usersearch = callobject.searchU(request)
+                return render(request, 'UserListing.html',{'Projects': usersearch})
+            else:
+                arguments['mnm'] = "! Please provide keys !"
+                return render(request, 'MainPage.html',arguments)
+
+
         elif "profile" in request.POST:
             if request.session.get('username'):
                 callobject = Calls()
@@ -92,8 +110,6 @@ def searchproject(request):
             # showing only public projects
             publicprojects = projects.objects.filter(privacy="Public")[:4]
             return render(request, 'MainPage.html', {'allprojects': publicprojects})
-
-
 
 #projectlisting
 #def toprojectpage(request):
@@ -119,7 +135,6 @@ def projectdetails(request,pk):
     #pk is called in the url path
     else:
         return render(request, 'ProjectPage.html',{'Projects':Projects})
-
 
 def myprojects(request):
     if request.session.get('username'):
@@ -165,9 +180,6 @@ def apply(request,pk):
         else:
             return HttpResponse("You are not a developer")
 
-
-
-
 def reccomend(request,pk):
     if request.method == 'POST':
         if request.POST.get('project_id') and request.POST.get('project_title') and request.POST.get('developername'):
@@ -188,8 +200,6 @@ def reccomend(request,pk):
         Users = appusers.objects.filter(idiotita="developer")
         context = {'Projects': Projects , 'Users': Users}
         return render(request, 'ReccomendPage.html', context)
-
-
 
 def acceptoffer(request,pk,sk):
     #pk,sk in url path
@@ -219,8 +229,6 @@ def myreccomendations(request):
     else:
         return HttpResponse("You have no reccomendations yet")
 
-
-
 def myoffers(request):
     Offers = offers.objects.filter(Q(developername=request.session.get('username')) & Q(isAccepted=False)).count()
     if Offers>0 :
@@ -228,7 +236,6 @@ def myoffers(request):
         return render(request,'MyOffers.html', {'myOffers': myOffers})
     else:
         return HttpResponse("You have made no pending offers.Either you have deleted offers or client has accepted your offers")
-
 
 def deleteoffer(request,pk):
     if request.method == 'POST':
@@ -239,7 +246,6 @@ def deleteoffer(request,pk):
     else:
         myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
-
 
 def completeprojectdeveloper(request,pk):
     if request.method == "POST":
@@ -322,5 +328,4 @@ def edit_profile_info(request):
                     arguments['mnm'] = "sth went wrong"
                 return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
 
-    return render(request, 'EditCustomerInfo.html', context)        
-
+    return render(request, 'EditCustomerInfo.html', context)

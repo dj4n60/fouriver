@@ -2,7 +2,7 @@ from django.urls import path
 
 
 
-from .views import createproject, searchproject,  profilepage, projectdetails,myprojects , apply , reccomend ,acceptoffer,myreccomendations,myoffers,deleteoffer,edit_profile_info,completeprojectdevelope
+from .views import createproject, searchproject,  profilepage, projectdetails,myprojects , apply , reccomend ,acceptoffer,myreccomendations,myoffers,deleteoffer,edit_profile_info,completeprojectdeveloper
 
 urlpatterns = [
     path('createproject', createproject),

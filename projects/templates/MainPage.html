@@ -55,8 +55,13 @@
                     {% endif %}
 
              {% endif %}
-	          <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
-	          <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
+            {% if request.session.idiotita  %}
+            <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/logout" class="nav-link">Logout</a></li>
+            {% else %}
+              <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
+              <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
+            {% endif %}
+
 	        </ul>
 
 	      </div>
@@ -96,6 +101,10 @@
 				              					<div class="icon"><span class="icon-briefcase"></span></div>
 								                <input type="text" class="form-control" name="projecttext" id="projecttext" >
 								              </div>
+                              <div class="form-field">
+                                <div class="icon"><span class="icon-briefcase"></span></div>
+                                <input type="text" class="form-control" name="details" id="details" placeholder="More keywords">
+                              </div>
 							              </div>
 			              			</div>
 			              			<div class="col-md">
@@ -136,6 +145,16 @@
 				              					<div class="icon"><span class="icon-user"></span></div>
 								                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
 								              </div>
+                              <br>
+
+                              <div class="form-field">
+				              					<div class="icon"><span class="icon-user"></span></div>
+								                <input type="text" class="form-control" name="nprojects" id="nprojects" placeholder="Num projects">
+								              </div>
+                              <div class="form-field">
+                                <div class="icon"><span class="icon-user"></span></div>
+                                <input type="text" class="form-control" name="rating" id="rating" placeholder="Rating">
+                              </div>
 							              </div>
 			              			</div>
 			              			<div class="col-md">
@@ -162,6 +181,10 @@
 			              				<div class="form-group">
 			              					<div class="form-field">
 								                <input type="submit" value="Search" name="SearchU" class="form-control btn btn-primary">
+								              </div>
+                              <br>
+                              <div class="form-field">
+                                <input type="submit" value="Advance Search" name="SearchUA" class="form-control btn btn-primary">
 								              </div>
 							              </div>
 			              			</div>
