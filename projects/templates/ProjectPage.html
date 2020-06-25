@@ -158,6 +158,14 @@
                          </div>
                             {% endif %}
                         {% endif %}
+                        {% if Projects.isCompleted != True %}
+                        {% if Projects.createdby == request.session.username %}
+                            <div class="apply-btn2">
+                            <p></p>
+                            <a href="{% url 'editproject' Projects.id %}" class="btn">Edit</a>
+                         </div>
+                        {% endif %}
+                        {% endif %}
                        </div>
                         
                     </div>

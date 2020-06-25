@@ -268,3 +268,19 @@ def comment(request,pk):
     else:
         Project=projects.objects.get(id=pk)
         return render(request,'CommentPage.html',{'Project':Project})
+
+def editproject(request,pk):
+    Project = projects.objects.get(id=pk)
+    if request.method == "POST":
+        Project.jobtitle = request.POST.get('jobtitle')
+        Project.privacy = request.POST.get('privacytype')
+        Project.jobdescription =request.POST.get('jobdesctription')
+
+        Project.save()
+        return redirect('/')
+
+    else:
+        context = {'Project':Project}
+        return render(request,'EditProject.html',context)
+
+
