@@ -274,7 +274,6 @@ def editproject(request,pk):
     if request.method == "POST":
         Project.jobtitle = request.POST.get('jobtitle')
         Project.privacy = request.POST.get('privacytype')
-        Project.jobdescription =request.POST.get('jobdesctription')
 
         Project.save()
         return redirect('/')
