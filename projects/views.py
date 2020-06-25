@@ -26,6 +26,8 @@ def createproject(request):
             Projects.save()
 
             return redirect('/')
+        else:
+            return HttpResponse("You have left empty fields")
     else:
         return render(request, 'CreateProject.html')
 
