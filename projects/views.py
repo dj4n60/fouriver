@@ -4,7 +4,7 @@ from .Calls import Calls
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import loader
+from django.template import loader, RequestContext
 from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
@@ -55,7 +55,7 @@ def searchproject(request):
             if request.POST.get('username'):
                 user = request.POST.get('username')
                 cat = request.POST.get('usertype')
-                return render(request, 'ProjectListing.html',{'Projects': Projects})
+                return render(request, 'ProjectListing.html', {'Projects': Projects})
             else:
                 return render(request, 'MainPage.html', {'mnm': mnm})
         elif "profile" in request.POST:
@@ -98,13 +98,13 @@ def projectdetails(request, pk):
 
 def edit_profile_info(request):
     if request.session.get('idiotita') == 'developer':
-        form = EditDeveloperForm(request.POST, request.FILES or None)
+        form = EditDeveloperForm(request.POST, request.FILES )
         context = {
             'form': form
         }
         if request.method == "POST":
             if form.is_valid():
-                cd = form.cleaned_data
+
                 username = request.session.get('username')
                 location = request.POST.get('location')
                 language = request.POST.get('language')
@@ -131,35 +131,40 @@ def edit_profile_info(request):
                     return TemplateResponse(request, 'EditDeveloperInfo.html', arguments)
 
         return render(request, 'EditDeveloperInfo.html', context)
-    if request.session.get('idiotita') == 'customer':
+    if request.session.get('idiotita') == 'client':
         form = EditCustomerForm(request.POST, request.FILES or None)
         context = {
             'form': form
         }
-        if request.method == "POST":
+        if request.method == 'POST':
             if form.is_valid():
-                cd = form.cleaned_data
+
                 username = request.session.get('username')
-                location = cd['location']
-                disc = cd['disc']
-                linkedin = cd['linkedin']
-                profile_pic = cd['profile_pic']
-                newfile = FileUploadHandler(title=username, file=request.FILES['profile_pic'])
-                newfile.save()
+                location = request.POST.get('location')
+                linkedin = request.POST.get('linkedin')
+                disc = request.POST.get('disc')
+                profile_pic = request.POST.get('profile_pic')
+                new = form.save()
+                new.profile_pic = request.FILES.get('profile_pic')
+
                 try:
                     userinfo = customerinfo.objects.create(
                         username=request.session.get('username'),
                         location=location,
-                        disc=disc,
                         linkedin=linkedin,
+                        disc=disc,
                         profile_pic=profile_pic,
-                         )
+                    )
                     arguments = {}
                     arguments['mnm'] = "all done"
                     return redirect(profilepage, arguments)
                 except IntegrityError as e:
                     arguments = {}
                     arguments['mnm'] = "sth went wrong"
-                return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
+                    return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
 
-    return render(request, 'EditCustomerInfo.html', context)
+
+        return render(request, 'EditCustomerInfo.html', context)
+    #else:
+
+        #return render(request, 'EditCustomerInfo.html', context_instance=RequestContext(request) )
