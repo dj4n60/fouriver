@@ -1,89 +1,5 @@
 
 
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-
-@font-face {
-  font-family: OpenSans-Regular;
-  src: url('../fonts/OpenSans/OpenSans-Regular.ttf'); 
-}
-
-
-
-/*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
-* {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
-}
-
-body, html {
-	height: 100%;
-	font-family: sans-serif;
-}
-
-/* ------------------------------------ */
-
-a.btn {
-  font: bold 15px Arial;
-  text-decoration: none;
-  background-color: #EEEEEE;
-  color: #333333;
-  padding: 2px 6px 2px 6px;
-  border-top: 1px solid #CCCCCC;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
-
-}
-
-
-
-/* ------------------------------------ */
-h1,h2,h3,h4,h5,h6 {margin: 0px;}
-
-p {margin: 0px;}
-
-ul, li {
-	margin: 0px;
-	list-style-type: none;
-}
-
-
-/* ------------------------------------ */
-input {
-  display: block;
-	outline: none;
-	border: none !important;
-}
-
-textarea {
-  display: block;
-  outline: none;
-}
-
-textarea:focus, input:focus {
-  border-color: transparent !important;
-}
-
-/* ------------------------------------ */
-
-
-iframe {
-	border: none !important;
-}
-
-
-
-
-/*//////////////////////////////////////////////////////////////////
-[ Utiliti ]*/
-
-
-
-
 
 
 /*//////////////////////////////////////////////////////////////////
@@ -110,6 +26,18 @@ iframe {
 
 .wrap-table100 {
   width: 1170px;
+}
+a.button {
+  font: bold 15px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+
 }
 
 table {
@@ -180,7 +108,7 @@ tbody tr:hover {
 
 .column1 {
   width: 150px;
-  padding-left: 40px;
+
 }
 
 .column2 {
@@ -195,20 +123,7 @@ tbody tr:hover {
   width: 150px;
 }
 
-.column5 {
-  width: 20px;
-}
 
-.column6 {
-  width: 222px;
-  text-align: right;
-  padding-right: 62px;
-}
-.column7 {
-  width: 222px;
-  text-align: right;
-  padding-right: 62px;
-}
 
 
 
@@ -266,15 +181,11 @@ tbody tr:hover {
 
   .column4,
   .column5,
-  .column6,
-  .column7{
-    text-align: left;
-  }
+
 
   .column4,
   .column5,
   .column6,
-  .column7
   .column1,
   .column2,
   .column3 {

@@ -1,5 +1,6 @@
 from django.db import models
 from django import forms
+from auth.models import appusers
 
 # Create your models here.
 
@@ -9,11 +10,23 @@ class projects(models.Model):
     jobtype = models.CharField(max_length=20)
     paymentmethod = models.CharField(max_length=20)
     jobdescription = models.CharField(max_length=200)
-    #taggeddev = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, null=True)
+    privacy = models.CharField(max_length=20,null=True)
+    tagdev = models.CharField(max_length=100,null=True)
+    offerby = models.CharField(max_length=100,null=True)
+    createdby = models.CharField(max_length=100,null=True)
+    isCompleted = models.BooleanField(default=False)
+    isCompletedbyDeveloper = models.BooleanField(default=False)
+    isCopletedbyClient = models.BooleanField(default=False)
+    developercomments = models.CharField(max_length=100,null=True)
+
 
 
     class Meta:
         db_table = "projects"
+
+    def __str__(self):
+        return self.jobtitle
 
 
 class user():
@@ -51,4 +64,3 @@ class customerinfo(models.Model):
 
     class Meta:
         db_table = "customerinfo"
-

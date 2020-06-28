@@ -15,3 +15,4 @@ def index(request):
     else:
         return HttpResponse(str(bool_ansers) + " Den paizei tetoio onoma")
     #return render(request, "site_app/blog.html")
+

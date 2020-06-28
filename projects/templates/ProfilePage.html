@@ -56,30 +56,9 @@
               <div class="ftco-search">
                   <div class="row">
                       <div class="col-md-12 nav-link-wrap">
-                        <table style="background-color:grey;width:100%;border-radius:20px;align-content: center;position: relative" >
-                      <thead>
-                        <h1> Recommendation </h1>
-                        <tr class="table100-head">
-                          <th class="column5" width="5%"></th>
-                          <th class="column2" width="5%"> Title    </th>
-                          <th class="column3" width="5%"> Job Type</th>
-                          <th class="column4" width="5%"> Payment Type</th>
-                          <th class="column5" width="5%"> Job Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                                          {% for i in taggedprojects %}
-                          <tr>
-                            <td class="column1"><a href="{% url 'projectdetails' i.id %}">Go to Project Page</a></td>
-                            <td class="column2" >{{i.jobtitle}}</td>
-                            <td class="column3" >{{i.jobtype}}</td>
-                            <td class="column4" >{{i.paymentmethod}}</td>
-                            <td class="column5" >{{i.jobdescription}}</td>
-                          </tr>
-                                          {% endfor %}
 
-                      </tbody>
-                      </table>
+
+
 <!--profile div-->
                   <div class="container"style="margin-left: 20px ">
                       <div class="row" style="margin-top: 10px;position: center" >
@@ -135,8 +114,6 @@
         </div>
       </div>
     </div>
-
-
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>

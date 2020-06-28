@@ -30,7 +30,6 @@ class Calls():
             user1.info3 = " "
             user1.profile_pic = ""#result2.get('profile_pic', flat=True)[0]
             user1.location2 = result2.values_list('location', flat=True)[0]
-
         user1.username = result.values_list('fullname', flat=True)[0]
         user1.location = result.values_list('location', flat=True)[0]
         user1.birthday = result.values_list('birthday', flat=True)[0]
