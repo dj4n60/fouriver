@@ -4,7 +4,7 @@ from .Calls import Calls
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.template import loader
+from django.template import loader, RequestContext
 from django.db.models import Q
 from django.db import IntegrityError
 from auth.models import appusers
@@ -30,6 +30,8 @@ def createproject(request):
             Projects.save()
 
             return redirect('/')
+        else:
+            return HttpResponse("You have left empty fields")
     else:
         return render(request, 'CreateProject.html')
 
@@ -68,7 +70,7 @@ def searchproject(request):
             if request.POST.get('username'):
                 user = request.POST.get('username')
                 cat = request.POST.get('usertype')
-                return render(request, 'ProjectListing.html',{'Projects': Projects})
+                return render(request, 'ProjectListing.html', {'Projects': Projects})
             else:
                 return render(request, 'MainPage.html', {'mnm': mnm})
         elif "profile" in request.POST:
@@ -105,20 +107,92 @@ def searchproject(request):
     #context = {'Projects':Projects}
 
 
+def edit_profile_info(request):
+    if request.session.get('idiotita') == 'developer':
+        form = EditDeveloperForm(request.POST, request.FILES )
+        context = {
+            'form': form
+        }
+        if request.method == "POST":
+            if form.is_valid():
+
+                username = request.session.get('username')
+                location = request.POST.get('location')
+                language = request.POST.get('language')
+                github = request.POST.get('github')
+                cv = request.POST.get('cv')
+                profile_pic = request.POST.get('profile_pic')
+                new = form.save()
+                new.profile_pic = request.FILES.get('profile_pic')
+                try:
+                    userinfo = developerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        language=language,
+                        github=github,
+                        cv=cv,
+                        profile_pic=profile_pic,
+                    )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect(profilepage, arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                    return TemplateResponse(request, 'EditDeveloperInfo.html', arguments)
+
+        return render(request, 'EditDeveloperInfo.html', context)
+    if request.session.get('idiotita') == 'client':
+        form = EditCustomerForm(request.POST, request.FILES or None)
+        context = {
+            'form': form
+        }
+        if request.method == 'POST':
+            if form.is_valid():
+
+                username = request.session.get('username')
+                location = request.POST.get('location')
+                linkedin = request.POST.get('linkedin')
+                disc = request.POST.get('disc')
+                profile_pic = request.POST.get('profile_pic')
+                new = form.save()
+                new.profile_pic = request.FILES.get('profile_pic')
+
+                try:
+                    userinfo = customerinfo.objects.create(
+                        username=request.session.get('username'),
+                        location=location,
+                        linkedin=linkedin,
+                        disc=disc,
+                        profile_pic=profile_pic,
+                    )
+                    arguments = {}
+                    arguments['mnm'] = "all done"
+                    return redirect(profilepage, arguments)
+                except IntegrityError as e:
+                    arguments = {}
+                    arguments['mnm'] = "sth went wrong"
+                    return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
+
+
+        return render(request, 'EditCustomerInfo.html', context)
+
+
 def projectdetails(request,pk):
     Offers = offers.objects.filter(projectid=pk)
-    totalOffers =offers.objects.filter(projectid=pk).count()
+    totalOffers =Offers.count()
     Projects = projects.objects.get(id=pk)
+    Comments = comments.objects.filter(projectid=pk)
     if request.session.get('username'):
         if Projects.createdby == request.session.get('username'):
-            context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers}
+            context = {'Projects': Projects ,'Offers' : Offers ,'totalOffers':totalOffers,'Comments':Comments}
             return render(request, 'ProjectPage.html', context)
         else:
-            context = {'Projects': Projects, 'totalOffers': totalOffers}
+            context = {'Projects': Projects, 'totalOffers': totalOffers,'Comments':Comments}
             return render(request, 'ProjectPage.html', context)
     #pk is called in the url path
     else:
-        return render(request, 'ProjectPage.html',{'Projects':Projects})
+        return render(request, 'ProjectPage.html',{'Projects':Projects,'Comments':Comments})
 
 
 def myprojects(request):
@@ -237,7 +311,7 @@ def deleteoffer(request,pk):
         myOffer.delete()
         return redirect('/')
     else:
-        myOffer = offers.objects.get(id=pk & Q(isAccepted=False))
+        myOffer = offers.objects.get(Q(id=pk) & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
 
 
@@ -256,71 +330,29 @@ def completeprojectdeveloper(request,pk):
         Project=projects.objects.get(id=pk)
         return render(request,'CompleteProjectDeveloper.html',{'Project':Project})
 
-def edit_profile_info(request):
-    if request.session.get('idiotita') == 'developer':
-        form = EditDeveloperForm(request.POST, request.FILES or None)
-        context = {
-            'form': form
-        }
-        if request.method == "POST":
-            if form.is_valid():
-                cd = form.cleaned_data
-                username = request.session.get('username')
-                location = request.POST.get('location')
-                language = request.POST.get('language')
-                github = request.POST.get('github')
-                cv = request.POST.get('cv')
-                profile_pic = request.POST.get('profile_pic')
-                new = form.save()
-                new.profile_pic = request.FILES.get('profile_pic')
-                try:
-                    userinfo = developerinfo.objects.create(
-                        username=request.session.get('username'),
-                        location=location,
-                        language=language,
-                        github=github,
-                        cv=cv,
-                        profile_pic=profile_pic,
-                    )
-                    arguments = {}
-                    arguments['mnm'] = "all done"
-                    return redirect(profilepage, arguments)
-                except IntegrityError as e:
-                    arguments = {}
-                    arguments['mnm'] = "sth went wrong"
-                    return TemplateResponse(request, 'EditDeveloperInfo.html', arguments)
+def comment(request,pk):
+    if request.method == "POST":
+        if request.POST.get('comments'):
+            Comment = comments()
+            Comment.commentby = request.session.get("username")
+            Comment.projectid = request.POST.get('project_id')
+            Comment.comment = request.POST.get('comments')
 
-        return render(request, 'EditDeveloperInfo.html', context)
-    if request.session.get('idiotita') == 'customer':
-        form = EditCustomerForm(request.POST, request.FILES or None)
-        context = {
-            'form': form
-        }
-        if request.method == "POST":
-            if form.is_valid():
-                cd = form.cleaned_data
-                username = request.session.get('username')
-                location = cd['location']
-                disc = cd['disc']
-                linkedin = cd['linkedin']
-                profile_pic = cd['profile_pic']
-                newfile = FileUploadHandler(title=username, file=request.FILES['profile_pic'])
-                newfile.save()
-                try:
-                    userinfo = customerinfo.objects.create(
-                        username=request.session.get('username'),
-                        location=location,
-                        disc=disc,
-                        linkedin=linkedin,
-                        profile_pic=profile_pic,
-                         )
-                    arguments = {}
-                    arguments['mnm'] = "all done"
-                    return redirect(profilepage, arguments)
-                except IntegrityError as e:
-                    arguments = {}
-                    arguments['mnm'] = "sth went wrong"
-                return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
+            Comment.save()
+            return redirect('/')
+        else:
+            return HttpResponse("Comment section is empty")
+    else:
+        Project=projects.objects.get(id=pk)
+        return render(request,'CommentPage.html',{'Project':Project})
+
+def editproject(request,pk):
+    Project = projects.objects.get(id=pk)
+    if request.method == "POST":
+        Project.jobtitle = request.POST.get('jobtitle')
+        Project.privacy = request.POST.get('privacytype')
+
+        Project.save()
+        return redirect('/')
 
     return render(request, 'EditCustomerInfo.html', context)        
-

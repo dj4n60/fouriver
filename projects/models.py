@@ -1,6 +1,8 @@
 from django.db import models
 from django import forms
+from auth.models import appusers
 
+# Create your models here.
 
 
 class projects(models.Model):

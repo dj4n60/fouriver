@@ -51,8 +51,8 @@
 			     <form method="POST" action="" class="p-5 bg-white">
               {% csrf_token %}
 
-               <select name="developername" id="developername" >
-                                    <option value="No Developer">No Developer Selected</option>
+               <select name="developername" id="developername" required >
+                                    <option value="">No Developer Selected</option>
                                                 {% for i in Users %}
 						                      	<option value="{{ i.username }}">{{ i.username }}</option>
                                                 {% endfor %}
