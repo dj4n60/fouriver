@@ -2,7 +2,51 @@
 {% load static %}
 <html lang="en">
   <head>
-    <title>Fouriver </title>
+
+    <style media="screen">
+      *{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: yellow;
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: green;
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: blue;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+    </style>
+    <title>Rate developer </title>
 
     <script src="https://kit.fontawesome.com/ab9169fef5.js" crossorigin="anonymous"></script>
 
@@ -33,7 +77,7 @@
 
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-        <a class="navbar-brand" href="/">Fouriver</a>
+        <a class="navbar-brand" href="/">Rate developer</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -41,7 +85,6 @@
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
 	            <li class="nav-item cta cta-colored"><a href="/" class="nav-link">Home</a></li>
-                <li class="nav-item cta cta-colored"><a href="/editinfo" class="nav-link">Edit Profile</a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -59,61 +102,6 @@
 
 
 
-<!--profile div-->
-                  <div class="container"style="margin-left: 20px ">
-                      <div class="row" style="margin-top: 10px;position: center" >
-                          <div class="row " style="background-color: #fdfffd ;border-radius: 25px;width:100%" >
-                              <div class="well well-md">
-                                  <div class="row" style="min-height: 500px">
-                                      <div class="left-content col-md-4 " style="display: block;line-height: 1.428571429;color: #999;border: 1px; width: 25% "  >
-
-                                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" style=" width:225px;height:225px;" />
-                                      </div>
-
-                                      <div class="right-content col-md-7 " style="border: 1px; width:70%">
-
-                                          <h1 style="color:black">
-                                              {{user1.username}}
-                                          </h1>
-                                        </br>
-
-
-                                          <h3 title="{{ user1.location}}">{{user1.location}}<i class="fa fa-map-marker" aria-hidden="true" style="color:black" ></i>
-                                          </h3>
-
-                                          <p>
-                                                 <br />
-                                                <i class="fas fa-envelope" style="color:black" ></i><a href="{{ user1.gmail}}">{{ user1.gmail }}</a>
-                                                <br />
-                                                <h3><i class="fas fa-gift" style="color:black;margin-bottom: 10px;margin-right: 10px;"></i>{{ user1.birthday}}</h3>
-                                                <a href="{{user1.info1}}">{{ user1.info1}}</a><!--github-->
-                                                <h3>{{ user1.info2 }}</h3>
-                                                <h3>{{ user1.info3 }}</h3>
-                                          </p>
-                                                        <!-- Split button -->
-                                          <div class=" btn-group" style="height: 50px ;length:225px;">
-                                              <button type="button" class="btn btn-primary" style="font-size:16px; length:120px;">
-                                                                  Social</button>
-                                              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                  <span class="caret"></span><span class="sr-only">Social</span>
-                                                              </button>
-                                              <ul class="dropdown-menu" role="menu">
-                                                  <li><a href="{{ user1.twlink }}">Twitter</a></li><li><a href="{{ user1.fblink }}">Facebook</a></li>
-
-                                                  <li><a href="{{ user1.gitlink}}">Github</a></li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
@@ -136,6 +124,26 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="{% static 'js/google-map.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
+
+
+
+  <form class="" action="" method="POST">
+  <div class="rate">
+      <input type="radio" id="star5" name="rate" value="5" />
+      <label for="star5" title="text">5 stars</label>
+      <input type="radio" id="star4" name="rate" value="4" />
+      <label for="star4" title="text">4 stars</label>
+      <input type="radio" id="star3" name="rate" value="3" />
+      <label for="star3" title="text">3 stars</label>
+      <input type="radio" id="star2" name="rate" value="2" />
+      <label for="star2" title="text">2 stars</label>
+      <input type="radio" id="star1" name="rate" value="1" />
+      <label for="star1" title="text">1 star</label>
+    </div>
+    <input type="submit" value="Rate!" name="rateb" class="form-control btn btn-primary">
+
+  </form>
+
 
   </body>
 </html>

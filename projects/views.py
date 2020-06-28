@@ -3,7 +3,7 @@ from django.core.files.uploadhandler import FileUploadHandler
 from .Calls import Calls
 from django.shortcuts import render
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader, RequestContext
 from django.db.models import Q
 from django.db import IntegrityError
@@ -217,8 +217,8 @@ def apply(request,pk):
             Offers.money = request.POST.get('money')
 
             Offers.save()
-
-            return redirect('/')
+            redirect = "/projectdetails/" + request.POST.get('project_id')
+            return HttpResponseRedirect(redirect)
         else:
             return HttpResponse("Data not saved")
 
@@ -248,7 +248,9 @@ def reccomend(request,pk):
             Reccomends.reccomendedby = request.session.get("username")
 
             Reccomends.save()
-            return redirect('/')
+
+            redirect = "/projectdetails/" + request.POST.get('project_id')
+            return HttpResponseRedirect(redirect)
 
         else:
             return HttpResponse("You left empty fields")
@@ -270,7 +272,8 @@ def acceptoffer(request,pk,sk):
             Offers.isAccepted = True
             Projects.save()
             Offers.save()
-            return redirect('/')
+            redirect = "/projectdetails/" + request.POST.get('project_id')
+            return HttpResponseRedirect(redirect)
         else:
             return HttpResponse("Attributes empty")
     else:
@@ -300,7 +303,8 @@ def deleteoffer(request,pk):
         myOffer = offers.objects.get(id=pk)
 
         myOffer.delete()
-        return redirect('/')
+        arguments['mnm'] = "! Offer Deleted !"
+        return render(request, 'MainPage.html', arguments)
     else:
         myOffer = offers.objects.get(Q(id=pk) & Q(isAccepted=False))
         return render(request, 'DeleteOffer.html', {'myOffer': myOffer})
@@ -313,7 +317,8 @@ def completeprojectdeveloper(request,pk):
             Project.isCompletedbyDeveloper = True
 
             Project.save()
-            return redirect('/')
+            redirect = "/projectdetails/" + pk
+            return HttpResponseRedirect(redirect)
         else:
             return HttpResponse("Comment section is empty")
     else:
@@ -327,9 +332,11 @@ def comment(request,pk):
             Comment.commentby = request.session.get("username")
             Comment.projectid = request.POST.get('project_id')
             Comment.comment = request.POST.get('comments')
-
+            # -*- coding: utf-8 -*-
+            redirect = "/projectdetails/" + request.POST.get('project_id')
             Comment.save()
-            return redirect('/')
+            #return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+            return HttpResponseRedirect(redirect)
         else:
             return HttpResponse("Comment section is empty")
     else:
@@ -343,8 +350,23 @@ def editproject(request,pk):
         Project.privacy = request.POST.get('privacytype')
 
         Project.save()
-        return redirect('/')
+        redirect = "/projectdetails/" + request.POST.get('project_id')
+        return HttpResponseRedirect(redirect)
 
     else:
         context = {'Project':Project}
         return render(request,'EditProject.html',context)
+
+def rate(request,pk):
+    if request.method == "POST":
+        arguments = {}
+        arguments['mnm'] = ''
+        arguments['mnm'] = 'The developer have been rated we hope to see you soon!'
+
+        #arguments['mnm'] = request.POST.get('rate') #number 1-5 meta ta diagrafw!
+        return render(request, 'MainPage.html', arguments)
+    else:
+        arguments = {}
+        arguments['mnm'] = ''
+        arguments['mnm'] = "! You have been rated!"
+        return render(request, 'stars.html', arguments)

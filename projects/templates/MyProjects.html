@@ -85,7 +85,7 @@
                                 {% endif %}
                                 {% if request.session.idiotita == 'client' %}
                                         {% if i.isCompletedbyDeveloper == True %}
-                                    <td class="column7"><a href="" class="btn">Rate Developer and Complete Project</a></td>
+                                    <td class="column7"><a href="{% url 'rate' i.id %}"" class="btn">Rate Developer and Complete Project</a></td>
                                             {% endif %}
                                 {% endif %}
 								</tr>
