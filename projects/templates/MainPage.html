@@ -34,25 +34,34 @@
 
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="http://127.0.0.1:8000">Fouriver</a>
+	      <a class="navbar-brand" href="/">Fouriver</a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item cta cta-colored"> <a class="nav-link"  href="http://127.0.0.1:8000" >Home</a></li>
-                <!--
-            <li class="nav-item cta cta-colored">
-                 <form  method="post" id="profile">
-                     <button type="submit" form="profile" name="profile" value="Profile">Profile</button>
-                 </form>
-            </li>-->
-                <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/profilepage" class="nav-link">Profile</a></li>
+	          <li class="nav-item cta cta-colored"> <a class="nav-link"  href="/" >Home</a></li>
 
-	          <li class="nav-item cta mr-md-2"> <a href="http://127.0.0.1:8000/register" class="nav-link">Register</a></li>
+            {% if request.session.username %}
+            <li class="nav-item cta mr-md-2">
+                 <form  method="post" id="profile">
+                <button type="submit" form="profile" name="profile" value="Profile">Profile</button>
+            </li>
+                <li class="nav-item cta mr-md-2">  <a href="/myprojects" class="nav-link">MyProjects</a> </li>
+                {% if request.session.idiotita == 'developer' %}
+                <li class="nav-item cta mr-md-2">  <a href="/myreccomendations" class="nav-link">MyReccomendations</a> </li>
+                 <li class="nav-item cta mr-md-2">  <a href="/myoffers" class="nav-link">MyOffers</a> </li>
+                    {% endif %}
+
+             {% endif %}
+            {% if request.session.idiotita  %}
+            <li class="nav-item cta cta-colored"><a href="/logout" class="nav-link">Logout</a></li>
+            {% else %}
+              <li class="nav-item cta cta-colored"><a href="/login" class="nav-link">Login</a></li>
+              <li class="nav-item cta mr-md-2"> <a href="/register" class="nav-link">Register</a></li>
             {% endif %}
-	          <li class="nav-item cta cta-colored"><a href="http://127.0.0.1:8000/login" class="nav-link">Login</a></li>
+
 	        </ul>
 
 	      </div>
@@ -90,8 +99,12 @@
 			              				<div class="form-group">
 				              				<div class="form-field">
 				              					<div class="icon"><span class="icon-briefcase"></span></div>
-								                <input type="text" class="form-control" name="projecttext" id="projecttext" >
+								                <input type="text" class="form-control" name="projecttext" id="projecttext" placeholder="Title of project">
 								              </div>
+                              <div class="form-field">
+                                <div class="icon"><span class="icon-briefcase"></span></div>
+                                <input type="text" class="form-control" name="details" id="details" placeholder="Advance search of project">
+                              </div>
 							              </div>
 			              			</div>
 			              			<div class="col-md">
@@ -100,7 +113,7 @@
 				              					<div class="select-wrap">
 						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 						                      <select name="projectcategory" id="projectcategory" class="form-control">
-                                    <option value="Full Time">No category</option>
+                                    <option value="No category">No category</option>
 						                      	<option value="Full Time">Full Time</option>
 						                        <option value="Part Time">Part Time</option>
 						                        <option value="Freelance">Freelance</option>
@@ -132,6 +145,16 @@
 				              					<div class="icon"><span class="icon-user"></span></div>
 								                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
 								              </div>
+                              <br>
+
+                              <div class="form-field">
+				              					<div class="icon"><span class="icon-user"></span></div>
+								                <input type="text" class="form-control" name="nprojects" id="nprojects" placeholder="Num projects">
+								              </div>
+                              <div class="form-field">
+                                <div class="icon"><span class="icon-user"></span></div>
+                                <input type="text" class="form-control" name="rating" id="rating" placeholder="Rating">
+                              </div>
 							              </div>
 			              			</div>
 			              			<div class="col-md">
@@ -140,8 +163,8 @@
 				              					<div class="select-wrap">
 						                      <div class="icon"><span class="ion-ios-arrow-down"></span></div>
 						                      <select name="usertype" id="usertype" class="form-control">
-						                      	<option value="">Client</option>
-						                        <option value="">Developer</option>
+						                      	<option value="Client">Client</option>
+						                        <option value="Developer">Developer</option>
 
 						                      </select>
 						                    </div>
@@ -158,6 +181,10 @@
 			              				<div class="form-group">
 			              					<div class="form-field">
 								                <input type="submit" value="Search" name="SearchU" class="form-control btn btn-primary">
+								              </div>
+                              <br>
+                              <div class="form-field">
+                                <input type="submit" value="Advance Search" name="SearchUA" class="form-control btn btn-primary">
 								              </div>
 							              </div>
 			              			</div>

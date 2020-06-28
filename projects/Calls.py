@@ -1,5 +1,6 @@
 from auth.models import appusers
-from .models import user, developerinfo, customerinfo
+from .models import *
+from django.db.models import Q
 
 class Calls():
 
@@ -45,3 +46,49 @@ class Calls():
             user1.location = user1.location
 
         return user1
+
+    def searchP(self,request):
+        textinjob = request.POST.get('projecttext')
+        mainCategory = request.POST.get('projectcategory')
+        details = request.POST.get('detail')
+        criterion1 = Q(jobtitle__icontains=textinjob)
+        criterion2 = Q(jobtype__iexact=mainCategory)
+        criterion3 = Q(jobdescription__exact=details)
+        if request.session.get('username'):
+            if  "No category" == mainCategory:
+                allProjects = projects.objects.filter( (criterion1 | criterion3) )
+            else:
+                allProjects = projects.objects.filter( (criterion1 | criterion3) &  criterion2 )
+            return allProjects
+        else:
+            publicProjects = projects.objects.filter(Q(privacy="Public") & criterion1)
+            return publicProjects
+
+    def searchU(self, request):
+        criterion1 = Q(username__icontains=request.POST.get('username'))
+        criterion2 = Q(idiotita__exact=request.POST.get('usertype'))
+        criterion3 = request.POST.get('nprojects')
+        criterion4 = Q(isCopletedbyClient=True)
+        criterion5 = Q(tagdev__exact=request.POST.get('username'))
+        username = request.session.get('username')
+
+        ######
+        if "SearchUA" in request.POST:
+            doneprojects = projects.objects.filter( criterion4 ) #completed projects
+            done_dev = []
+            show_dev = [] #dev to search
+            for i in doneprojects:
+                #done_dev.append(i.tagdev)
+                criterion5 = Q(tagdev__exact=i.tagdev)
+                numprojects = projects.objects.filter( criterion4 & criterion5).count() # number of projects from username
+                if numprojects >= int(criterion3):
+                    show_dev.append(i.tagdev)
+            criterionmulusername = Q(username__in=show_dev)
+            allUsers = appusers.objects.filter(criterionmulusername | criterion2 ) #Users with username Advance search
+            ################
+            #criterion4 = Q(idiotita__exact=request.POST.get('rating')) search on appusers
+        else:
+            allUsers = appusers.objects.filter(criterion1 & criterion2 ) #Users with username simple search
+
+
+        return allUsers

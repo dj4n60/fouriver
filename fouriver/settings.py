@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'site_app.apps.SiteAppConfig',
     'auth.apps.AuthConfig',
-    'projects.apps.ProjectsConfig'
+    'projects.apps.ProjectsConfig',
+    'django_seed',
 
 ]
 

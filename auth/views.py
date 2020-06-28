@@ -65,8 +65,11 @@ def register(request):
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
 
 
-def logout_request(request):
-    if request.method == 'POST':
+def logout(request):
+    if request.session:
         request.session.flush()
-        messages.info(request, "Logged out succesfully!")
-        return render(request, 'auth/LoginForm.html')
+        return redirect('/')
+    else:
+        return redirect('/')
+
+        #messages.info(request, "Logged out succesfully!")
