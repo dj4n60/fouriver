@@ -4,6 +4,7 @@ from django.template import loader
 from .Auth import Authetic
 from django.db import IntegrityError
 from .models import appusers
+from projects.models import customerinfo, developerinfo
 from django.template.response import TemplateResponse
 
 from django.contrib import messages
@@ -52,12 +53,21 @@ def register(request):
         authobject = Authetic(Password)
         try:
             newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
+            try:
+                if idiotita == 'client':
+                    userinfo = customerinfo.objects.create(username=username)
+                else:
+                    userinfo = developerinfo.objects.create(username=username)
+            except IntegrityError as e:
+                arguments = {}
+                arguments['mnm'] = "New error"
+                return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
             arguments = {}
             arguments['mnm'] = "Try to login with your new account"
-            return redirect('http://127.0.0.1:8000/')  # theloume success
+            return render(request, 'MainPage.html', arguments)
         except IntegrityError as e:
             arguments = {}
-            arguments['mnm'] = "Username already exist"
+            arguments['mnm'] = "Username exist"
             return TemplateResponse(request, 'auth/RegisterForm.html', arguments)
     else:
             arguments = {}

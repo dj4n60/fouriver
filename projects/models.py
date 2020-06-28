@@ -15,15 +15,15 @@ class projects(models.Model):
     tagdev = models.CharField(max_length=100,null=True)
     offerby = models.CharField(max_length=100,null=True)
     createdby = models.CharField(max_length=100,null=True)
-    isCompleted = models.BooleanField(default=False)
-    isCompletedbyDeveloper = models.BooleanField(default=False)
-    isCopletedbyClient = models.BooleanField(default=False)
+    isCompleted = models.BooleanField(default=False) #feveloper
+    isCompletedbyDeveloper = models.BooleanField(default=False) #o dev accepted
+    isCopletedbyClient = models.BooleanField(default=False) # okay meta to ratign ginetai true
     developercomments = models.CharField(max_length=100,null=True)
 
 
 
-    class Meta:
-        db_table = "projects"
+class Meta:
+    db_table = "projects"
 
     def __str__(self):
         return self.jobtitle
@@ -51,8 +51,8 @@ class offers(models.Model):
     class Meta:
         db_table = "offers"
 
-    def __str__(self):
-        return self.developername
+        def __str__(self):
+            return self.developername
 
 class reccomends(models.Model):
     developername = models.CharField(max_length=100,null=True)
@@ -92,3 +92,11 @@ class customerinfo(models.Model):
 
     class Meta:
         db_table = "customerinfo"
+
+class comments(models.Model):
+    commentby = models.CharField(max_length=100)
+    projectid = models.CharField(max_length=100)
+    comment = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "comments"

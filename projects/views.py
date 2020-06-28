@@ -178,7 +178,6 @@ def edit_profile_info(request):
 
         return render(request, 'EditCustomerInfo.html', context)
 
-
 def projectdetails(request,pk):
     Offers = offers.objects.filter(projectid=pk)
     totalOffers =Offers.count()
@@ -346,4 +345,6 @@ def editproject(request,pk):
         Project.save()
         return redirect('/')
 
-    return render(request, 'EditCustomerInfo.html', context)
+    else:
+        context = {'Project':Project}
+        return render(request,'EditProject.html',context)
