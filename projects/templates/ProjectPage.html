@@ -32,7 +32,7 @@
     
     <main>
 
-
+<li class="nav-item cta cta-colored"> <a class="btn"  href="http://127.0.0.1:8000"  >Home</a></li>
         <!-- job post company Start -->
         <div class="job-post-company pt-120 pb-120">
             <div class="container">
@@ -109,6 +109,23 @@
                     {% endif %}
 					</table>
 
+                        <p style="color:white;background-color: midnightblue;border-radius: 5px;" >Comment Section</p>
+                    {% for i in Comments %}
+
+                            <p></p>
+                            <div style="border: 2px outset black;display: block;">
+                                    <ul>
+                                        <li>Username</li>
+                                        <h4>{{ i.commentby }}</h4>
+                                     </ul>
+                                    <ul>
+                                        <li>Comment</li>
+                                        <h4>{{ i.comment }}</h4>
+
+                                    </ul>
+                            </div>
+
+                    {% endfor %}
                     </div>
                     <!-- Right Content -->
                     <div class="col-xl-4 col-lg-4">
@@ -135,7 +152,19 @@
                                 <p></p>
                             <a href="{% url 'reccomend' Projects.id %}" class="btn">Reccomend to Developer</a>
                          </div>
+                                <div class="apply-btn2">
+                                <p></p>
+                            <a href="{% url 'comment' Projects.id %}" class="btn">Make comment</a>
+                         </div>
                             {% endif %}
+                        {% endif %}
+                        {% if Projects.isCompleted != True %}
+                        {% if Projects.createdby == request.session.username %}
+                            <div class="apply-btn2">
+                            <p></p>
+                            <a href="{% url 'editproject' Projects.id %}" class="btn">Edit</a>
+                         </div>
+                        {% endif %}
                         {% endif %}
                        </div>
                         

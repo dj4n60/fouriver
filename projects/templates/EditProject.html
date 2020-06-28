@@ -29,9 +29,6 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-
-
   </head>
   <body>
 
@@ -40,7 +37,7 @@
 
 
           <div class="col-md-8 ftco-animate text-center text-md-left mb-5" data-scrollax=" properties: { translateY: '70%' }">
-            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Apply for Job</h1>
+            <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Edit Job</h1>
           </div>
 
 
@@ -56,31 +53,32 @@
 
               <div class="row form-group">
                 <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Project id</label>
-                  <input type="text" id="project_id" name="project_id" class="form-control" value="{{ Projects.id }}" readonly="readonly">
+                  <label class="font-weight-bold" for="fullname">Job Title</label>
+                  <input type="text" id="jobtitle" name="jobtitle" class="form-control" value="{{ Project.jobtitle }}" required>
                 </div>
               </div>
 
-              <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Project Title</label>
-                  <input type="text" id="project_title" name="project_title" class="form-control"  value="{{ Projects.jobtitle }}" readonly="readonly">
-                </div>
+
+              <div class="col-md">
+                  <div class="form-group">
+                      <div class="form-field">
+                          <div class="select-wrap">
+                              <h3>Privacy</h3>
+						                      <select name="privacytype" id="privacytype" class="form-control">
+                                    <option value="{{ Project.privacy }}">{{ Project.privacy  }}</option>
+                                                  {% if Project.privacy == 'Public' %}
+						                      	<option value="Private">Private</option>
+                                                  {% else %}
+						                        <option value="Public">Public</option>
+                                                  {% endif %}
+						                      </select>
+                          </div>
+                      </div>
+                  </div>
               </div>
 
-              <div class="row form-group mb-5">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Offer by</label>
-                    <p class="form-control" >{{ request.session.username }}</p>
-                </div>
-              </div>
 
-                <div class="row form-group">
-                <div class="col-md-12 mb-3 mb-md-0">
-                  <label class="font-weight-bold" for="fullname">Money(50-100)</label>
-                  <input type="number" id="money" name="money" class="form-control" min="50" max="100" step="10" required>
-                </div>
-              </div>
+
 
               <div class="row form-group">
                 <div class="col-md-12">

@@ -7,14 +7,23 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link href = "{%  static 'css/editprofile/editprofile.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700,800,900" rel="stylesheet">
+    <style type="text/css">
+    .exactCenter {
+      width:200px;
+      height:200px;
+      position: fixed;
 
+      top: 40%;
+      left: 60%;
+      margin-top: -100px;
+      margin-left: -400px;
+    }</style>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-
-<div class="hero-image js-fullheight" style="background-image: url({% static 'images/bg_2.jpg' %}); background-position: center;background-repeat: no-repeat;background-size: cover;text-align: center;" ><!-- rewove border-->
-    <div class="content container">
+<body style="background-image: url({% static 'images/bg_2.jpg' %});background-repeat: no-repeat;background-size: cover " >
+<div class="exactCenter" >
+    <div class="comtent container">
         <div class="row">
             {% block content  %}
                 <form method="POST"> {% csrf_token %}
@@ -24,13 +33,6 @@
             {% endblock %}
         </div>
     </div>
-
-
-
 </div>
-
-
-
-
 </body>
 </html>
