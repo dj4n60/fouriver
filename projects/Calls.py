@@ -13,6 +13,15 @@ class Calls():
         user1 = appusers()
         result = appusers.objects.filter(username=request.session.get("username"))
 
+        user1.username = result.values_list('fullname', flat=True)[0]
+        user1.location = result.values_list('location', flat=True)[0]
+        user1.birthday = result.values_list('birthday', flat=True)[0]
+        user1.gmail = result.values_list('email', flat=True)[0]
+        user1.twlink = 'test'
+        user1.fblink = 'test'
+        user1.gitlink = 'test'
+
+
         if request.session.get('idiotita') == 'developer':
             result1 = developerinfo.objects.filter(username=request.session.get("username"))
             try:
@@ -21,7 +30,7 @@ class Calls():
                 user1.info2 = result1.values_list('cv', flat=True)[0]
                 user1.info3 = result1.values_list('language', flat=True)[0]
                 user1.profile_pic = 'test'# result1.values_list('profile_pic', flat=True)
-                user1.location1 = result1.values_list('location', flat=True)[0]
+                user1.location = result1.values_list('location', flat=True)[0]
 
             except IndexError as e:
                 user1.info1 = 'not available'
@@ -37,21 +46,16 @@ class Calls():
                 user1.info1 = result2.values_list('linkedin', flat=True)[0]
                 user1.info2 = result2.values_list('disc', flat=True)[0]
                 user1.info3 = " "
-                user1.profile_pic = 'not available' # result2.get('profile_pic', flat=True)[0]
-                user1.location2 = result2.values_list('location', flat=True)[0]
+                user1.profile_pic = 'not available'# result2.get('profile_pic', flat=True)[0]
+                user1.location = result2.values_list('location', flat=True)[0]
+
             except IndexError as e:
                 user1.info1 = 'not available'
                 user1.info2 = 'not available'
                 user1.info3 = 'not available'
-                user1.location1 = result.values_list('location', flat=True)[0]
+                user1.location = result.values_list('location', flat=True)[0]
 
-        user1.username = result.values_list('fullname', flat=True)[0]
-        user1.location = result.values_list('location', flat=True)[0]
-        user1.birthday = result.values_list('birthday', flat=True)[0]
-        user1.gmail = result.values_list('email', flat=True)[0]
-        user1.twlink = 'test'
-        user1.fblink = 'test'
-        user1.gitlink = 'test'
+
 
 
 
