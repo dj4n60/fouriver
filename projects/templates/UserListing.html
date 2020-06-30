@@ -41,6 +41,7 @@
 								<tr>
 									<td class="column1" >{{i.username}}</td>
 									<td class="column2" >{{i.fullname}}</td>
+									<td class="column3" > <a href="{% url 'profileviewer' i.username %}" class="btn">Go to profile</td>
 								</tr>
                                 {% endfor %}
 

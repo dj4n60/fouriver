@@ -24,5 +24,6 @@ urlpatterns = [
     path('comment/<str:pk>/', comment, name="comment"),
     path('editproject/<str:pk>/', editproject, name="editproject"),
     path('rate/<str:pk>/', rate, name="rate"),
+    path('profileviewer/<str:pk>/', profileviewer, name="profileviewer"),
 
 ]

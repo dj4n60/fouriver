@@ -85,8 +85,12 @@
                                 {% endif %}
                                 {% if request.session.idiotita == 'client' %}
                                         {% if i.isCompletedbyDeveloper == True %}
+																					{% if i.isCopletedbyClient == False %}
                                     <td class="column7"><a href="{% url 'rate' i.id %}"" class="btn">Rate Developer and Complete Project</a></td>
-                                            {% endif %}
+																					{% else %}
+																							<td class="column7">Completed</a></td>
+																						{% endif %}
+                                          {% endif %}
                                 {% endif %}
 								</tr>
                                 {% endfor %}

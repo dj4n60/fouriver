@@ -13,6 +13,7 @@ class Calls():
         user1 = appusers()
         result = appusers.objects.filter(username=request.session.get("username"))
 
+        user1.user = result.values_list('username', flat=True)[0]
         user1.username = result.values_list('fullname', flat=True)[0]
         user1.location = result.values_list('location', flat=True)[0]
         user1.birthday = result.values_list('birthday', flat=True)[0]
@@ -80,10 +81,11 @@ class Calls():
 
     def searchU(self, request):
         criterion1 = Q(username__icontains=request.POST.get('username'))
-        criterion2 = Q(idiotita__exact=request.POST.get('usertype'))
+        criterion2 = Q(idiotita__iexact=request.POST.get('usertype'))
         criterion3 = request.POST.get('nprojects')
         criterion4 = Q(isCopletedbyClient=True)
-        criterion5 = Q(tagdev__exact=request.POST.get('username'))
+        criterion5 = Q(offerby__exact=request.POST.get('username'))
+        criterion6 = Q(rating__iexact=request.POST.get('rating'))
         username = request.session.get('username')
 
         ######
@@ -91,14 +93,18 @@ class Calls():
             doneprojects = projects.objects.filter( criterion4 ) #completed projects
             done_dev = []
             show_dev = [] #dev to search
-            for i in doneprojects:
-                #done_dev.append(i.tagdev)
-                criterion5 = Q(tagdev__exact=i.tagdev)
-                numprojects = projects.objects.filter( criterion4 & criterion5).count() # number of projects from username
-                if numprojects >= int(criterion3):
-                    show_dev.append(i.tagdev)
-            criterionmulusername = Q(username__in=show_dev)
-            allUsers = appusers.objects.filter(criterionmulusername | criterion2 ) #Users with username Advance search
+            if criterion3:
+                for i in doneprojects:
+                    #done_dev.append(i.tagdev)
+                    criterion5 = Q(offerby__exact=i.offerby)
+                    numprojects = projects.objects.filter( criterion4 & criterion5).count() # number of projects from username
+                    if numprojects >= int(criterion3):
+                        show_dev.append(i.offerby)
+                criterionmulusername = Q(username__in=show_dev)
+                allUsers = appusers.objects.filter( criterionmulusername | criterion6 ) #Users with username Advance search
+            else:
+                allUsers = appusers.objects.filter( criterion6 ) #Users with username Advance search
+
             ################
             #criterion4 = Q(idiotita__exact=request.POST.get('rating')) search on appusers
         else:

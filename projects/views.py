@@ -43,6 +43,55 @@ def profilepage(request):  # (request,username):
     context = {'user1': user1}
     return render(request, "ProfilePage.html", context)
 
+def profileviewer(request,pk):  # (request,username):
+    user1 = appusers()
+    result = appusers.objects.filter(username=pk)
+
+    user1.username = result.values_list('fullname', flat=True)[0]
+    user1.location = result.values_list('location', flat=True)[0]
+    user1.birthday = result.values_list('birthday', flat=True)[0]
+    user1.gmail = result.values_list('email', flat=True)[0]
+    user1.twlink = 'test'
+    user1.fblink = 'test'
+    user1.gitlink = 'test'
+
+
+    if result.values_list('idiotita', flat=True)[0] == 'developer':
+        result1 = developerinfo.objects.filter(username=pk)
+        try:
+
+            user1.info1 = result1.values_list('github', flat=True)[0]
+            user1.info2 = result1.values_list('cv', flat=True)[0]
+            user1.info3 = result1.values_list('language', flat=True)[0]
+            user1.profile_pic = 'test'# result1.values_list('profile_pic', flat=True)
+            user1.location = result1.values_list('location', flat=True)[0]
+
+        except IndexError as e:
+            user1.info1 = 'not available'
+            user1.info2 = 'not available'
+            user1.info3 = 'not available'
+            user1.location1 = result.values_list('location', flat=True)[0]
+
+
+    if result.values_list('idiotita', flat=True)[0] == 'client':
+
+        result2 = customerinfo.objects.filter(username=pk)
+        try:
+            user1.info1 = result2.values_list('linkedin', flat=True)[0]
+            user1.info2 = result2.values_list('disc', flat=True)[0]
+            user1.info3 = " "
+            user1.profile_pic = 'not available'# result2.get('profile_pic', flat=True)[0]
+            user1.location = result2.values_list('location', flat=True)[0]
+
+        except IndexError as e:
+            user1.info1 = 'not available'
+            user1.info2 = 'not available'
+            user1.info3 = 'not available'
+            user1.location = result.values_list('location', flat=True)[0]
+
+    context = {'user1': user1}
+    return render(request, "ProfilePage.html", context)
+
 def searchproject(request):
     arguments = {}
     arguments['mnm'] = ''
@@ -60,7 +109,7 @@ def searchproject(request):
                 return render(request, 'MainPage.html', arguments)
 
         elif "SearchU" in request.POST:
-            if request.POST.get('username'):
+            if request.POST.get('username') :
                 callobject = Calls()
                 usersearch = callobject.searchU(request)
                 return render(request, 'UserListing.html',{'Projects': usersearch})
@@ -68,7 +117,7 @@ def searchproject(request):
                 arguments['mnm'] = "! Please provide keys !"
                 return render(request, 'MainPage.html',arguments)
         elif "SearchUA" in request.POST:
-            if request.POST.get('nprojects'):
+            if request.POST.get('nprojects') or request.POST.get('rating'):
                 callobject = Calls()
                 usersearch = callobject.searchU(request)
                 return render(request, 'UserListing.html',{'Projects': usersearch})
@@ -96,16 +145,6 @@ def searchproject(request):
             # showing only public projects
             publicprojects = projects.objects.filter(privacy="Public")[:4]
             return render(request, 'MainPage.html', {'allprojects': publicprojects})
-
-#projectlisting
-#def toprojectpage(request):
-        #jobtitle = request.POST.get('jobtitle')
-        #Projects = projects.objects.filter(jobtitle=jobtitle)
-        #return render(request, 'ProjectPage.html' , {'Projects':Projects})
-    #Projects in {} refer to html / data passed to html
-    #Projects = projects.objects.filter(jobtitle=jobtitle)
-    #context = {'Projects':Projects}
-
 
 def edit_profile_info(request):
     if request.session.get('idiotita') == 'developer':
@@ -365,11 +404,16 @@ def rate(request,pk):
     if request.method == "POST":
         project = projects.objects.get(id=pk)
         developer = developerinfo.objects.get(username=project.offerby)
+        appuser = appusers.objects.get(username=project.offerby)
+
         if request.POST.get('rate'):
             rating = request.POST.get('rate')
+            project.isCopletedbyClient = True
             developer.rating = (float(rating) + float(developer.rating))/2
+            appuser.rating = (float(rating) + float(developer.rating))/2
+            appuser.save()
             developer.save()
-            project.delete()
+            project.save()
             arguments = {}
             arguments['mnm'] = ''
             arguments['mnm'] = 'The developer have been rated. We hope to see you soon! '
@@ -377,12 +421,15 @@ def rate(request,pk):
         else:
             #request.POST.get('rate') = non type ara 0
             rating = "0"
+            project.isCopletedbyClient = True
             developer.rating = (float(rating) + float(developer.rating))/2
+            appuser.rating = (float(rating) + float(developer.rating))/2
+            appuser.save()
             developer.save()
-            project.delete()
+            project.save()
             arguments = {}
             arguments['mnm'] = ''
-            arguments['mnm'] = 'The developer have been rated. We hope to see you soon!' 
+            arguments['mnm'] = 'The developer have been rated. We hope to see you soon!'
             return render(request, 'MainPage.html', arguments)
     else:
         arguments = {}

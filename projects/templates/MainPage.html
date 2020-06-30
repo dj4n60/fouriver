@@ -44,10 +44,7 @@
 	          <li class="nav-item cta cta-colored"> <a class="nav-link"  href="/" >Home</a></li>
 
             {% if request.session.username %}
-            <li class="nav-item cta mr-md-2">
-
                <li class="nav-item cta mr-md-2">  <a href="/profilepage" class="nav-link">Profile</a> </li>
-            </li>
                 <li class="nav-item cta mr-md-2">  <a href="/myprojects" class="nav-link">MyProjects</a> </li>
                 {% if request.session.idiotita == 'developer' %}
                 <li class="nav-item cta mr-md-2">  <a href="/myreccomendations" class="nav-link">MyReccomendations</a> </li>

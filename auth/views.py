@@ -52,11 +52,28 @@ def register(request):
         Password = str(password)
         authobject = Authetic(Password)
         try:
-            newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
-
+            if idiotita == "developer"  :
+                newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita)
+                userinfo = developerinfo.objects.create(
+                    username=username,
+                    location="location",
+                    language="language",
+                    github="github",
+                    cv="cv",
+                    profile_pic="profile_pic",
+                    )
+            else:
+                newuser = appusers.objects.create(username=username,fullname=fullname,location=location,email=email,birthday=birthday,password=str(authobject.encrypt()),idiotita=idiotita,rating="-24")
+                userinfo = customerinfo.objects.create(
+                    username=username,
+                    location="location",
+                    linkedin="linkedin",
+                    disc="disc",
+                    profile_pic="profile_pic",
+                    )
             arguments = {}
             arguments['mnm'] = "Try to login with your new account"
-            return render(request, 'MainPage.html', arguments)
+            return redirect('/')
         except IntegrityError as e:
             arguments = {}
             arguments['mnm'] = "Username exist"
