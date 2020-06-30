@@ -78,6 +78,8 @@ class developerinfo(models.Model):
     github = models.CharField(max_length=50, default="not available")
     cv = models.CharField(max_length=50, default="not available")
     profile_pic = models.ImageField(upload_to='static/images/', )
+    rating =  models.CharField(max_length=4, default="0")
+
 
     class Meta:
         db_table = "developerinfo"

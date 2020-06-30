@@ -40,9 +40,8 @@ def createproject(request):
 def profilepage(request):  # (request,username):
     callobject = Calls()
     user1 = callobject.profilecall(request)
-    context = {'user1':user1 }
+    context = {'user1': user1}
     return render(request, "ProfilePage.html", context)
-
 
 def searchproject(request):
     arguments = {}
@@ -126,6 +125,7 @@ def edit_profile_info(request):
                 new = form.save()
                 new.profile_pic = request.FILES.get('profile_pic')
                 try:
+                    developerinfo.objects.get(username=request.session.get('username')).delete()
                     userinfo = developerinfo.objects.create(
                         username=request.session.get('username'),
                         location=location,
@@ -134,9 +134,11 @@ def edit_profile_info(request):
                         cv=cv,
                         profile_pic=profile_pic,
                     )
+
                     arguments = {}
                     arguments['mnm'] = "all done"
-                    return redirect(profilepage, arguments)
+                    redirect = '/profilepage'
+                    return HttpResponseRedirect(redirect)
                 except IntegrityError as e:
                     arguments = {}
                     arguments['mnm'] = "sth went wrong"
@@ -160,6 +162,7 @@ def edit_profile_info(request):
                 new.profile_pic = request.FILES.get('profile_pic')
 
                 try:
+                    customerinfo.objects.get(username=request.session.get('username')).delete()
                     userinfo = customerinfo.objects.create(
                         username=request.session.get('username'),
                         location=location,
@@ -169,14 +172,15 @@ def edit_profile_info(request):
                     )
                     arguments = {}
                     arguments['mnm'] = "all done"
-                    return redirect(profilepage, arguments)
+                    redirect = '/profilepage'
+                    return HttpResponseRedirect(redirect)
                 except IntegrityError as e:
                     arguments = {}
                     arguments['mnm'] = "sth went wrong"
                     return TemplateResponse(request, 'EditCustomerInfo.html', arguments)
 
-
         return render(request, 'EditCustomerInfo.html', context)
+
 
 def projectdetails(request,pk):
     Offers = offers.objects.filter(projectid=pk)
@@ -359,12 +363,27 @@ def editproject(request,pk):
 
 def rate(request,pk):
     if request.method == "POST":
-        arguments = {}
-        arguments['mnm'] = ''
-        arguments['mnm'] = 'The developer have been rated we hope to see you soon!'
-
-        #arguments['mnm'] = request.POST.get('rate') #number 1-5 meta ta diagrafw!
-        return render(request, 'MainPage.html', arguments)
+        project = projects.objects.get(id=pk)
+        developer = developerinfo.objects.get(username=project.offerby)
+        if request.POST.get('rate'):
+            rating = request.POST.get('rate')
+            developer.rating = (float(rating) + float(developer.rating))/2
+            developer.save()
+            project.delete()
+            arguments = {}
+            arguments['mnm'] = ''
+            arguments['mnm'] = 'The developer have been rated. We hope to see you soon! '
+            return render(request, 'MainPage.html', arguments)
+        else:
+            #request.POST.get('rate') = non type ara 0
+            rating = "0"
+            developer.rating = (float(rating) + float(developer.rating))/2
+            developer.save()
+            project.delete()
+            arguments = {}
+            arguments['mnm'] = ''
+            arguments['mnm'] = 'The developer have been rated. We hope to see you soon!' 
+            return render(request, 'MainPage.html', arguments)
     else:
         arguments = {}
         arguments['mnm'] = ''
