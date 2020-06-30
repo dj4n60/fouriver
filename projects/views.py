@@ -43,7 +43,6 @@ def profilepage(request):  # (request,username):
     context = {'user1': user1}
     return render(request, "ProfilePage.html", context)
 
-
 def searchproject(request):
     arguments = {}
     arguments['mnm'] = ''
@@ -364,12 +363,27 @@ def editproject(request,pk):
 
 def rate(request,pk):
     if request.method == "POST":
-        arguments = {}
-        arguments['mnm'] = ''
-        arguments['mnm'] = 'The developer have been rated we hope to see you soon!'
-
-        #arguments['mnm'] = request.POST.get('rate') #number 1-5 meta ta diagrafw!
-        return render(request, 'MainPage.html', arguments)
+        project = projects.objects.get(id=pk)
+        developer = developerinfo.objects.get(username=project.offerby)
+        if request.POST.get('rate'):
+            rating = request.POST.get('rate')
+            developer.rating = (float(rating) + float(developer.rating))/2
+            developer.save()
+            project.delete()
+            arguments = {}
+            arguments['mnm'] = ''
+            arguments['mnm'] = 'The developer have been rated. We hope to see you soon! '
+            return render(request, 'MainPage.html', arguments)
+        else:
+            #request.POST.get('rate') = non type ara 0
+            rating = "0"
+            developer.rating = (float(rating) + float(developer.rating))/2
+            developer.save()
+            project.delete()
+            arguments = {}
+            arguments['mnm'] = ''
+            arguments['mnm'] = 'The developer have been rated. We hope to see you soon!' 
+            return render(request, 'MainPage.html', arguments)
     else:
         arguments = {}
         arguments['mnm'] = ''
