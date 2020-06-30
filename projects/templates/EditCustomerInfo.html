@@ -17,6 +17,25 @@
       left: 60%;
       margin-top: -100px;
       margin-left: -400px;
+    }
+    .bordersha{
+        height: 400px;
+        width: 450px;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-bottom: 1px solid #999;
+        border-right: 1px solid #999;
+        box-shadow: 0 5px 10px #888888;
+    }
+    .button {
+      background-color: #008CBA; /* Green */
+      border: none;
+      color: white;
+      padding: 10px 45px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
     }</style>
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -24,14 +43,17 @@
 <body style="background-image: url({% static 'images/bg_2.jpg' %});background-repeat: no-repeat;background-size: cover " >
 <div class="exactCenter" >
     <div class="comtent container">
-        <div class="row">
-            {% block content  %}
-                <form method="POST"> {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Save"/>
-                </form>
-            {% endblock %}
-        </div>
+
+
+            <div class=" row bordersha" style="text-align: center">
+                {% block content  %}
+                    <form method="POST"> {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="button" value="Save"/>
+                    </form>
+                {% endblock %}
+            </div>
+
     </div>
 </div>
 </body>
